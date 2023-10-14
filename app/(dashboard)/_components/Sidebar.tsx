@@ -32,7 +32,7 @@ const Sidebar = () => {
     return (
         <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
             <div className="p-6 flex justify-center items-center">
-                // @ts-ignore
+                {/*@ts-ignore*/}
                 <Logo className="text-primary"/>
             </div>
             <div className="flex flex-col w-full">
