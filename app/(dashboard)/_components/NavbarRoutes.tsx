@@ -23,7 +23,7 @@ const NavbarRoutes = () => {
     return (
         <div className="flex gap-x-2 justify-between items-center w-full">
             <Link href={`/${actualLink}`} className={"w-1/2"}>
-                <Button variant="primary" size="sm">
+                <Button variant="ghost" size="sm">
                     {actualLink}
                 </Button>
             </Link>
