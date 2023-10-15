@@ -1,2 +1,8 @@
 export {default as Logo} from './Logo'
 export {default as Sidebar} from './Sidebar'
+export {default as Navbar} from './Navbar'
+export {default as SidebarItem} from './SidebarItem'
+export {default as MobileSidebar} from './MobileSidebar'
+export {default as NavbarRoutes} from './NavbarRoutes'
+export {default as Overview} from './Overview'
+export {default as RecentSales} from './RecentSales'
