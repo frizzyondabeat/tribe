@@ -1,6 +1,6 @@
 "use client"
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {usePathname} from "next/navigation";
 import Link from "next/link"
 import {Button} from "@components/ui/button";
@@ -16,19 +16,21 @@ const NavbarRoutes = () => {
 
     const pathname = usePathname();
 
-    let actualLink
+    const [navHeader, setNavHeader] = useState("Dashboard");
 
-    pathname?.startsWith('/') ? actualLink = "Dashboard" : actualLink = pathname?.split("/")[0]
+    useEffect(() => {
+        setNavHeader(pathname === "/" ? "Dashboard" : pathname.replace("/", ""));
+    }, [pathname]);
 
     return (
         <div className="flex gap-x-2 justify-between items-center w-full">
-            <Link href={`/${actualLink}`} className={"w-1/2"}>
-                <Button variant="ghost" size="sm">
-                    {actualLink}
+            <Link href={`/${navHeader === "Dashboard" ? "" : navHeader}`} className={"w-1/2"}>
+                <Button variant="ghost" size="sm" className="capitalize">
+                    {navHeader}
                 </Button>
             </Link>
 
-            <div className="flex relative w-full h-full items-center justify-end">
+            <div className="md:flex relative w-full h-full items-center justify-end hidden">
                 <Input placeholder="Search" className="px-10" />
                 <Search size={18} className="text-slate-500 absolute left-3" />
             </div>

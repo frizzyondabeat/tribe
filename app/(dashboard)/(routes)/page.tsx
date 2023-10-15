@@ -3,13 +3,15 @@
 import {Tabs, TabsList, TabsTrigger, TabsContent} from "@components/ui/tabs";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@components/ui/card";
 import {Overview, RecentSales} from "@app/(dashboard)/_components";
+import {Shield} from "lucide-react";
+import PieChart from "@app/(dashboard)/_components/PieChart";
 
 
 export default function RootPage() {
     return (
         <div className="flex flex-col min-h-screen py-2 px-5">
             <Tabs defaultValue="overview" className="space-y-4">
-                <TabsList>
+                <TabsList className="fixed">
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="analytics">
                         Analytics
@@ -21,7 +23,7 @@ export default function RootPage() {
                         Notifications
                     </TabsTrigger>
                 </TabsList>
-                <TabsContent value="overview" className="space-y-4">
+                <TabsContent value="overview" className="space-y-4 pt-8">
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -42,7 +44,7 @@ export default function RootPage() {
                                 </svg>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-2xl font-bold text-primary">$45,231.89</div>
+                                <div className="text-2xl font-bold text-primary">₦45,231.89</div>
                                 <p className="text-xs text-muted-foreground">
                                     +20.1% from last month
                                 </p>
@@ -102,25 +104,14 @@ export default function RootPage() {
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">
-                                    Active Now
+                                    Admin Users
                                 </CardTitle>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    className="h-4 w-4 text-muted-foreground"
-                                >
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                                </svg>
+                                <Shield size={16} className="text-muted-foreground" />
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold text-primary">+573</div>
                                 <p className="text-xs text-muted-foreground">
-                                    +201 since last hour
+                                    +21 since last hour
                                 </p>
                             </CardContent>
                         </Card>
@@ -148,7 +139,7 @@ export default function RootPage() {
                         </Card>
                     </div>
                 </TabsContent>
-                <TabsContent value="analytics" className="space-y-4">
+                <TabsContent value="analytics" className="space-y-4 pt-8">
                     <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -169,7 +160,7 @@ export default function RootPage() {
                                 </svg>
                             </CardHeader>
                             <CardContent>
-                                <div className="text-2xl font-bold text-primary">$45,231.89</div>
+                                <div className="text-2xl font-bold text-primary">₦45,231.89</div>
                                 <p className="text-xs text-muted-foreground">
                                     +20.1% from last month
                                 </p>
@@ -229,20 +220,9 @@ export default function RootPage() {
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">
-                                    Active Now
+                                    Admin Users
                                 </CardTitle>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    strokeWidth="2"
-                                    className="h-4 w-4 text-muted-foreground"
-                                >
-                                    <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-                                </svg>
+                                <Shield size={16} className="text-muted-foreground" />
                             </CardHeader>
                             <CardContent>
                                 <div className="text-2xl font-bold text-primary">+573</div>
@@ -257,8 +237,8 @@ export default function RootPage() {
                             <CardHeader>
                                 <CardTitle>Overview</CardTitle>
                             </CardHeader>
-                            <CardContent className="pl-2">
-                                <Overview />
+                            <CardContent className="pl-2 items-center justify-center flex">
+                                <PieChart />
                             </CardContent>
                         </Card>
 
