@@ -7,7 +7,6 @@ import {Button} from "@components/ui/button";
 import {Input} from "@components/ui/input";
 import {Search} from "@node_modules/lucide-react";
 import {SelectLanguagePrompt} from "@components/ui/select-language";
-import {Avatar, AvatarFallback, AvatarImage} from "@components/ui/avatar";
 import {ModeToggle} from "@components/ui/toggle-mode";
 import {UserNav} from "@components/ui/user-nav";
 
