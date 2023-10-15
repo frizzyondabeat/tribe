@@ -29,7 +29,7 @@ const NavbarRoutes = () => {
             </Link>
 
             <div className="flex relative w-full h-full items-center justify-end">
-                <Input placeholder="Search" variant="outline" className="px-10" />
+                <Input placeholder="Search" className="px-10" />
                 <Search size={18} className="text-slate-500 absolute left-3" />
             </div>
 
