@@ -39,7 +39,7 @@ const SignInPage = () => {
     const onSubmit = async (data: z.infer<typeof schema>) => {
         try {
             await axios.post('/api/auth/sign-in', data)
-        } catch (error) {
+        } catch (error: any) {
             if (error?.response?.status === 404) {
                 return toast({
                     variant: "destructive",
