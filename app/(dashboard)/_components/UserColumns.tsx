@@ -6,7 +6,7 @@ import {ArrowUpDown, Shield, User} from "lucide-react";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
-export type Users = {
+export type UsersProps = {
     id: string
     firstName: string
     lastName: string
@@ -14,7 +14,7 @@ export type Users = {
     email: string
 }
 
-export const userColumns: ColumnDef<Users>[] = [
+export const userColumns: ColumnDef<UsersProps>[] = [
     {
         accessorKey: "id",
         header: "ID",

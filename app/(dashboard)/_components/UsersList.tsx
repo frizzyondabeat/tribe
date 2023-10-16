@@ -1,11 +1,11 @@
 "use client"
 
 import React from 'react';
-import {userColumns, Users} from "@app/(dashboard)/_components/UserColumns";
+import {userColumns, UsersProps} from "@app/(dashboard)/_components/UserColumns";
 import {DataTable} from "@components/ui/data-table";
 
 // TODO: Fetch data from API
-const getTableData:Users[] = () => {
+const getTableData: () => UsersProps[] = () => {
 
     return [
         {
