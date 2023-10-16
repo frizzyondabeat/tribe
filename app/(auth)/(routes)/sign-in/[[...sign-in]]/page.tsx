@@ -1,7 +1,7 @@
 "use client"
 
 import React, {useState} from 'react';
-import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@components/ui/card";
+import {Card, CardContent, CardHeader, CardTitle} from "@components/ui/card";
 import {z} from "zod";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
@@ -13,6 +13,7 @@ import {Eye, EyeOff} from "@node_modules/lucide-react";
 import {Button} from "@components/ui/button";
 import axios from "@app/api/axios";
 import Link from "next/link";
+import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@components/ui/tooltip";
 
 const schema = z.object({
     email: z.string().email({message: "Invalid email address"}),
@@ -38,7 +39,7 @@ const SignInPage = () => {
 
     const onSubmit = async (data: z.infer<typeof schema>) => {
         try {
-            await axios.post('/api/auth/sign-in', data)
+            await axios.post('/sas', data)
         } catch (error: any) {
             if (error?.response?.status === 404) {
                 return toast({
@@ -150,17 +151,41 @@ const SignInPage = () => {
                                                         />
                                                         {
                                                             !showPassword ? (
-                                                                <Eye
-                                                                    size={18}
-                                                                    className={`dark:text-slate-500 absolute right-3 cursor-pointer`}
-                                                                    onClick={() => setShowPassword(!showPassword)}
-                                                                />
+                                                                <TooltipProvider>
+                                                                    <Tooltip>
+                                                                        <TooltipTrigger className="flex items-center">
+                                                                            <Eye
+                                                                                size={18}
+                                                                                className={`dark:text-slate-500 absolute right-3 cursor-pointer`}
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault()
+                                                                                    setShowPassword(!showPassword)
+                                                                                }}
+                                                                            />
+                                                                        </TooltipTrigger>
+                                                                        <TooltipContent>
+                                                                            Show password
+                                                                        </TooltipContent>
+                                                                    </Tooltip>
+                                                                </TooltipProvider>
                                                             ) : (
-                                                                <EyeOff
-                                                                    size={18}
-                                                                    className={`dark:text-slate-500 absolute right-3 cursor-pointer`}
-                                                                    onClick={() => setShowPassword(!showPassword)}
-                                                                />
+                                                                <TooltipProvider>
+                                                                    <Tooltip>
+                                                                        <TooltipTrigger className="flex items-center">
+                                                                            <EyeOff
+                                                                                size={18}
+                                                                                className={`dark:text-slate-500 absolute right-3 cursor-pointer`}
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault()
+                                                                                    setShowPassword(!showPassword)
+                                                                                }}
+                                                                            />
+                                                                        </TooltipTrigger>
+                                                                        <TooltipContent>
+                                                                            Hide password
+                                                                        </TooltipContent>
+                                                                    </Tooltip>
+                                                                </TooltipProvider>
                                                             )
                                                         }
                                                     </div>
@@ -172,19 +197,17 @@ const SignInPage = () => {
                                         )
                                     }
                                 />
+                                <Button
+                                    type="submit"
+                                    disabled={!isValid || isSubmitting}
+                                    variant={"default"}
+                                    className={"w-full cursor-pointer"}
+                                >
+                                    Continue
+                                </Button>
                             </form>
                         </Form>
                     </CardContent>
-                    <CardFooter>
-                        <Button
-                            type="submit"
-                            disabled={!isValid || isSubmitting}
-                            variant={"default"}
-                            className={"w-full cursor-pointer"}
-                        >
-                            Continue
-                        </Button>
-                    </CardFooter>
                 </Card>
             </div>
         </div>
