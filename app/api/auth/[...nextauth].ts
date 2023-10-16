@@ -1,8 +1,9 @@
-import {CredentialsProvider} from "next-auth/providers";
+import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "../axios";
 import NextAuth from "next-auth";
 
-export const authOptions = {
+// @ts-ignore
+export default NextAuth({
     providers: [
         CredentialsProvider({
             name: "Credentials",
@@ -35,14 +36,15 @@ export const authOptions = {
         }),
     ],
     session: {
-        jwt: true,
+        strategy: "jwt",
     },
     callbacks: {
-        async jwt(token, user) {
+        async jwt({token, user}: {token: any, user: any }) {
             if (user) {
-                token.accessToken = user.accessToken
-                token.user = user.user
+                token.accessToken = user?.accessToken
+                token.user = user?.user
             }
+
             return token
         }
     },
@@ -51,6 +53,4 @@ export const authOptions = {
         signOut: "/auth/sign-out",
         error: "/auth/error",
     }
-}
-
-export default NextAuth(authOptions)
+})
