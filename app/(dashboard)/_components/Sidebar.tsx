@@ -16,9 +16,19 @@ const sidebarRoutes = [
         href: "/users"
     },
     {
+        icon: LucideUsers,
+        label: "Transactions",
+        href: "/transactions"
+    },
+    {
         icon: Settings,
         label: "Settings",
         href: "/settings"
+    },
+    {
+        icon: Settings,
+        label: "Audit Logs",
+        href: "/audits"
     },
     {
         icon: LogOut,
