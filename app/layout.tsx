@@ -4,6 +4,8 @@ import {Inter} from 'next/font/google'
 import {ThemeProvider} from "@components/theme-provider";
 import React from "react";
 import {Toaster} from "@components/ui/toaster";
+import {getServerSession} from "next-auth"
+import SessionProvider from "@components/SessionProvider";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -12,11 +14,14 @@ export const metadata: Metadata = {
     description: 'A super admin dashboard built with Next.js and Tailwind CSS.',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
                                        children,
                                    }: {
     children: React.ReactNode
 }) {
+
+    const session = await getServerSession()
+
     return (
         <html lang="en">
         <body className={inter.className}>
@@ -26,7 +31,9 @@ export default function RootLayout({
             enableSystem={true}
             //
         >
-            {children}
+            <SessionProvider session={session}>
+                {children}
+            </SessionProvider>
         </ThemeProvider>
         <Toaster />
         </body>

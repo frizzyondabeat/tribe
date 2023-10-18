@@ -1,51 +1,16 @@
 "use client"
 
 import React from 'react';
-import {userColumns, UsersProps} from "@app/(dashboard)/_components/UserColumns";
+import {userColumns} from "@app/(dashboard)/_components/UserColumns";
 import {DataTable} from "@components/ui/data-table";
+import {UserArray} from "@lib/fetchUsers";
 
-// TODO: Fetch data from API
-const getTableData: () => UsersProps[] = () => {
 
-    return [
-        {
-            id: "1",
-            firstName: "John",
-            lastName: "Doe",
-            status: "admin",
-            email: "john.doe@gmail.com"
-        },
-        {
-            id: "2",
-            firstName: "Jane",
-            lastName: "Doe",
-            status: "user",
-            email: "maryjane@rocketmail.com"
-        },
-        {
-            id: "3",
-            firstName: "Leslie",
-            lastName: "Enyinnia",
-            status: "admin",
-            email: "leslie.e@yahoo.com"
-        },
-        {
-            id: "4",
-            firstName: "Mayowa",
-            lastName: "Yusuf",
-            status: "admin",
-            email: "mayowa.yusuf@outlook.com"
-        }
-    ];
-}
-
-const UsersList = () => {
-
-    // TODO: Fetch data from API
+const UsersList = ({users}: {users: UserArray | undefined}) => {
 
     return (
-        <div className="container mx-auto py-10">
-            <DataTable columns={userColumns} data={getTableData()} />
+        <div className="container mx-auto py-10 overflow-x-auto">
+            <DataTable columns={userColumns} data={users} />
         </div>
     );
 };

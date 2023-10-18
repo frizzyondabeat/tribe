@@ -1,7 +1,16 @@
 "use client"
 import React from 'react';
 import {Logo} from "@app/(dashboard)/_components";
-import {Layout, LucideUsers, Settings, LogOut} from "@node_modules/lucide-react";
+import {
+    BarChart2Icon,
+    Layout,
+    LogOut,
+    LucideUsers,
+    Settings,
+    ShieldIcon,
+    StickyNoteIcon,
+    UsersIcon
+} from "@node_modules/lucide-react";
 import SidebarItem from "@app/(dashboard)/_components/SidebarItem";
 
 const sidebarRoutes = [
@@ -13,22 +22,34 @@ const sidebarRoutes = [
     {
         icon: LucideUsers,
         label: "Users",
-        href: "/users"
+        href: "/users",
+        subCategories: [
+            {
+                icon: ShieldIcon,
+                label: "Admin Users",
+                href: "/users/admin"
+            },
+            {
+                icon: UsersIcon,
+                label: "App Users",
+                href: "/users/app"
+            }
+        ]
     },
     {
-        icon: LucideUsers,
+        icon: BarChart2Icon,
         label: "Transactions",
         href: "/transactions"
+    },
+    {
+        icon: StickyNoteIcon,
+        label: "Audit Logs",
+        href: "/audit-logs"
     },
     {
         icon: Settings,
         label: "Settings",
         href: "/settings"
-    },
-    {
-        icon: Settings,
-        label: "Audit Logs",
-        href: "/audits"
     },
     {
         icon: LogOut,
@@ -39,6 +60,7 @@ const sidebarRoutes = [
 ]
 
 const Sidebar = () => {
+
     return (
         <div className="h-full border-r flex flex-col overflow-y-auto shadow-sm">
             <div className="p-6 flex justify-center items-center">
@@ -48,7 +70,7 @@ const Sidebar = () => {
             <div className="flex flex-col w-full">
                 {
                     sidebarRoutes.map((route, index) => (
-                        <SidebarItem icon={route.icon} label={route.label} href={route.href} key={index}/>
+                        <SidebarItem icon={route.icon} label={route.label} href={route.href} key={index} subCategory={route?.subCategories}/>
                     ))
                 }
             </div>

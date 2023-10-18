@@ -4,7 +4,7 @@ import {
     ColumnDef, ColumnFiltersState,
     flexRender,
     getCoreRowModel, getFilteredRowModel, getPaginationRowModel, getSortedRowModel, SortingState,
-    useReactTable,
+    useReactTable, VisibilityState,
 } from "@tanstack/react-table"
 
 import {
@@ -18,10 +18,17 @@ import {
 import {Button} from "@components/ui/button";
 import {useState} from "react";
 import {Input} from "@components/ui/input";
+import {
+    DropdownMenu,
+    DropdownMenuCheckboxItem,
+    DropdownMenuContent,
+    DropdownMenuTrigger
+} from "@components/ui/dropdown-menu";
+import {ChevronDownIcon} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[] | undefined
 }
 
 export function DataTable<TData, TValue>({
@@ -32,6 +39,17 @@ export function DataTable<TData, TValue>({
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
+    // Define an initial state for column visibility
+    const [initialColumnVisibility, setInitialColumnVisibility] = useState<VisibilityState>({
+        email: true, // Initially show the email column
+        // Add other columns here
+    });
+
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialColumnVisibility);
+    const [rowSelection, setRowSelection] = useState({});
+    
+    data = data ?? []
+
     const table = useReactTable({
         data,
         columns,
@@ -41,9 +59,13 @@ export function DataTable<TData, TValue>({
         getSortedRowModel: getSortedRowModel(),
         onColumnFiltersChange: setColumnFilters,
         getFilteredRowModel: getFilteredRowModel(),
+        onColumnVisibilityChange: setColumnVisibility,
+        onRowSelectionChange: setRowSelection,
         state: {
             sorting,
             columnFilters,
+            columnVisibility,
+            rowSelection,
         }
     })
 
@@ -58,6 +80,32 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
+                <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                        <Button variant="outline" className="ml-auto">
+                            Columns <ChevronDownIcon className="ml-2 h-4 w-4" />
+                        </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="end">
+                        {table
+                            .getAllColumns()
+                            .filter((column) => column.getCanHide())
+                            .map((column) => {
+                                return (
+                                    <DropdownMenuCheckboxItem
+                                        key={column.id}
+                                        className="capitalize"
+                                        checked={column.getIsVisible()}
+                                        onCheckedChange={(value) =>
+                                            column.toggleVisibility(value)
+                                        }
+                                    >
+                                        {column.id}
+                                    </DropdownMenuCheckboxItem>
+                                )
+                            })}
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
             <div className="rounded-md border">
                 <Table>

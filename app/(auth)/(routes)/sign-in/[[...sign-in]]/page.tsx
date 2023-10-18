@@ -9,15 +9,17 @@ import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@c
 import {useToast} from "@components/ui/use-toast";
 import {ToastAction} from "@components/ui/toast";
 import {Input} from "@components/ui/input";
-import {Eye, EyeOff} from "@node_modules/lucide-react";
+import {Eye, EyeOff} from "lucide-react";
 import {Button} from "@components/ui/button";
-import axios from "@app/api/axios";
 import Link from "next/link";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@components/ui/tooltip";
+import {LoginFooter} from "@app/(dashboard)/_components";
+import {signIn} from "next-auth/react";
+import {useRouter} from "next/navigation";
 
 const schema = z.object({
     email: z.string().email({message: "Invalid email address"}),
-    password: z.string().min(8, {message: "Password must be at least 8 characters long"})
+    password: z.string().min(1, {message: "Password is required"})
 });
 
 const SignInPage = () => {
@@ -34,43 +36,53 @@ const SignInPage = () => {
 
     const {toast} = useToast()
 
+    const router = useRouter()
+
     const [showPassword, setShowPassword] = useState<boolean>(false);
     // const [isTypingPwd, setIsTypingPwd] = useState<boolean>(false);
 
     const onSubmit = async (data: z.infer<typeof schema>) => {
-        try {
-            await axios.post('/sas', data)
-        } catch (error: any) {
-            if (error?.response?.status === 404) {
-                return toast({
-                    variant: "destructive",
-                    title: "Network error.",
-                    description: "Please check your internet connection and try again.",
-                    action:
-                        <ToastAction
-                            altText={"Try again"}
-                            onClick={() => onSubmit(data)}
-                            className={"cursor-pointer hover:underline outline-none border-none"}
-                        >
-                            Try again
-                        </ToastAction>
-                })
-            } else {
-                return toast({
-                    variant: "destructive",
-                    title: "Something went wrong.",
-                    description: "Please try again.",
-                    action:
-                        <ToastAction
-                            altText={"Try again"}
-                            onClick={() => onSubmit(data)}
-                            className={"cursor-pointer hover:underline outline-none border-none"}
-                        >
-                            Try again
-                        </ToastAction>
-                })
+        await signIn("credentials", {
+            email: data.email,
+            password: data.password,
+            redirect: false
+        }).then(
+            (res) => {
+                res?.status === 200 && router.push("/")
             }
-        }
+        ).catch(
+            (error) => {
+                if (error?.response?.status === 404) {
+                    return toast({
+                        variant: "destructive",
+                        title: "Network error.",
+                        description: "Please check your internet connection and try again.",
+                        action:
+                            <ToastAction
+                                altText={"Try again"}
+                                onClick={() => onSubmit(data)}
+                                className={"cursor-pointer hover:underline outline-none border-none"}
+                            >
+                                Try again
+                            </ToastAction>
+                    })
+                } else {
+                    return toast({
+                        variant: "destructive",
+                        title: "Something went wrong.",
+                        description: "Please try again.",
+                        action:
+                            <ToastAction
+                                altText={"Try again"}
+                                onClick={() => onSubmit(data)}
+                                className={"cursor-pointer hover:underline outline-none border-none"}
+                            >
+                                Try again
+                            </ToastAction>
+                    })
+                }
+            }
+        )
     }
 
 
@@ -118,14 +130,14 @@ const SignInPage = () => {
                                     render={
                                         ({field, formState: {errors}}) => (
                                             <FormItem>
-                                                <div className="flex justify-between items-center">
+                                                <div className="flex justify-between items-center h-full">
                                                     <FormLabel>Password</FormLabel>
                                                     <Link
                                                         href={"/auth/forgot-password"}
                                                     >
                                                         <Button
                                                             variant={"link"}
-                                                            className={"text-primary text-xs font-light m-0 p-0 h-auto"}
+                                                            className={"text-primary text-xs font-light m-0 p-0 h-full"}
                                                         >
                                                             Forgot your password?
                                                         </Button>
@@ -209,6 +221,7 @@ const SignInPage = () => {
                         </Form>
                     </CardContent>
                 </Card>
+                <LoginFooter className="text-sm justify-start lg:space-x-2 space-x-2 mt-5 px-6 font-semibold"/>
             </div>
         </div>
     );

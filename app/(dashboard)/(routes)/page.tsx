@@ -28,7 +28,7 @@ export default function RootPage() {
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">
-                                    Total Revenue
+                                    Total Transactions
                                 </CardTitle>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ export default function RootPage() {
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                                 <CardTitle className="text-sm font-medium">
-                                    Users
+                                    Daily Transactions
                                 </CardTitle>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -79,7 +79,7 @@ export default function RootPage() {
                         </Card>
                         <Card>
                             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                                <CardTitle className="text-sm font-medium">Sales</CardTitle>
+                                <CardTitle className="text-sm font-medium">App Users</CardTitle>
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 24 24"
@@ -244,9 +244,9 @@ export default function RootPage() {
 
                         <Card className="col-span-3">
                             <CardHeader>
-                                <CardTitle>Recent Sales</CardTitle>
+                                <CardTitle>Recent Transactions</CardTitle>
                                 <CardDescription>
-                                    You made 265 sales this month.
+                                    You have 20 transactions today
                                 </CardDescription>
                             </CardHeader>
                             <CardContent>

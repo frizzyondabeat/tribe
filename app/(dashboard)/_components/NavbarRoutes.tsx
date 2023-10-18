@@ -6,7 +6,6 @@ import Link from "next/link"
 import {Button} from "@components/ui/button";
 import {Input} from "@components/ui/input";
 import {Search} from "@node_modules/lucide-react";
-import {SelectLanguagePrompt} from "@components/ui/select-language";
 import {ModeToggle} from "@components/ui/toggle-mode";
 import {UserNav} from "@components/ui/user-nav";
 
@@ -19,7 +18,7 @@ const NavbarRoutes = () => {
     const [navHeader, setNavHeader] = useState("Dashboard");
 
     useEffect(() => {
-        setNavHeader(pathname === "/" ? "Dashboard" : pathname.replace("/", ""));
+        setNavHeader(pathname === "/" ? "Dashboard" : pathname.split("/")[1]);
     }, [pathname]);
 
     return (
@@ -30,13 +29,13 @@ const NavbarRoutes = () => {
                 </Button>
             </Link>
 
-            <div className="md:flex relative w-full h-full items-center justify-end hidden">
+            <div className="md:flex relative w-full h-full items-center justify-center hidden">
                 <Input placeholder="Search" className="px-10" />
                 <Search size={18} className="text-slate-500 absolute left-3" />
             </div>
 
-            <div className="flex w-full gap-x-5 justify-end">
-                <SelectLanguagePrompt />
+            <div className="flex gap-x-5 w-full justify-end">
+                {/*<SelectLanguagePrompt />*/}
                 <ModeToggle />
                 <UserNav />
             </div>

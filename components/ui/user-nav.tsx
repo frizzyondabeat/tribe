@@ -12,15 +12,20 @@ import {
 import {Button} from "@components/ui/button";
 import {Avatar, AvatarFallback, AvatarImage} from "@components/ui/avatar";
 import {useRouter} from "next/navigation";
+import {signOut} from "@node_modules/next-auth/react";
+import {useSession} from "next-auth/react";
 
 export function UserNav() {
 
     const router = useRouter()
 
     const handleSignOut = () => {
-        localStorage.removeItem("token")
-        router.push("/sign-in")
+        signOut().then(() => {
+            router.push("/sign-in")
+        })
     }
+
+    const {data: session} = useSession()
 
     return (
         <DropdownMenu>
@@ -35,9 +40,9 @@ export function UserNav() {
             <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                     <div className="flex flex-col space-y-1">
-                        <p className="text-sm font-medium leading-none">Efeoghene Omonigho</p>
+                        <p className="text-sm font-medium leading-none">{`${session?.user?.name}`}</p>
                         <p className="text-xs leading-none text-muted-foreground">
-                            omonigho.efeoghene@outlook.com
+                            {session?.user?.email}
                         </p>
                     </div>
                 </DropdownMenuLabel>
