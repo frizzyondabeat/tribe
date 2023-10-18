@@ -49,11 +49,12 @@ const SignInPage = () => {
             callbackUrl: "/"
         }).then(
             (value) => {
-                const {ok, error} = value as SignInResponse;
+                const {ok, error, status} = value as SignInResponse;
                 if (ok) {
+                    console.log("Sign-in successful.")
                     router.push("/")
                 }
-                if (error?.includes("401")) {
+                if (error?.includes("401") && status === 401) {
                     toast(
                         {
                             variant: "destructive",

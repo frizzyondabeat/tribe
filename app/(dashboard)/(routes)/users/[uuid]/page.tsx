@@ -23,7 +23,7 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
         }).catch((error) => {
             console.log(error);
         });
-    });
+    }, [axiosAuth, params.uuid]);
 
     return (
         <div>
