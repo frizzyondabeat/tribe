@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import React from "react";
-import {useRouter} from "next/navigation";
+import {useRouter} from "next/router";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
