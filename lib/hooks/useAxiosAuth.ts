@@ -46,7 +46,7 @@ const useAxiosAuth = () => {
             axiosAuth.interceptors.response.eject(responseInterceptor)
         }
 
-    }, [session])
+    }, [session, router])
 
     return axiosAuth
 }

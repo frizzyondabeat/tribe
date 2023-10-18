@@ -1,6 +1,6 @@
 "use client"
 
-import {ColumnDef} from "@tanstack/react-table"
+import {ColumnDef, Row} from "@tanstack/react-table"
 import {Button} from "@components/ui/button";
 import {ArrowUpDown, MoreHorizontal, Shield, ShieldHalf, User, Verified} from "lucide-react";
 import {z} from "zod";
@@ -19,44 +19,48 @@ import {useRouter} from "next/navigation";
 // You can use a Zod schema here if you want.
 export type UsersProps = z.infer<typeof UserSchema>
 
+export const ActionCell = ({ row }: {
+    row: Row<UsersProps>
+}) => {
+    const {uuid} = row.original
+
+    //@ts-ignore
+    const router = useRouter()
+
+    return (
+        <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="h-8 w-8 p-0">
+                    <span className="sr-only">Open menu</span>
+                    <MoreHorizontal className="h-4 w-4" />
+                </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuItem
+                    onClick={() => navigator.clipboard.writeText(uuid)}
+                >
+                    Copy UUID
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                    onClick={
+                        () => {
+                            router.push(`/users/${uuid}`)
+                        }
+                    }
+                >
+                    View User
+                </DropdownMenuItem>
+            </DropdownMenuContent>
+        </DropdownMenu>
+    )
+}
+
 export const userColumns: ColumnDef<UsersProps>[] = [
     {
         id: "actions",
-        cell: ({ row }) => {
-            const {uuid} = row.original
-
-            //@ts-ignore
-            const router = useRouter()
-
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(uuid)}
-                        >
-                            Copy UUID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                            onClick={
-                                () => {
-                                    router.push(`/users/${uuid}`)
-                                }
-                            }
-                        >
-                            View User
-                        </DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            )
-        },
+        cell: ActionCell,
     },
     {
         accessorKey: "id",
