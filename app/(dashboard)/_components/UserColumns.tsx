@@ -13,7 +13,7 @@ import {
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import React from "react";
-import {useRouter} from "next/router";
+import {useRouter} from "next/navigation";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -25,6 +25,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         cell: ({ row }) => {
             const {uuid} = row.original
 
+            //@ts-ignore
             const router = useRouter()
 
             return (
