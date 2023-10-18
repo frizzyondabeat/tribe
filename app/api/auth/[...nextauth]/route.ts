@@ -3,7 +3,7 @@ import axios from "../../../../lib/axios";
 import NextAuth, {NextAuthOptions} from "next-auth";
 
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
             name: "credentials",
