@@ -39,13 +39,7 @@ export function DataTable<TData, TValue>({
     const [sorting, setSorting] = useState<SortingState>([]);
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-    // Define an initial state for column visibility
-    const [initialColumnVisibility, setInitialColumnVisibility] = useState<VisibilityState>({
-        email: true, // Initially show the email column
-        // Add other columns here
-    });
-
-    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>(initialColumnVisibility);
+    const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = useState({});
     
     data = data ?? []

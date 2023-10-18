@@ -36,6 +36,7 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
                 <ArrowLeft className="h-4 w-4"/>
                 <p>Go back</p>
             </Button>
+            <p>{user?.firstName}</p>
         </div>
     );
 };
