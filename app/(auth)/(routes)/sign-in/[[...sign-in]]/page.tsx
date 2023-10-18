@@ -14,7 +14,7 @@ import {Button} from "@components/ui/button";
 import Link from "next/link";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@components/ui/tooltip";
 import {LoginFooter} from "@app/(dashboard)/_components";
-import {signIn} from "next-auth/react";
+import {signIn, SignInResponse} from "next-auth/react";
 import {useRouter} from "next/navigation";
 
 const schema = z.object({
@@ -45,41 +45,38 @@ const SignInPage = () => {
         await signIn("credentials", {
             email: data.email,
             password: data.password,
-            redirect: false
+            redirect: false,
+            callbackUrl: "/"
         }).then(
-            (res) => {
-                res?.status === 200 && router.push("/")
-            }
-        ).catch(
-            (error) => {
-                if (error?.response?.status === 404) {
-                    return toast({
-                        variant: "destructive",
-                        title: "Network error.",
-                        description: "Please check your internet connection and try again.",
-                        action:
-                            <ToastAction
-                                altText={"Try again"}
-                                onClick={() => onSubmit(data)}
-                                className={"cursor-pointer hover:underline outline-none border-none"}
-                            >
-                                Try again
-                            </ToastAction>
-                    })
+            (value) => {
+                const {ok, error} = value as SignInResponse;
+                if (ok) {
+                    router.push("/")
+                }
+                if (error?.includes("401")) {
+                    toast(
+                        {
+                            variant: "destructive",
+                            title: "Invalid credentials.",
+                            description: "Please try again",
+                        }
+                    )
                 } else {
-                    return toast({
-                        variant: "destructive",
-                        title: "Something went wrong.",
-                        description: "Please try again.",
-                        action:
-                            <ToastAction
-                                altText={"Try again"}
-                                onClick={() => onSubmit(data)}
-                                className={"cursor-pointer hover:underline outline-none border-none"}
-                            >
-                                Try again
-                            </ToastAction>
-                    })
+                    toast(
+                        {
+                            variant: "destructive",
+                            title: "Something went wrong.",
+                            description: "Server error occurred.",
+                            action:
+                                <ToastAction
+                                    altText={"Try again"}
+                                    onClick={() => onSubmit(data)}
+                                    className={"cursor-pointer hover:underline outline-none border-none"}
+                                >
+                                    Try again
+                                </ToastAction>
+                        }
+                    )
                 }
             }
         )

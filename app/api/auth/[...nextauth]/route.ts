@@ -28,12 +28,8 @@ export const authOptions: NextAuthOptions = {
                     }
                 )
                     .then(res => res.data)
-                    .catch(error => {
-                        throw error
-                    })
 
                 if (user) {
-                    console.log(user)
                     return user
                 }
 
@@ -47,7 +43,6 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({token, user}: { token: any, user: any }) {
             if (user) {
-                console.log("Current User: ", user)
                 token.accessToken = user?.message
                 token.user = user?.data
             }
@@ -63,7 +58,9 @@ export const authOptions: NextAuthOptions = {
             return session
         },
         async redirect({url, baseUrl}) {
-            return url.startsWith(baseUrl) ? url : baseUrl
+            if (url.startsWith("/")) return `${baseUrl}${url}`
+            else if (new URL(url).origin === baseUrl) return url
+            else return baseUrl
         },
         async signIn({user}) {
             return !!user;
