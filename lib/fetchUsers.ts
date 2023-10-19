@@ -7,7 +7,7 @@ const UserResults = z.array(UserSchema);
 
 export type UserArray = z.infer<typeof UserResults>;
 
-export async function fetchUsers(axiosAuth: AxiosInstance) {
+export async function fetchAllUsers(axiosAuth: AxiosInstance) {
     try {
         const res = await axiosAuth.get("/api/v1/admin/users/view-all");
         console.log(res.data);
@@ -41,6 +41,36 @@ export async function fetchUser(axiosAuth: AxiosInstance, id: string) {
 
         const usersJson: UsersProps = res.data?.data;
         return UserSchema.parse(usersJson);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+export async function fetchAppUsers(axiosAuth: AxiosInstance) {
+    try {
+        return fetchAllUsers(axiosAuth).then((users) => {
+            if (users) {
+                return users.filter(user =>
+                     user.userType === "APP_USER"
+                );
+            }
+        });
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+export async function fetchAdminUsers(axiosAuth: AxiosInstance) {
+    try {
+        return fetchAllUsers(axiosAuth).then((users) => {
+            if (users) {
+                return users.filter(user =>
+                    user.userType === "INSTITUTION_ADMIN" || user.userType === "SUPER_ADMIN"
+                );
+            }
+        });
     } catch (err) {
         console.log(err);
         throw err;
