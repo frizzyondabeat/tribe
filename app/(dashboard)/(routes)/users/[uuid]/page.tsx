@@ -1,6 +1,6 @@
 "use client"
 import React, {useEffect, useState} from 'react';
-import {UsersProps} from "@app/(dashboard)/_components/UserColumns";
+import {UsersProps} from "@app/(dashboard)/(routes)/users/_components/UserColumns";
 import {fetchUser} from "@lib/fetchUsers";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {Button} from "@components/ui/button";

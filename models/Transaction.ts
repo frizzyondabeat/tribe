@@ -2,7 +2,7 @@ import {z} from 'zod';
 
 export const TransactionSchema = z.object({
     id: z.string(),
-    uuid: z.string().uuid("Invalid UUID"),
+    uuid: z.string(),
     paymentType: z.enum(["SEND_MONEY", "CONVERT_MONEY", "PAY_BILLS"]),
     amount: z.number(),
     sourceCurrency: z.string(),
@@ -19,5 +19,5 @@ export const TransactionSchema = z.object({
     transactionReference: z.string(),
     narration: z.string(),
     activityStatus: z.string(),
-    dateCreated: z.string().datetime(),
+    dateCreated: z.string(),
 })

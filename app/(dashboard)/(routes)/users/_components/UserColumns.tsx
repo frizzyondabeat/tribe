@@ -19,7 +19,7 @@ import {useRouter} from "next/navigation";
 // You can use a Zod schema here if you want.
 export type UsersProps = z.infer<typeof UserSchema>
 
-export const ActionCell = ({ row }: {
+export const UserActionCell = ({ row }: {
     row: Row<UsersProps>
 }) => {
     const {uuid} = row.original
@@ -60,7 +60,7 @@ export const ActionCell = ({ row }: {
 export const userColumns: ColumnDef<UsersProps>[] = [
     {
         id: "actions",
-        cell: ActionCell,
+        cell: UserActionCell,
     },
     {
         accessorKey: "id",

@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import {userColumns} from "@app/(dashboard)/_components/UserColumns";
+import {userColumns} from "@app/(dashboard)/(routes)/users/_components/UserColumns";
 import {DataTable} from "@components/ui/data-table";
 import {UserArray} from "@lib/fetchUsers";
 

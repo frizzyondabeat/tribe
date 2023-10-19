@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { UserSchema } from "@models/User";
 import {AxiosInstance} from "axios";
-import {UsersProps} from "@app/(dashboard)/_components/UserColumns";
+import {UsersProps} from "@app/(dashboard)/(routes)/users/_components/UserColumns";
 
 const UserResults = z.array(UserSchema);
 
