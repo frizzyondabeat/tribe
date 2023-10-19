@@ -1,7 +1,7 @@
 import {z} from 'zod';
 
 export const TransactionSchema = z.object({
-    id: z.string(),
+    id: z.number(),
     uuid: z.string(),
     paymentType: z.enum(["SEND_MONEY", "CONVERT_MONEY", "PAY_BILLS"]),
     amount: z.number(),

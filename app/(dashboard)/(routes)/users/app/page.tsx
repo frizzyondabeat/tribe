@@ -2,7 +2,7 @@
 
 import React, {useEffect, useState} from 'react';
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
-import {fetchAppUsers, UserArray} from "@lib/fetchUsers";
+import {fetchAppUsers, UserArray} from "@lib/userCalls";
 import {toast} from "@components/ui/use-toast";
 import {UsersList} from "@app/(dashboard)/_components";
 

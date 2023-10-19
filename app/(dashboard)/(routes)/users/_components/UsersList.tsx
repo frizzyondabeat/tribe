@@ -3,13 +3,13 @@
 import React from 'react';
 import {userColumns} from "@app/(dashboard)/(routes)/users/_components/UserColumns";
 import {DataTable} from "@components/ui/data-table";
-import {UserArray} from "@lib/fetchUsers";
+import {UserArray} from "@lib/userCalls";
 
 
 const UsersList = ({users}: {users: UserArray | undefined}) => {
 
     return (
-        <div className="container mx-auto py-2 overflow-x-auto h-screen">
+        <div className="container mx-auto py-2 overflow-x-auto">
             <DataTable columns={userColumns} data={users} />
         </div>
     );

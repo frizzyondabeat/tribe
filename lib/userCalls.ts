@@ -76,3 +76,25 @@ export async function fetchAdminUsers(axiosAuth: AxiosInstance) {
         throw err;
     }
 }
+
+export async function deleteUserById(axiosAuth: AxiosInstance) {
+    try {
+        const res = await axiosAuth.delete(`/api/v1/admin/users/delete`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            });
+        console.log(res.data);
+
+        if (!res.data) {
+            return undefined;
+        }
+
+        const usersJson: UsersProps = res.data?.data;
+        return UserSchema.parse(usersJson);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}

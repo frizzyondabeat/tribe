@@ -9,17 +9,19 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import React from "react";
 import {useRouter} from "next/navigation";
+import {toast} from "@components/ui/use-toast";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type UsersProps = z.infer<typeof UserSchema>
 
-export const UserActionCell = ({ row }: {
+export const UserActionCell = ({row}: {
     row: Row<UsersProps>
 }) => {
     const {uuid} = row.original
@@ -32,17 +34,31 @@ export const UserActionCell = ({ row }: {
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-8 w-8 p-0">
                     <span className="sr-only">Open menu</span>
-                    <MoreHorizontal className="h-4 w-4" />
+                    <MoreHorizontal className="h-4 w-4"/>
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuItem
-                    onClick={() => navigator.clipboard.writeText(uuid)}
+                    onClick={() =>
+                        navigator.clipboard.writeText(uuid)
+                            .then(
+                                () => {
+                                    return toast(
+                                        {
+                                            variant: "default",
+                                            title: "Copied to clipboard",
+                                            description: "Copied UUID to clipboard.",
+                                            className: "bg-green-500",
+                                        }
+                                    )
+                                }
+                            )
+                    }
                 >
                     Copy UUID
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator/>
                 <DropdownMenuItem
                     onClick={
                         () => {
@@ -193,21 +209,21 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         },
         cell: ({row}) => {
 
-                const {enabled} = row.original
+            const {enabled} = row.original
 
-                if (enabled) {
-                    return (
-                        <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
-                            <Verified className="h-4 w-4 fill-green-500"/>
-                        </Button>
-                    )
-                } else {
-                    return (
-                        <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
-                            <Verified className="h-4 w-4 fill-red-500"/>
-                        </Button>
-                    )
-                }
+            if (enabled) {
+                return (
+                    <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
+                        <Verified className="h-4 w-4 fill-green-500"/>
+                    </Button>
+                )
+            } else {
+                return (
+                    <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
+                        <Verified className="h-4 w-4 fill-red-500"/>
+                    </Button>
+                )
+            }
         }
     }
 ]

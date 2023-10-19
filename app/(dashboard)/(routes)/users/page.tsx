@@ -1,14 +1,17 @@
 "use client"
 import React, {useEffect, useState} from 'react';
 import {UsersList} from "@app/(dashboard)/_components";
-import {fetchAllUsers, UserArray} from "@lib/fetchUsers";
+import {fetchAllUsers, UserArray} from "@lib/userCalls";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {toast} from "@components/ui/use-toast";
+import {useRouter} from "next/navigation";
 
 
 const UsersPage = () => {
 
     const axiosAuth = useAxiosAuth();
+
+    const router = useRouter()
 
     const [users, setUsers] = useState<UserArray | undefined>();
 
@@ -27,6 +30,7 @@ const UsersPage = () => {
                     }
                 )
             } else {
+                router.push("/sign-in")
                 return toast(
                     {
                         variant: "destructive",
