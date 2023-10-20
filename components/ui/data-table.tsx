@@ -77,7 +77,7 @@ export function DataTable<TData, TValue>({
                 <div className="flex space-x-2 items-center">
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="ml-auto">
+                            <Button variant="outline" className="ml-auto text-xs">
                                 Sort <ChevronDownIcon className="ml-2 h-4 w-4"/>
                             </Button>
                         </DropdownMenuTrigger>
@@ -94,6 +94,7 @@ export function DataTable<TData, TValue>({
                                                 setFilterBy(column.id);
                                                 column.setFilterValue("")
                                             }}
+                                            className="text-xs capitalize"
                                         >
                                             {column.id}
                                         </DropdownMenuCheckboxItem>
@@ -104,7 +105,7 @@ export function DataTable<TData, TValue>({
                     </DropdownMenu>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="ml-auto">
+                            <Button variant="outline" className="ml-auto text-xs">
                                 Columns <ChevronDownIcon className="ml-2 h-4 w-4"/>
                             </Button>
                         </DropdownMenuTrigger>
@@ -116,11 +117,11 @@ export function DataTable<TData, TValue>({
                                     return (
                                         <DropdownMenuCheckboxItem
                                             key={column.id}
-                                            className="capitalize"
                                             checked={column.getIsVisible()}
                                             onCheckedChange={(value) =>
                                                 column.toggleVisibility(value)
                                             }
+                                            className="text-xs capitalize"
                                         >
                                             {column.id}
                                         </DropdownMenuCheckboxItem>

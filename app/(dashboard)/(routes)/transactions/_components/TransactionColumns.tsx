@@ -32,7 +32,7 @@ export const TransactionActionCell = ({row}: {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                <DropdownMenuLabel className={"text-xs"}>Actions</DropdownMenuLabel>
                 <DropdownMenuItem
                     onClick={() =>
                         navigator.clipboard.writeText(uuid)
@@ -49,6 +49,7 @@ export const TransactionActionCell = ({row}: {
                                 }
                             )
                     }
+                    className={"text-xs"}
                 >
                     Copy Transaction UUID
                 </DropdownMenuItem>
@@ -59,6 +60,7 @@ export const TransactionActionCell = ({row}: {
                             router.push(`/transactions/${uuid}/${userId}`)
                         }
                     }
+                    className={"text-xs"}
                 >
                     View Transaction
                 </DropdownMenuItem>
