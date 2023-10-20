@@ -92,7 +92,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="flex items-center gap-x-1 justify-center w-full text-sm font-semibold"
+                    className="flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold"
                 >
                     ID
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -113,7 +114,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     First Name
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -134,7 +136,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Last Name
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -155,7 +158,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     User Type
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -197,7 +201,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Email
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -218,7 +223,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Phone Number
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -239,7 +245,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Created At
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -266,7 +273,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Updated At
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -293,7 +301,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     UUID
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -314,7 +323,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Address
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -335,7 +345,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Country
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -358,7 +369,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Enabled
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -391,7 +403,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap`}
+                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap`}
                 >
                     Status
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -416,7 +429,8 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="flex items-center gap-x-1 justify-center w-full text-sm font-semibold whitespace-nowrap"
+                    className="flex items-center gap-x-1 justify-center w-full text-xs
+                     font-semibold whitespace-nowrap"
                 >
                     KYC Completed
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
