@@ -72,7 +72,7 @@ export function DataTable<TData, TValue>({
                     onChange={(event) =>
                         table.getColumn(filterBy ?? "email")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm"
+                    className="max-w-sm text-xs"
                 />
                 <div className="flex space-x-2 items-center">
                     <DropdownMenu>

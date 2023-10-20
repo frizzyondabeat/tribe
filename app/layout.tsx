@@ -6,6 +6,7 @@ import React from "react";
 import {Toaster} from "@components/ui/toaster";
 import {getServerSession} from "next-auth"
 import SessionProvider from "@components/SessionProvider";
+import {SkeletonTheme} from "@node_modules/react-loading-skeleton";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -32,7 +33,9 @@ export default async function RootLayout({
             //
         >
             <SessionProvider session={session}>
-                {children}
+                <SkeletonTheme baseColor="#e2e8f0" highlightColor="#edf2f7">
+                    {children}
+                </SkeletonTheme>
             </SessionProvider>
         </ThemeProvider>
         <Toaster />

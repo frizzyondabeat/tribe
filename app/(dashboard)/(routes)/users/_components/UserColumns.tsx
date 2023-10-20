@@ -21,6 +21,11 @@ import {toast} from "@components/ui/use-toast";
 // You can use a Zod schema here if you want.
 export type UsersProps = z.infer<typeof UserSchema>
 
+const statusColor = {
+    ACTIVATED: "bg-green-500",
+    DEACTIVATED: "bg-red-500",
+}
+
 export const UserActionCell = ({row}: {
     row: Row<UsersProps>
 }) => {
@@ -224,6 +229,62 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                     </Button>
                 )
             }
+        }
+    },
+    {
+        accessorKey: "status",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    Status
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+
+            const {status} = row.original
+
+            return (
+                <Button variant="ghost" className={`w-full uppercase flex gap-x-5 cursor-auto ${statusColor[status]}`}>
+                    {status}
+                </Button>
+            )
+        }
+    },
+    {
+        accessorKey: "kycCompleted",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                >
+                    KYC Completed
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+
+                const {kycCompleted} = row.original
+
+                if (kycCompleted) {
+                    return (
+                        <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
+                            <Verified className="h-4 w-4 fill-green-500"/>
+                        </Button>
+                    )
+                } else {
+                    return (
+                        <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
+                            <Verified className="h-4 w-4 fill-red-500"/>
+                        </Button>
+                    )
+                }
         }
     }
 ]

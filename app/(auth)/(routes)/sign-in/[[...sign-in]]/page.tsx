@@ -16,6 +16,7 @@ import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@compone
 import {LoginFooter} from "@app/(dashboard)/_components";
 import {signIn, SignInResponse} from "next-auth/react";
 import {useRouter} from "next/navigation";
+import {ModeToggle} from "@components/ui/toggle-mode";
 
 const schema = z.object({
     email: z.string().email({message: "Invalid email address"}),
@@ -53,8 +54,7 @@ const SignInPage = () => {
                 if (ok) {
                     console.log("Sign-in successful.")
                     router.push("/")
-                }
-                if (error?.includes("401") && status === 401) {
+                } else if (!ok && error?.includes("401") && status === 401) {
                     toast(
                         {
                             variant: "destructive",
@@ -85,13 +85,17 @@ const SignInPage = () => {
 
 
     return (
-        <div className="flex flex-col justify-center items-center w-screen h-screen">
-            <div className="w-[350px]">
-                <h1 className="font-extrabold flex justify-start mb-5 px-6 text-2xl">tribe</h1>
-                <Card className="shadow-lg w-[350px] h-auto dark:shadow-slate-800 overflow-y-auto">
+        <div className="flex flex-col justify-center items-center w-screen h-screen relative">
+            <div className="w-[350px] text-slate-600 dark:text-primary-foreground">
+                <h1 className="font-extrabold flex justify-center px-6 text-2xl">
+                    <strong className="text-primary">3</strong>
+                    ribe
+                </h1>
+                <p className="text-[10px] text-slate-500 text-center font-light mb-6 dark:text-white">Management Portal</p>
+                <Card className="shadow-lg w-[350px] h-auto dark:shadow-slate-800 overflow-y-auto text-slate-600 dark:text-primary-foreground">
                     <CardHeader>
-                        <CardTitle>
-                            Sign in to your account
+                        <CardTitle className="text-[18px]">
+                            Sign in
                         </CardTitle>
                     </CardHeader>
                     <CardContent>
@@ -106,13 +110,14 @@ const SignInPage = () => {
                                     render={
                                         ({field, formState: {errors}}) => (
                                             <FormItem>
-                                                <FormLabel>Email</FormLabel>
+                                                <FormLabel className="text-xs">Email</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         disabled={isSubmitting}
                                                         placeholder="e.g john.doe@gmail.com"
                                                         {...field}
                                                         type={"email"}
+                                                        className="text-xs"
                                                     />
                                                 </FormControl>
                                                 <FormMessage>
@@ -129,13 +134,14 @@ const SignInPage = () => {
                                         ({field, formState: {errors}}) => (
                                             <FormItem>
                                                 <div className="flex justify-between items-center h-full">
-                                                    <FormLabel>Password</FormLabel>
+                                                    <FormLabel className="text-xs">Password</FormLabel>
                                                     <Link
-                                                        href={"/auth/forgot-password"}
+                                                        href={"/forgot-password"}
+                                                        className="h-auto"
                                                     >
                                                         <Button
                                                             variant={"link"}
-                                                            className={"text-primary text-xs font-light m-0 p-0 h-full"}
+                                                            className={"text-primary text-xs font-light m-0 p-0 h-auto"}
                                                         >
                                                             Forgot your password?
                                                         </Button>
@@ -147,7 +153,7 @@ const SignInPage = () => {
                                                             disabled={isSubmitting}
                                                             {...field}
                                                             type={showPassword ? "text" : "password"}
-                                                            className="pr-10"
+                                                            className="pr-10 text-xs"
                                                             // onKeyDown={
                                                             //     () => {
                                                             //         console.log(field.value.length)
@@ -219,7 +225,10 @@ const SignInPage = () => {
                         </Form>
                     </CardContent>
                 </Card>
-                <LoginFooter className="text-sm justify-start lg:space-x-2 space-x-2 mt-5 px-6 font-semibold"/>
+                <LoginFooter className="text-xs justify-center lg:space-x-2 space-x-2 mt-5 px-6 font-semibold text-slate-400"/>
+            </div>
+            <div className="absolute top-0 right-0 mt-5 mr-5">
+                <ModeToggle />
             </div>
         </div>
     );

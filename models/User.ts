@@ -18,4 +18,6 @@ export const UserSchema = z.object({
     createdAt: z.string(),
     updatedAt: z.string(),
     enabled: z.boolean(),
+    status: z.enum(["ACTIVATED", "DEACTIVATED"]),
+    kycCompleted: z.boolean(),
 })

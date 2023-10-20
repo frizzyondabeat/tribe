@@ -1,5 +1,5 @@
-import { z } from "zod";
-import { UserSchema } from "@models/User";
+import {z} from "zod";
+import {UserSchema} from "@models/User";
 import {AxiosInstance} from "axios";
 import {UsersProps} from "@app/(dashboard)/(routes)/users/_components/UserColumns";
 
@@ -52,7 +52,7 @@ export async function fetchAppUsers(axiosAuth: AxiosInstance) {
         return fetchAllUsers(axiosAuth).then((users) => {
             if (users) {
                 return users.filter(user =>
-                     user.userType === "APP_USER"
+                    user.userType === "APP_USER"
                 );
             }
         });
@@ -77,7 +77,7 @@ export async function fetchAdminUsers(axiosAuth: AxiosInstance) {
     }
 }
 
-export async function deleteUserById(axiosAuth: AxiosInstance) {
+export async function deleteUserById(axiosAuth: AxiosInstance, userId: string) {
     try {
         const res = await axiosAuth.delete(`/api/v1/admin/users/delete`,
             {
@@ -98,3 +98,28 @@ export async function deleteUserById(axiosAuth: AxiosInstance) {
         throw err;
     }
 }
+
+export async function activateOrDeactivateAppUser(axiosAuth: AxiosInstance, userUUID: string, status: "ACTIVATED" | "DEACTIVATED") {
+    try {
+        const res = await axiosAuth.post(`/api/v1/admin/users/app-user/activate-deactivate`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                status,
+                userUUID,
+            });
+        console.log(res.data);
+
+        if (!res.data) {
+            return undefined;
+        }
+
+        const usersJson: UsersProps = res.data?.data;
+        return UserSchema.parse(usersJson);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+

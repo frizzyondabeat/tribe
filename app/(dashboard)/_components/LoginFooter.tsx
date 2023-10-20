@@ -5,7 +5,7 @@ import {Dot} from "lucide-react";
 
 const footerLinks = [
     {
-        label: '©Tribe',
+        label: '©3ribe',
         href: '/',
     },
     {

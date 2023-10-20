@@ -68,18 +68,13 @@ export const TransactionActionCell = ({row}: {
 }
 
 export const statusColors = {
-    SUCCESSFUL: "text-green-500",
+    SUCCESSFUL: "text-[#2fa406]",
     PENDING: "text-yellow-500",
     FAILED: "text-red-500",
-    ONGOING: "text-blue-500",
+    ONGOING: "text-amber-500",
     REFUNDED: "text-primary"
 }
 
-export const paymentTypeColors = {
-    SEND_MONEY: "bg-green-500",
-    CONVERT_MONEY: "bg-yellow-500",
-    PAY_BILLS: "bg-primary",
-}
 
 export const transactionColumns: ColumnDef<TransactionsProps>[] = [
     {
@@ -87,46 +82,50 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
         cell: TransactionActionCell,
     },
     {
-        accessorKey: "id",
+        accessorKey: "transactionReference",
         header: ({column}) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
-                    ID
+                    Transaction Reference
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
                 </Button>
             )
         },
+        cell: ({row}) => {
+            const {transactionReference} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {transactionReference}
+                </span>
+            )
+        }
     },
     {
-        accessorKey: "uuid",
+        accessorKey: "sourceCurrency",
         header: ({column}) => {
             return (
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs flex justify-center whitespace-nowrap"
                 >
-                    Transaction UUID
+                    Source Currency
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
                 </Button>
             )
         },
-    },
-    {
-        accessorKey: "userId",
-        header: ({column}) => {
+        cell: ({row}) => {
+            const {sourceCurrency} = row.original
             return (
-                <Button
-                    variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                >
-                    User ID
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
-                </Button>
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {sourceCurrency}
+                </span>
             )
-        },
+        }
     },
     {
         accessorKey: "amount",
@@ -135,6 +134,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs justify-center flex "
                 >
                     Amount
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -142,17 +142,152 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
             )
         },
         cell: ({row}) => {
-            const {amount} = row.original
+            const {amount, sourceCurrency} = row.original
             return (
-                <span>
-                    ₦{`${amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",").toString()}
+                <span className="text-xs whitespace-nowrap flex justify-center">
+                    {sourceCurrency}{`${amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",").toString()}
                 </span>
             )
         }
     },
     {
+        accessorKey: "sourceAccount",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className={`font-semibold text-xs whitespace-nowrap`}
+                >
+                    Source Account
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {sourceAccount} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {sourceAccount}
+                </span>
+            )
+        }
+    },
+    {
+        accessorKey: "destinationCurrency",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs whitespace-nowrap flex justify-center"
+                >
+                    Destination Currency
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {destinationCurrency} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {destinationCurrency}
+                </span>
+            )
+        }
+    },
+    {
+        accessorKey: "transactionStatus",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs whitespace-nowrap flex justify-center"
+                >
+                    Transaction Status
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {transactionStatus} = row.original
+            return (
+                <span className={`${statusColors[transactionStatus]} text-xs whitespace-nowrap flex justify-center`}>
+                    {transactionStatus}
+                </span>
+            )
+        }
+    },
+    {
+        accessorKey: "userId",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                >
+                    User ID
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {userId} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {userId}
+                </span>
+            )
+        }
+    },
+    {
+        accessorKey: "uuid",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                >
+                    Transaction UUID
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {uuid} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {uuid}
+                </span>
+            )
+        }
+    },
+
+    {
         accessorKey: "activityStatus",
-        header: "Activity Status",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                >
+                    Activity Status
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {activityStatus} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {activityStatus}
+                </span>
+            )
+        }
     },
     {
         accessorKey: "dateCreated",
@@ -161,6 +296,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
                 >
                     Date Created
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -176,21 +312,32 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 day: "numeric",
             })
             return (
-                <p>{formattedDate}</p>
+                <p className="text-xs whitespace-nowrap flex justify-center">{formattedDate}</p>
             )
         }
     },
     {
-        accessorKey: "sourceAccount",
-        header: "Source Account",
-    },
-    {
-        accessorKey: "sourceCurrency",
-        header: "Source Currency",
-    },
-    {
         accessorKey: "sourceProcessor",
-        header: "Source Processor",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                >
+                    Source Processor
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {sourceProcessor} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {sourceProcessor}
+                </span>
+            )
+        }
     },
     {
         accessorKey: "sourceStatus",
@@ -199,6 +346,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
                 >
                     Source Status
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -208,7 +356,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
         cell: ({row}) => {
             const {sourceStatus} = row.original
             return (
-                <span className={statusColors[sourceStatus]}>
+                <span className={`${statusColors[sourceStatus]} text-xs whitespace-nowrap flex justify-center`}>
                     {sourceStatus}
                 </span>
             )
@@ -216,15 +364,49 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
     },
     {
         accessorKey: "destinationAccount",
-        header: "Destination Account",
-    },
-    {
-        accessorKey: "destinationCurrency",
-        header: "Destination Currency",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                >
+                    Destination Account
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {destinationAccount} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {destinationAccount}
+                </span>
+            )
+        }
     },
     {
         accessorKey: "destinationProcessor",
-        header: "Destination Processor",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "desc")}
+                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                >
+                    Destination Processor
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {destinationProcessor} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {destinationProcessor}
+                </span>
+            )
+        }
     },
     {
         accessorKey: "destinationStatus",
@@ -233,6 +415,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
                 >
                     Destination Status
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -242,7 +425,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
         cell: ({row}) => {
             const {destinationStatus} = row.original
             return (
-                <span className={statusColors[destinationStatus]}>
+                <span className={`${statusColors[destinationStatus]} text-xs whitespace-nowrap flex justify-center`}>
                     {destinationStatus}
                 </span>
             )
@@ -250,7 +433,26 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
     },
     {
         accessorKey: "institutionId",
-        header: "Institution ID",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "desc")}
+                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                >
+                    Institution ID
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {institutionId} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap justify-center flex">
+                    {institutionId}
+                </span>
+            )
+        }
     },
     {
         accessorKey: "recipientName",
@@ -259,16 +461,21 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className={`font-semibold text-xs whitespace-nowrap flex justify-center w-full`}
                 >
                     Recipient Name
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
                 </Button>
             )
+        },
+        cell: ({row}) => {
+            const {recipientName} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap justify-center flex">
+                    {recipientName}
+                </span>
+            )
         }
-    },
-    {
-        accessorKey: "transactionReference",
-        header: "Transaction Reference",
     },
     {
         accessorKey: "paymentType",
@@ -277,6 +484,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
                 >
                     Payment Type
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -287,8 +495,8 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
             const {paymentType} = row.original
             return (
                 <Button
-                    variant="ghost"
-                    className={paymentTypeColors[paymentType]}
+                    variant="secondary"
+                    className={`text-xs justify-center`}
                 >
                     {paymentType}
                 </Button>
@@ -296,7 +504,38 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
         }
     },
     {
+        accessorKey: "id",
+        header: ({column}) => {
+            return (
+                <Button
+                    variant="ghost"
+                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    className="font-semibold text-xs"
+                >
+                    ID
+                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                </Button>
+            )
+        },
+        cell: ({row}) => {
+            const {id} = row.original
+            return (
+                <span className="text-[12px] flex justify-center">
+                    {id}
+                </span>
+            )
+        }
+    },
+    {
         accessorKey: "narration",
         header: "Narration",
+        cell: ({row}) => {
+            const {narration} = row.original
+            return (
+                <span className="text-[12px] whitespace-nowrap flex justify-center">
+                    {narration}
+                </span>
+            )
+        }
     }
 ]

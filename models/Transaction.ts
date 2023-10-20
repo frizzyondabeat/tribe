@@ -20,4 +20,5 @@ export const TransactionSchema = z.object({
     narration: z.string(),
     activityStatus: z.string(),
     dateCreated: z.string(),
+    transactionStatus: z.enum(["PENDING", "SUCCESSFUL", "FAILED", "ONGOING", "REFUNDED"]),
 })

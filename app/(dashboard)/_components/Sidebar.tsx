@@ -42,14 +42,14 @@ const sidebarRoutes = [
         href: "/transactions"
     },
     {
-        icon: StickyNoteIcon,
-        label: "Audit Logs",
-        href: "/audit-logs"
-    },
-    {
         icon: Settings,
         label: "Settings",
         href: "/settings"
+    },
+    {
+        icon: StickyNoteIcon,
+        label: "Audit Logs",
+        href: "/audit-logs"
     },
     {
         icon: LogOut,
