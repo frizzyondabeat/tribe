@@ -7,6 +7,17 @@ const TransactionResults = z.array(TransactionSchema);
 
 export type TransactionArray = z.infer<typeof TransactionResults>;
 
+export type TotalTransactionValueProps = [{
+    currency: string,
+    totalAmount: number
+}]
+
+export type MonthlyTransactionCountProps = [{
+    month: string,
+    count: number,
+    totalAmount: number
+}]
+
 export async function fetchAllTransactions(axiosAuth: AxiosInstance) {
     try {
         const res = await axiosAuth.get("/api/v1/admin/transactions/view-all");
@@ -42,6 +53,74 @@ export async function fetchTransactionByUUIDAndUserId(axiosAuth: AxiosInstance, 
 
         const transactionsJson: TransactionsProps = res.data?.data;
         return TransactionSchema.parse(transactionsJson);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+export async function fetchDailyTransactionCount(axiosAuth: AxiosInstance) {
+    try {
+        const res = await axiosAuth.get(`/api/v1/dashboard/daily-transaction-count`);
+        console.log(res.data);
+
+        if (!res.data) {
+            return undefined;
+        }
+
+        const dailyTransactionCount: number = res.data?.data;
+        return dailyTransactionCount;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+export async function fetchTotalTransactionAmount(axiosAuth: AxiosInstance) {
+try {
+        const res = await axiosAuth.get(`/api/v1/dashboard/daily-transaction-value`);
+        console.log(res.data);
+
+        if (!res.data) {
+            return undefined;
+        }
+
+        const totalTransactionAmount: TotalTransactionValueProps = res.data?.data;
+        return totalTransactionAmount;
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+export async function fetchTopTransactions(axiosAuth: AxiosInstance) {
+    try {
+        const res = await axiosAuth.get(`/api/v1/dashboard/get-top-transactions`);
+        console.log(res.data);
+
+        if (!res.data) {
+            return undefined;
+        }
+
+        const topTransactions: TransactionArray = res.data?.data;
+        return TransactionResults.parse(topTransactions);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+export async function fetchMonthlyTransaction(axiosAuth: AxiosInstance) {
+    try {
+        const res = await axiosAuth.get(`/api/v1/dashboard/monthly-transaction`);
+        console.log(res.data);
+
+        if (!res.data) {
+            return undefined;
+        }
+
+        const monthlyTransactionCount: MonthlyTransactionCountProps = res.data?.data
+        return monthlyTransactionCount;
     } catch (err) {
         console.log(err);
         throw err;

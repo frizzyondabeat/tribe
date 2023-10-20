@@ -123,3 +123,25 @@ export async function activateOrDeactivateAppUser(axiosAuth: AxiosInstance, user
     }
 }
 
+export async function fetchTotalCountOfUsers (axiosAuth: AxiosInstance, userType: string) {
+    try {
+        const res = await axiosAuth.get(`/api/v1/dashboard/total-users/${userType}`,
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+        console.log(res.data);
+
+        if (!res.data) {
+            return undefined;
+        }
+
+        const userCount: number = res.data?.data;
+        return userCount
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
