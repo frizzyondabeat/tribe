@@ -149,13 +149,13 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
                         <Separator className="my-2"/>
                         <div className="flex items-center">
                             <h1 className="w-1/3 font-semibold">Status</h1>
-                            <p className={`w-full ${user?.status === "ACTIVATED" ? "text-green-400" : "text-red-400"}`}>{user && user.status}</p>
+                            <p className={`w-full ${user?.status === "ACTIVATED" ? "text-[#2fa406]" : "text-red-400"}`}>{user && user.status}</p>
                         </div>
 
                         <Separator className="my-2"/>
                         <div className="flex items-center">
                             <h1 className="w-1/3 font-semibold">KYC Completed</h1>
-                            <p className={`w-full uppercase ${user?.kycCompleted ? "text-green-400" : "text-red-400"}`}>{user && user.kycCompleted.toString()}</p>
+                            <p className={`w-full uppercase ${user?.kycCompleted ? "text-[#2fa406]" : "text-red-400"}`}>{user && user.kycCompleted.toString()}</p>
                         </div>
 
                         <Separator className="my-2"/>
