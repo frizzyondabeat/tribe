@@ -5,7 +5,7 @@ import {usePathname} from "next/navigation";
 import Link from "next/link"
 import {Button} from "@components/ui/button";
 import {Input} from "@components/ui/input";
-import {Search} from "@node_modules/lucide-react";
+import {PlusIcon, Search} from "@node_modules/lucide-react";
 import {ModeToggle} from "@components/ui/toggle-mode";
 import {UserNav} from "@components/ui/user-nav";
 import {Skeleton} from "@components/ui/skeleton";
@@ -27,7 +27,7 @@ const NavbarRoutes = () => {
             {
                 navHeader
                     ? (
-                        <Link href={`/${navHeader === "Dashboard" ? "" : navHeader}`} className={"w-1/2"}>
+                        <Link href={`/${navHeader === "dashboard" ? "" : navHeader}`} className={"w-1/2"}>
                             <Button variant="ghost" size="sm" className="capitalize">
                                 {navHeader && navHeader}
                             </Button>
@@ -45,6 +45,16 @@ const NavbarRoutes = () => {
 
             <div className="flex gap-x-5 w-full justify-end">
                 {/*<SelectLanguagePrompt />*/}
+                {
+                    navHeader && navHeader === "users" && !pathname.includes("create") && (
+                        <Link href={`/${navHeader}/create`}>
+                            <Button variant="default" size="sm" className="capitalize">
+                                Create
+                                <PlusIcon size={18} className="ml-2" />
+                            </Button>
+                        </Link>
+                    )
+                }
                 <ModeToggle />
                 <UserNav />
             </div>
