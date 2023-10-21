@@ -105,7 +105,9 @@ export const userColumns: ColumnDef<UsersProps>[] = [
             return (
                 <p className="flex justify-center text-xs">{id}</p>
             )
-        }
+        },
+        // @ts-ignore
+        // show: false,
     },
     {
         accessorKey: "firstName",
@@ -236,7 +238,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
             return (
                 <p className="flex justify-center text-xs">{phoneNumber}</p>
             )
-        }
+        },
     },
     {
         accessorKey: "createdAt",

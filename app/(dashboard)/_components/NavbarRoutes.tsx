@@ -15,7 +15,7 @@ const NavbarRoutes = () => {
 
     const pathname = usePathname();
 
-    const [navHeader, setNavHeader] = useState("Dashboard");
+    const [navHeader, setNavHeader] = useState<string>("");
 
     useEffect(() => {
         setNavHeader(pathname === "/" ? "Dashboard" : pathname.split("/")[1]);

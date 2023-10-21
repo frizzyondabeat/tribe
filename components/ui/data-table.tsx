@@ -15,23 +15,28 @@ import {
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
 import {Button} from "@components/ui/button";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Input} from "@components/ui/input";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
-    DropdownMenuContent, DropdownMenuTrigger
+    DropdownMenuContent,
+    DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import {ChevronDownIcon} from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[] | undefined,
+    visibleFields?: string[]
 }
+
+const usersVisibleFields = ["email", "firstName", "lastName", "userType", "actions"]
 
 export function DataTable<TData, TValue>({
                                              columns,
                                              data,
+                                             visibleFields = usersVisibleFields
                                          }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -58,10 +63,20 @@ export function DataTable<TData, TValue>({
             columnFilters,
             columnVisibility,
             rowSelection,
-        }
+        },
     })
 
     const [filterBy, setFilterBy] = useState<string>(table.getAllColumns()[1].id);
+
+    useEffect(() => {
+        table.getAllColumns().filter(
+            (column) => {
+                return !visibleFields.includes(column.id)
+            }
+        ).forEach((column) => {
+            column.toggleVisibility(false)
+        })
+    }, [data, columns, visibleFields]);
 
     return (
         <div>

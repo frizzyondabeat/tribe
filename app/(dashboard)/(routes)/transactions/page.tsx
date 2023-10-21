@@ -28,6 +28,7 @@ const TransactionsPage = () => {
                     }
                 )
             } else {
+                console.log("Error fetching transactions: ", error)
                 return toast(
                     {
                         variant: "destructive",

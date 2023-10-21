@@ -4,11 +4,13 @@ import React from "react";
 import {transactionColumns} from "@app/(dashboard)/(routes)/transactions/_components/TransactionColumns";
 
 
+const visibleFields = ["transactionReference", "sourceCurrency", "amount", "sourceAccount", "destinationAccount", "status", "actions"]
+
 const TransactionsList = ({transactions}: { transactions: TransactionArray | undefined }) => {
 
     return (
         <div className="container mx-auto py-2 overflow-x-auto">
-            <DataTable columns={transactionColumns} data={transactions} />
+            <DataTable columns={transactionColumns} data={transactions} visibleFields={visibleFields} />
         </div>
     );
 };

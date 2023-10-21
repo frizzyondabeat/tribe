@@ -3,10 +3,16 @@
 import {useSession} from "next-auth/react";
 import {useEffect} from "react";
 import {axiosAuth} from "@lib/axios";
-import {useRouter} from "next/navigation";
+import {redirect, useRouter} from "next/navigation";
 
 const useAxiosAuth = () => {
-    const {data: session} = useSession()
+    const {data: session} = useSession({
+        required: true,
+        onUnauthenticated() {
+            console.log("Unauthenticated")
+            redirect("/sign-in")
+        }
+    })
 
     const router = useRouter()
 
@@ -15,6 +21,7 @@ const useAxiosAuth = () => {
         const requestInterceptor = axiosAuth.interceptors.request.use(
             async (config) => {
                 if (!session?.accessToken) {
+                    console.log("No access token")
                     router.push("/sign-in")
                 }
                 if (!config.headers["Authorization"]) {
@@ -32,6 +39,8 @@ const useAxiosAuth = () => {
 
                 if (error?.response?.status === 401 && !originalRequest._retry) {
                     originalRequest._retry = true
+
+                    console.log("Refreshing token...: ", error?.response)
 
                 //     redirect to login page
                     router.push("/sign-in")

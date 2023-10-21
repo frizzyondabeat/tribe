@@ -5,10 +5,10 @@ import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {useRouter} from "next/navigation";
 import {ArrowLeft} from "@node_modules/lucide-react";
 import {Button} from "@components/ui/button";
-import {TransactionsProps} from "@app/(dashboard)/(routes)/transactions/_components/TransactionColumns";
+import {statusColors, TransactionsProps} from "@app/(dashboard)/(routes)/transactions/_components/TransactionColumns";
 import {fetchTransactionByUUIDAndUserId} from "@lib/transactionsCalls";
 import {Card, CardContent, CardHeader, CardTitle} from "@components/ui/card";
-import Skeleton from "@node_modules/react-loading-skeleton";
+import Skeleton from "react-loading-skeleton";
 
 const TransactionDetailsPage = ({params}: { params: { uuid: string, userId: string } }) => {
 
@@ -73,7 +73,7 @@ const TransactionDetailsPage = ({params}: { params: { uuid: string, userId: stri
 
                         <div className="flex items-center flex-col gap-1">
                             <h1 className="w-full font-bold text-sm">Source Status</h1>
-                            <p className="w-full text-sm">{transaction && transaction.sourceStatus}</p>
+                            <p className={`w-full text-sm ${transaction && statusColors[transaction.sourceStatus]}`}>{transaction && transaction.sourceStatus}</p>
                         </div>
 
                         <div className="flex items-center flex-col gap-1">
@@ -93,7 +93,7 @@ const TransactionDetailsPage = ({params}: { params: { uuid: string, userId: stri
 
                         <div className="flex items-center flex-col gap-1">
                             <h1 className="w-full font-bold text-sm">Destination Status</h1>
-                            <p className="w-full text-sm">{transaction && transaction.destinationStatus}</p>
+                            <p className={`w-full text-sm ${transaction && statusColors[transaction?.destinationStatus]}`}>{transaction && transaction.destinationStatus}</p>
                         </div>
 
                         <div className="flex items-center flex-col gap-1">

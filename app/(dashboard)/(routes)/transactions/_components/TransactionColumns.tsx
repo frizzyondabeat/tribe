@@ -267,7 +267,6 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
             )
         }
     },
-
     {
         accessorKey: "activityStatus",
         header: ({column}) => {

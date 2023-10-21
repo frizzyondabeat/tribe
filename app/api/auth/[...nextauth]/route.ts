@@ -3,7 +3,7 @@ import axios from "../../../../lib/axios";
 import NextAuth, {NextAuthOptions} from "next-auth";
 
 
-const authOptions: NextAuthOptions = {
+export const authOptions: NextAuthOptions = {
     secret:process.env.NEXTAUTH_SECRET,
     providers: [
         CredentialsProvider({
@@ -40,6 +40,8 @@ const authOptions: NextAuthOptions = {
     ],
     session: {
         strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60,
+        updateAge: 24 * 60 * 60,
     },
     callbacks: {
         async jwt({token, user}: { token: any, user: any }) {

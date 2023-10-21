@@ -8,7 +8,6 @@ import {useEffect, useState} from "react";
 import {fetchTotalCountOfUsers} from "@lib/userCalls";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {useSession} from "next-auth/react";
-import {useRouter} from "next/navigation";
 import {
     fetchDailyTransactionCount, fetchMonthlyTransaction,
     fetchTopTransactions,
@@ -23,9 +22,17 @@ export default function RootPage() {
 
     const axiosAuth = useAxiosAuth();
 
-    const {data: session} = useSession()
-
-    const router = useRouter();
+    const {data: session} = useSession({
+        required: true,
+        onUnauthenticated() {
+            return {
+                redirect: {
+                    destination: "/sign-in",
+                    permanent: false,
+                },
+            };
+        }
+    })
 
     const currentMonth = new Date().toLocaleString('default', { month: 'long' })
 
@@ -38,9 +45,7 @@ export default function RootPage() {
     const [monthlyTransactions, setMonthlyTransactions] = useState<MonthlyTransactionCountProps>();
 
     useEffect(() => {
-        if (!session) {
-            router.push("/sign-in");
-        } else {
+        if (session) {
             UserTypes.filter((userType) => userType !== "SUPER_ADMIN").forEach((userType) => {
                 fetchTotalCountOfUsers(axiosAuth, userType)
                     .then((response) => {

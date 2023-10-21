@@ -47,7 +47,7 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
             </Button>
             <div className="grid gap-4 md:grid-cols-3 grid-cols-1">
                 <Card className="col-span-1 items-center justify-center flex flex-col">
-                    <CardContent className="flex flex-col items-center justify-center gap-3">
+                    <CardHeader>
                         <Avatar className="h-20 w-20">
                             <AvatarFallback>
                                 {
@@ -57,6 +57,8 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
                                 }
                             </AvatarFallback>
                         </Avatar>
+                    </CardHeader>
+                    <CardContent className="flex flex-col items-center justify-center gap-3">
                         <h1 className="text-2xl font-bold">
                             {user && `${user.firstName} ${user.lastName}`}
                         </h1>
