@@ -43,7 +43,7 @@ export const TransactionActionCell = ({row}: {
                                             variant: "default",
                                             title: "Copied to clipboard",
                                             description: "Copied transaction UUID to clipboard.",
-                                            className: "bg-green-500",
+                                            className: "bg-green-500 text-white",
                                         }
                                     )
                                 }

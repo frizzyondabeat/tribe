@@ -16,6 +16,7 @@ import {
 import React from "react";
 import {useRouter} from "next/navigation";
 import {toast} from "@components/ui/use-toast";
+import {BsClipboardCheckFill, BsFillClipboardXFill, BsPersonFillCheck, BsPersonFillX} from "react-icons/bs";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -54,7 +55,7 @@ export const UserActionCell = ({row}: {
                                             variant: "default",
                                             title: "Copied to clipboard",
                                             description: "Copied UUID to clipboard.",
-                                            className: "bg-green-500",
+                                            className: "bg-green-500 text-white",
                                         }
                                     )
                                 }
@@ -386,13 +387,13 @@ export const userColumns: ColumnDef<UsersProps>[] = [
             if (enabled) {
                 return (
                     <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
-                        <Verified className="h-4 w-4 fill-green-500"/>
+                        <BsPersonFillCheck className="h-4 w-4 fill-green-500"/>
                     </Button>
                 )
             } else {
                 return (
                     <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
-                        <Verified className="h-4 w-4 fill-red-500"/>
+                        <BsPersonFillX className="h-4 w-4 fill-red-500"/>
                     </Button>
                 )
             }
@@ -446,13 +447,13 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 if (kycCompleted) {
                     return (
                         <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
-                            <Verified className="h-4 w-4 fill-green-500"/>
+                            <BsClipboardCheckFill className="h-4 w-4 text-green-500"/>
                         </Button>
                     )
                 } else {
                     return (
                         <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto">
-                            <Verified className="h-4 w-4 fill-red-500"/>
+                            <BsFillClipboardXFill className="h-4 w-4 text-red-500"/>
                         </Button>
                     )
                 }
