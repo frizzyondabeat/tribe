@@ -15,12 +15,13 @@ import {
 
 import {Table, TableBody, TableCell, TableHead, TableHeader, TableRow,} from "@/components/ui/table"
 import {Button} from "@components/ui/button";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Input} from "@components/ui/input";
 import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
+    DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import {ChevronDownIcon} from "lucide-react";
@@ -80,7 +81,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex items-center py-4 justify-between">
+            <div className="flex items-center py-4 justify-between gap-x-2">
                 <Input
                     placeholder={`Filter by ${filterBy ?? "email"}`}
                     value={(table.getColumn(filterBy ?? "email")?.getFilterValue() as string) ?? ""}
@@ -90,6 +91,27 @@ export function DataTable<TData, TValue>({
                     className="max-w-sm text-xs"
                 />
                 <div className="flex space-x-2 items-center">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="default" className="ml-auto text-xs">
+                                Export <ChevronDownIcon className="ml-2 h-4 w-4"/>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="center">
+                            <DropdownMenuLabel className="text-xs">File Formats</DropdownMenuLabel>
+                            <DropdownMenuItem className="text-xs capitalize">
+                                CSV
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator/>
+                            <DropdownMenuItem className="text-xs capitalize">
+                                Excel
+                            </DropdownMenuItem>
+                            <DropdownMenuSeparator/>
+                            <DropdownMenuItem className="text-xs capitalize">
+                                PDF
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto text-xs">
@@ -183,7 +205,7 @@ export function DataTable<TData, TValue>({
                         ) : (
                             <TableRow>
                                 <TableCell colSpan={columns.length} className="h-24 text-center">
-                                    No results.
+                                    No Records Found
                                 </TableCell>
                             </TableRow>
                         )}
