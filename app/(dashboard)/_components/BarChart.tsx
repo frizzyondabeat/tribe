@@ -1,20 +1,43 @@
 import React from 'react';
 import {MonthlyTransactionCountProps} from "@lib/transactionsCalls";
 import {ResponsiveBar} from "@node_modules/@nivo/bar";
+import {useTheme} from "@node_modules/next-themes";
 
 const BarChart = ({data}: { data: MonthlyTransactionCountProps | undefined }) => {
 
     // generate random color
     const randomColor = () => {
-        const hex = Math.floor(Math.random() * 0xFFFFFF);
-        return "#" + hex.toString(16);
-    }
+        const minBrightness = 128; // Adjust this value to set your brightness threshold.
+
+        let color;
+
+        do {
+            const hex = Math.floor(Math.random() * 0xFFFFFF);
+            color = "#" + hex.toString(16);
+        } while (getBrightness(color) < minBrightness);
+
+        return color;
+    };
+
+    const getBrightness = (color: string) => {
+        const r = parseInt(color.slice(1, 3), 16);
+        const g = parseInt(color.slice(3, 5), 16);
+        const b = parseInt(color.slice(5, 7), 16);
+
+        // Use a formula to calculate the brightness (perceived luminance).
+        return (0.299 * r + 0.587 * g + 0.114 * b);
+    };
+
 
     const newData = data && data.map(({totalAmount, month}) => ({
         id: month,
         color: randomColor(),
         value: totalAmount,
     }));
+
+    const { theme } = useTheme()
+
+    console.log("Theme: ", theme)
 
     const formatValue = (value: number) => {
         if (value < 1000) {
@@ -41,11 +64,13 @@ const BarChart = ({data}: { data: MonthlyTransactionCountProps | undefined }) =>
                             ticks: {
                                 text: {
                                     fontSize: '10px',
+                                    fill: `${theme && theme === "dark" && '#fff'}`,
                                 }
                             },
                             legend: {
                                 text: {
                                     fontSize: '14px',
+                                    fill: `${theme && theme === "dark" && '#fff'}`,
                                 }
                             }
                         }

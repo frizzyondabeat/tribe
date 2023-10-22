@@ -289,7 +289,7 @@ export default function RootPage() {
                                                 <CardTitle>Overview</CardTitle>
                                             </CardHeader>
                                             <CardContent className="justify-center flex h-full w-full">
-                                                <div className="h-[400px] w-full flex justify-center items-center">
+                                                <div className="h-[400px] w-full flex justify-center items-center dark:text-white">
                                                     <BarChart data={monthlyTransactions}/>
                                                 </div>
                                             </CardContent>

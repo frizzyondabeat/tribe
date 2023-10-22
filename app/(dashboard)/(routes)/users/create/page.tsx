@@ -293,7 +293,7 @@ const CreateUserPage = () => {
                                 name="address"
                                 render={
                                     ({field, formState: {errors}}) => (
-                                        <FormItem>
+                                        <FormItem className="col-span-full">
                                             <FormLabel className="text-xs">Address</FormLabel>
                                             <FormControl>
                                                 <Input
@@ -360,17 +360,15 @@ const CreateUserPage = () => {
                                     )
                                 }
                             />
-                            <div className="flex h-full items-end mt-2 md:mt-0">
-                                <Button
-                                    type="submit"
-                                    disabled={!isValid || isSubmitting}
-                                    variant={"default"}
-                                    className={"w-full cursor-pointer flex justify-center text-xs"}
-                                >
-                                    Create
-                                    <PlusIcon className="ml-2 h-4 w-4"/>
-                                </Button>
-                            </div>
+                            <Button
+                                type="submit"
+                                disabled={!isValid || isSubmitting}
+                                variant={"default"}
+                                className={"md:w-1/2 w-full cursor-pointer flex justify-center text-xs mt-4"}
+                            >
+                                Create
+                                <PlusIcon className="ml-2 h-4 w-4"/>
+                            </Button>
                         </form>
                     </Form>
                 </CardContent>

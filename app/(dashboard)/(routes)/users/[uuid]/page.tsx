@@ -32,7 +32,7 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
         }).catch((error) => {
             console.log(error);
         });
-    }, [axiosAuth, uuid]);
+    }, [axiosAuth, uuid, params]);
 
 
     return (

@@ -68,7 +68,7 @@ const TransactionsPage = () => {
                 )
             }
         });
-    }, [axiosAuth]);
+    }, [axiosAuth, router]);
 
 
     return (

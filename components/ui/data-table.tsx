@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
         ).forEach((column) => {
             column.toggleVisibility(false)
         })
-    }, [data, columns, visibleFields]);
+    }, [data, columns, visibleFields, table]);
 
     return (
         <div>

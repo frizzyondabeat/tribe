@@ -65,7 +65,7 @@ const UsersPage = () => {
                 )
             }
         });
-    }, [axiosAuth]);
+    }, [axiosAuth, router]);
 
     return (
         <div className="flex flex-col min-h-screen">
