@@ -1,22 +1,85 @@
 import React from 'react';
-import {Cell, Pie, PieChart} from "recharts";
+import {MonthlyTransactionCountProps} from "@lib/transactionsCalls";
+import {ResponsivePie} from "@node_modules/@nivo/pie";
 
-const data = [
-    {name: 'Admin', value: 400},
-    {name: 'User', value: 300},
-]
 
-const COLORS = ["#FFBB28", "#FF8042"];
-const PieChartModel = () => {
+const PieChart = ({data}: { data: MonthlyTransactionCountProps | undefined }) => {
+
+    const newData = data && data.map(({totalAmount, month}) => ({
+        id: month,
+        label: month,
+        value: totalAmount,
+    }));
+
     return (
-        <PieChart width={400} height={350}>
-            <Pie dataKey={"value"} data={data} cx={200} cy={200} outerRadius={80} paddingAngle={5} fill="#8884d8" label>
-                {
-                    data.map((entry, index) => <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>)
-                }
-            </Pie>
-        </PieChart>
+        <React.Fragment>
+            {
+                newData &&
+                <ResponsivePie
+                    renderWrapper={true}
+                    data={newData}
+                    enableArcLabels={true}
+                    colors={{
+                        scheme: "category10"
+                    }}
+                    motionConfig="wobbly"
+                    margin={{
+                        top: 40,
+                        right: 80,
+                        bottom: 80,
+                        left: 80
+                    }}
+                    innerRadius={0.5}
+                    padAngle={0.7}
+                    cornerRadius={3}
+                    activeOuterRadiusOffset={8}
+                    borderWidth={1}
+                    borderColor={{
+                        from: "color",
+                        modifiers: [["darker", 0.2]],
+                    }}
+                    arcLinkLabelsSkipAngle={10}
+                    arcLinkLabelsTextColor="#333333"
+                    arcLinkLabelsThickness={2}
+                    arcLinkLabelsColor={{
+                        from: "color",
+                    }}
+                    arcLabel={e => e.id + `₦${e.value}`}
+                    arcLabelsSkipAngle={10}
+                    arcLabelsTextColor={{
+                        theme: "background"
+                    }}
+                    enableArcLinkLabels={true}
+                    legends={[
+                        {
+                            anchor: "bottom",
+                            direction: "row",
+                            justify: false,
+                            translateX: 0,
+                            translateY: 56,
+                            itemsSpacing: 0,
+                            itemWidth: 100,
+                            itemHeight: 18,
+                            itemTextColor: "#999",
+                            itemDirection: "left-to-right",
+                            itemOpacity: 1,
+                            symbolSize: 18,
+                            symbolShape: "circle",
+                            effects: [
+                                {
+                                    on: "hover",
+                                    style: {
+                                        itemTextColor: "#000",
+                                    }
+                                }
+                            ]
+                        },
+                    ]}
+
+                />
+            }
+        </React.Fragment>
     );
 };
 
-export default PieChartModel;
+export default PieChart;

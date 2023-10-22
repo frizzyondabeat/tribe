@@ -29,12 +29,40 @@ export const authOptions: NextAuthOptions = {
                     }
                 )
                     .then(res => res.data)
+                    .catch(err => {
+                        console.log("Error Logging in: ", err?.response?.status, err?.response?.statusText)
+                        return null
+                    })
 
                 if (user) {
                     return user
                 }
 
                 return null
+
+                // return new Promise((resolve, reject) => {
+                //     // Introduce a delay of 1000 milliseconds (1 second)
+                //     setTimeout(() => {
+                //         // Replace this with your actual login logic
+                //         const user = {
+                //             message: "test",
+                //             data: {
+                //                 firstName: "test",
+                //                 lastName: "test",
+                //                 email: "asassa",
+                //                 userType: "SUPER_ADMIN",
+                //                 uuid: "asasas",
+                //             },
+                //         };
+                //
+                //         if (user) {
+                //             // @ts-ignore
+                //             resolve(user);
+                //         } else {
+                //             reject("Login failed");
+                //         }
+                //     }, 1000);
+                // });
             }
         }),
     ],

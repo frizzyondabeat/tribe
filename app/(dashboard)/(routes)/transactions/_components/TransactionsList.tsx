@@ -4,7 +4,7 @@ import React from "react";
 import {transactionColumns} from "@app/(dashboard)/(routes)/transactions/_components/TransactionColumns";
 
 
-const visibleFields = ["transactionReference", "sourceCurrency", "amount", "sourceAccount", "destinationAccount", "status", "actions"]
+const visibleFields = ["transactionReference", "amount", "sourceAccount", "destinationAccount", "transactionStatus", "actions"]
 
 const TransactionsList = ({transactions}: { transactions: TransactionArray | undefined }) => {
 

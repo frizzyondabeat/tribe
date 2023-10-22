@@ -33,7 +33,9 @@ export function UserNav() {
                 <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                     <Avatar>
                         <AvatarImage src=""/>
-                        <AvatarFallback>EO</AvatarFallback>
+                        <AvatarFallback>{
+                            session?.user?.name?.split(" ").map((name) => name[0]).join("")
+                        }</AvatarFallback>
                     </Avatar>
                 </Button>
             </DropdownMenuTrigger>

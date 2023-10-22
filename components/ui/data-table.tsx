@@ -25,6 +25,7 @@ import {
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import {ChevronDownIcon} from "lucide-react";
+import {exportToExcel} from "@lib/utils/exportToExcel";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -103,7 +104,10 @@ export function DataTable<TData, TValue>({
                                 CSV
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>
-                            <DropdownMenuItem className="text-xs capitalize">
+                            <DropdownMenuItem
+                                className="text-xs capitalize"
+                                onClick={() => exportToExcel(table, "users")}
+                            >
                                 Excel
                             </DropdownMenuItem>
                             <DropdownMenuSeparator/>

@@ -12,15 +12,16 @@ const RecentSales = ({transactions}: { transactions: TransactionArray | undefine
                     (transaction,  index) => {
                         return (
                             <div key={index} className={`flex items-start text-xs justify-between`}>
-                                <p className="w-[5%] text-xs">{transaction.id}</p>
-                                <div className="ml-4 space-y-1">
+                                <div className="space-y-1 w-1/2">
                                     <p className="text-xs font-medium leading-none">{transaction.recipientName}</p>
                                     <p className="text-muted-foreground text-[10px] leading-tight">
                                         {transaction.transactionReference}
                                     </p>
                                 </div>
-                                <div className="ml-auto font-medium text-start">{`${transaction.sourceCurrency}${transaction.amount}`}</div>
-                                <div className={`ml-2 text-xs ${statusColors[transaction.transactionStatus]}`}>{transaction.transactionStatus}</div>
+                                <div className="flex space-x-6">
+                                    <div className="ml-auto font-medium text-start">{`${transaction.sourceCurrency}${transaction.amount}`}</div>
+                                    <div className={`ml-2 text-xs ${statusColors[transaction.transactionStatus]}`}>{transaction.transactionStatus}</div>
+                                </div>
                             </div>
                         )
                     }

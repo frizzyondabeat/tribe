@@ -40,7 +40,6 @@ const SignInPage = () => {
     const router = useRouter()
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
-    // const [isTypingPwd, setIsTypingPwd] = useState<boolean>(false);
 
     const onSubmit = async (data: z.infer<typeof schema>) => {
         await signIn("credentials", {

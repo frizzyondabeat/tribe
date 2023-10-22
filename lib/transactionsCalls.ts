@@ -64,12 +64,9 @@ export async function fetchDailyTransactionCount(axiosAuth: AxiosInstance) {
         const res = await axiosAuth.get(`/api/v1/dashboard/daily-transaction-count`);
         console.log(res.data);
 
-        if (!res.data) {
-            return undefined;
-        }
-
         const dailyTransactionCount: number = res.data?.data;
-        return dailyTransactionCount;
+        console.log("Daily count: ",dailyTransactionCount)
+        return `${dailyTransactionCount}`;
     } catch (err) {
         console.log(err);
         throw err;
