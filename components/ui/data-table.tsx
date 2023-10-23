@@ -45,7 +45,8 @@ interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[] | undefined,
     visibleFields?: string[],
-    action?: "ADD_CURRENCY" | "EXCHANGE"
+    action?: "ADD_CURRENCY" | "EXCHANGE",
+    enableExport?: boolean
 }
 
 const usersVisibleFields = ["email", "firstName", "lastName", "userType", "actions"]
@@ -54,7 +55,8 @@ export function DataTable<TData, TValue>({
                                              columns,
                                              data,
                                              visibleFields = usersVisibleFields,
-                                             action
+                                             action,
+                                             enableExport = true
                                          }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -204,30 +206,33 @@ export function DataTable<TData, TValue>({
                     className="max-w-sm text-xs"
                 />
                 <div className="flex space-x-2 items-center">
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="default" className="ml-auto text-xs">
-                                Export <ChevronDownIcon className="ml-2 h-4 w-4"/>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="center">
-                            <DropdownMenuLabel className="text-xs">File Formats</DropdownMenuLabel>
-                            <DropdownMenuItem className="text-xs capitalize">
-                                CSV
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator/>
-                            <DropdownMenuItem
-                                className="text-xs capitalize"
-                                onClick={() => exportToExcel(table, "users")}
-                            >
-                                Excel
-                            </DropdownMenuItem>
-                            <DropdownMenuSeparator/>
-                            <DropdownMenuItem className="text-xs capitalize">
-                                PDF
-                            </DropdownMenuItem>
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                    {
+                        enableExport &&
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="default" className="ml-auto text-xs">
+                                    Export <ChevronDownIcon className="ml-2 h-4 w-4"/>
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="center">
+                                <DropdownMenuLabel className="text-xs">File Formats</DropdownMenuLabel>
+                                <DropdownMenuItem className="text-xs capitalize">
+                                    CSV
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator/>
+                                <DropdownMenuItem
+                                    className="text-xs capitalize"
+                                    onClick={() => exportToExcel(table, "users")}
+                                >
+                                    Excel
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator/>
+                                <DropdownMenuItem className="text-xs capitalize">
+                                    PDF
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    }
                     {
                         action === "ADD_CURRENCY" &&
                         <Dialog open={open} onOpenChange={setOpen}>

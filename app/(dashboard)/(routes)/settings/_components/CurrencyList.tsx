@@ -8,7 +8,7 @@ const visibleFields = ["name", "code", "symbol", "country", "actions"]
 const CurrencyList = ({currencies}: {currencies: CurrencyArray | undefined}) => {
     return (
         <div className="p-1">
-            <DataTable columns={CurrencyColumns} data={currencies} visibleFields={visibleFields} action={"ADD_CURRENCY"}/>
+            <DataTable columns={CurrencyColumns} data={currencies} visibleFields={visibleFields} action={"ADD_CURRENCY"} enableExport={false}/>
         </div>
     );
 };
