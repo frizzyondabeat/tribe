@@ -21,16 +21,31 @@ import {
     DropdownMenu,
     DropdownMenuCheckboxItem,
     DropdownMenuContent,
-    DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import {ChevronDownIcon} from "lucide-react";
 import {exportToExcel} from "@lib/utils/exportToExcel";
+import {Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger} from "@components/ui/dialog";
+import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@components/ui/form";
+import {PlusIcon} from "@node_modules/lucide-react";
+import {useForm} from "@node_modules/react-hook-form";
+import {addCurrency, CurrencyDtoProps, fetchAllCurrencies} from "@lib/currencyCalls";
+import {zodResolver} from "@node_modules/@hookform/resolvers/zod";
+import {CurrencyDtoSchema} from "@models/Currency";
+import {useToast} from "@components/ui/use-toast";
+import {useRouter} from "@node_modules/next/navigation";
+import useAxiosAuth from "@lib/hooks/useAxiosAuth";
+import {ToastAction} from "@components/ui/toast";
+import {useCurrencyContext} from "@context/CurrencyContext";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[] | undefined,
-    visibleFields?: string[]
+    visibleFields?: string[],
+    action?: "ADD_CURRENCY" | "EXCHANGE"
 }
 
 const usersVisibleFields = ["email", "firstName", "lastName", "userType", "actions"]
@@ -38,7 +53,8 @@ const usersVisibleFields = ["email", "firstName", "lastName", "userType", "actio
 export function DataTable<TData, TValue>({
                                              columns,
                                              data,
-                                             visibleFields = usersVisibleFields
+                                             visibleFields = usersVisibleFields,
+                                             action
                                          }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -69,6 +85,102 @@ export function DataTable<TData, TValue>({
     })
 
     const [filterBy, setFilterBy] = useState<string>(table.getAllColumns()[1].id);
+
+    const form = useForm<CurrencyDtoProps>({
+        resolver: zodResolver(CurrencyDtoSchema),
+        defaultValues: {
+            country: "",
+            currencyCode: "",
+            symbol: ""
+        }
+    })
+
+    const {isSubmitting, isValid} = form.formState;
+
+    const [isLoading, setIsLoading] = useState(false);
+
+    const {toast} = useToast();
+
+    const {setCurrencies} = useCurrencyContext()
+
+    const router = useRouter();
+
+    const axiosAuth = useAxiosAuth();
+
+    const [open, setOpen] = useState(false);
+
+
+    const onSubmit = (data: CurrencyDtoProps) => {
+        console.log("Creating currency: ", data)
+        setIsLoading(true)
+        addCurrency(axiosAuth, data)
+            .then((response) => {
+                console.log("Currency created: ", response)
+                fetchAllCurrencies(axiosAuth).then((response) => {
+                    console.log("Fetched currencies: ", response)
+                    setCurrencies(response);
+                })
+                toast(
+                    {
+                        variant: "default",
+                        title: "Currency created.",
+                        description: "Currency was successfully created.",
+                        className: "bg-green-500 text-white"
+                    }
+                )
+                setIsLoading(false)
+            })
+            .catch((error) => {
+                console.log("Error creating currency: ", error)
+                if (error?.response?.status === 404) {
+                    return toast(
+                        {
+                            variant: "destructive",
+                            title: "Network error.",
+                            description: "Please check your internet connection and try again.",
+                            action:
+                                <ToastAction
+                                    altText={"Try again"}
+                                    onClick={() => onSubmit(data)}
+                                    className={"cursor-pointer hover:underline outline-none border-none"}
+                                >
+                                    Try again
+                                </ToastAction>
+                        }
+                    )
+                } else if (error?.response?.status === 401) {
+                    router.push("/sign-in")
+                    return toast(
+                        {
+                            variant: "destructive",
+                            title: "Something went wrong.",
+                            description: "Token expired. Please login again.",
+                        }
+                    )
+                } else {
+                    return toast(
+                        {
+                            variant: "destructive",
+                            title: "Something went wrong.",
+                            description: "Please try again.",
+                            action:
+                                <ToastAction
+                                    altText={"Try again"}
+                                    onClick={() => onSubmit(data)}
+                                    className={"cursor-pointer hover:underline outline-none border-none"}
+                                >
+                                    Try again
+                                </ToastAction>
+                        }
+                    )
+                }
+            })
+            .finally(
+                () => {
+                    router.refresh()
+                }
+            )
+    }
 
     useEffect(() => {
         table.getAllColumns().filter(
@@ -116,34 +228,114 @@ export function DataTable<TData, TValue>({
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
-                    <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                            <Button variant="outline" className="ml-auto text-xs">
-                                Sort <ChevronDownIcon className="ml-2 h-4 w-4"/>
-                            </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent align="end">
-                            {table
-                                .getAllColumns()
-                                .filter((column) => column.getCanFilter())
-                                .map((column) => {
-                                    return (
-                                        <DropdownMenuCheckboxItem
-                                            key={column.id}
-                                            checked={filterBy === column.id}
-                                            onCheckedChange={() => {
-                                                setFilterBy(column.id);
-                                                column.setFilterValue("")
-                                            }}
-                                            className="text-xs capitalize"
+                    {
+                        action === "ADD_CURRENCY" &&
+                        <Dialog open={open} onOpenChange={setOpen}>
+                            <DialogTrigger onClick={() => setOpen(true)}>
+                                <Button variant="default" className="ml-auto text-xs">
+                                    Add Currency
+                                    <PlusIcon className="ml-2 h-4 w-4"/>
+                                </Button>
+                            </DialogTrigger>
+                            <DialogContent className="sm:max-w-[425px]">
+                                <DialogTitle>Add Currency</DialogTitle>
+                                <DialogDescription>
+                                    Add a new currency to the database.
+                                </DialogDescription>
+                                <Form {...form}>
+                                    <form
+                                        onSubmit={form.handleSubmit(onSubmit)}
+                                        className={"space-y-5"}
+                                    >
+                                        <FormField
+                                            control={form.control}
+                                            name={"country"}
+                                            render={
+                                                ({field, formState: {errors}}) => (
+                                                    <FormItem>
+                                                        <FormLabel className="text-xs">Country</FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                disabled={isSubmitting}
+                                                                placeholder="e.g Nigeria"
+                                                                {...field}
+                                                                type={"text"}
+                                                                className="text-xs"
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage>
+                                                            {errors?.country?.message}
+                                                        </FormMessage>
+                                                    </FormItem>
+                                                )
+                                            }
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name={"currencyCode"}
+                                            render={
+                                                ({field, formState: {errors}}) => (
+                                                    <FormItem>
+                                                        <FormLabel className="text-xs">Currency Code</FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                disabled={isSubmitting}
+                                                                placeholder="e.g NGN"
+                                                                {...field}
+                                                                type={"text"}
+                                                                className="text-xs"
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage>
+                                                            {errors?.currencyCode?.message}
+                                                        </FormMessage>
+                                                    </FormItem>
+                                                )
+                                            }
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name={"symbol"}
+                                            render={
+                                                ({field, formState: {errors}}) => (
+                                                    <FormItem>
+                                                        <FormLabel className="text-xs">Symbol</FormLabel>
+                                                        <FormControl>
+                                                            <Input
+                                                                disabled={isSubmitting}
+                                                                placeholder="e.g ₦"
+                                                                {...field}
+                                                                type={"text"}
+                                                                className="text-xs"
+                                                            />
+                                                        </FormControl>
+                                                        <FormMessage>
+                                                            {errors?.symbol?.message}
+                                                        </FormMessage>
+                                                    </FormItem>
+                                                )
+                                            }
+                                        />
+                                        <Button
+                                            type="submit"
+                                            variant={"outline"}
+                                            disabled={!isValid || isSubmitting}
+                                            className={"text-xs"}
+                                            onClick={
+                                                () => {
+                                                    if (!isLoading) {
+                                                        setOpen(false)
+                                                    }
+                                                }
+                                            }
                                         >
-                                            {column.id}
-                                        </DropdownMenuCheckboxItem>
-                                    )
-                                })
-                            }
-                        </DropdownMenuContent>
-                    </DropdownMenu>
+                                            Add Currency
+                                        </Button>
+                                    </form>
+                                </Form>
+                            </DialogContent>
+                        </Dialog>
+                    }
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto text-xs">

@@ -14,7 +14,7 @@ import {Button} from "@components/ui/button";
 import Link from "next/link";
 import {Tooltip, TooltipContent, TooltipProvider, TooltipTrigger} from "@components/ui/tooltip";
 import {LoginFooter} from "@app/(dashboard)/_components";
-import {signIn, SignInResponse} from "next-auth/react";
+import {signIn, SignInResponse, useSession} from "next-auth/react";
 import {useRouter} from "next/navigation";
 import {ModeToggle} from "@components/ui/toggle-mode";
 
@@ -40,6 +40,12 @@ const SignInPage = () => {
     const router = useRouter()
 
     const [showPassword, setShowPassword] = useState<boolean>(false);
+
+    const {data: session} = useSession()
+
+    if (session) {
+        router.push("/")
+    }
 
     const onSubmit = async (data: z.infer<typeof schema>) => {
         await signIn("credentials", {

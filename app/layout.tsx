@@ -7,6 +7,7 @@ import {Toaster} from "@components/ui/toaster";
 import {getServerSession} from "next-auth"
 import SessionProvider from "@components/SessionProvider";
 import {authOptions} from "@app/api/auth/[...nextauth]/route";
+import {CurrencyContextProvider} from "@context/CurrencyContext";
 
 const inter = Inter({subsets: ['latin']})
 
@@ -33,7 +34,9 @@ export default async function RootLayout({
             //
         >
             <SessionProvider session={session}>
-                {children}
+                <CurrencyContextProvider>
+                    {children}
+                </CurrencyContextProvider>
             </SessionProvider>
         </ThemeProvider>
         <Toaster/>

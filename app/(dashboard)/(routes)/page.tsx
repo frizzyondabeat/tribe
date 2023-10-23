@@ -128,7 +128,7 @@ export default function RootPage() {
     return (
         <div className="flex flex-col min-h-screen py-2 px-5 w-full">
             <Tabs defaultValue="overview" className="space-y-4">
-                <TabsList className="fixed">
+                <TabsList className="fixed z-50">
                     <TabsTrigger value="overview">Overview</TabsTrigger>
                     <TabsTrigger value="analytics">
                         Analytics
