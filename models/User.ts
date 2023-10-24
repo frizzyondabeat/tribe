@@ -9,7 +9,7 @@ export const UserSchema = z.object({
     country: z.string().min(2, "Country must be at least 2 characters"),
     address: z.string().min(5, "Address must be at least 5 characters"),
     phoneNumber: z
-        .string(),
+        .coerce.string(),
         // .min(11, "Phone number must be at least 11 digits")
         // .transform(
         //     (val) => `+234 ${val.slice(1, 4)} ${val.slice(4, 7)} ${val.slice(7)}`,

@@ -4,7 +4,10 @@ import {DataTable} from "@components/ui/data-table";
 import {CurrencyColumns} from "@app/(dashboard)/(routes)/settings/_components/CurrencyColumns";
 
 const visibleFields = ["name", "code", "symbol", "country", "actions"]
-
+/**
+ * Renders a list of currencies in a table
+*@param {CurrencyArray} currencies - Array of currencies
+* */
 const CurrencyList = ({currencies}: {currencies: CurrencyArray | undefined}) => {
     return (
         <div className="p-1">

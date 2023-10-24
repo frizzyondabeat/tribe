@@ -19,6 +19,7 @@ import {ArrowLeft, PlusIcon} from "@node_modules/lucide-react";
 import {createUser} from "@lib/userCalls";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {ToastAction} from "@components/ui/toast";
+import {useFetch} from "@lib/hooks/useSWR";
 
 const countries = [
     {label: "Nigeria", value: "Nigeria"},
@@ -26,6 +27,10 @@ const countries = [
 ] as const;
 
 const CreateUserPage = () => {
+
+    const {getAllUsers} = useFetch()
+
+    const {data: users, mutate} = getAllUsers()
 
     const form = useForm<z.infer<typeof UserDtoSchema>>(
         {
@@ -52,64 +57,15 @@ const CreateUserPage = () => {
 
     const [open, setOpen] = useState(false);
 
+    const allUsers = users ?? []
+
     const onSubmit = (data: z.infer<typeof UserDtoSchema>) => {
         console.log("Creating user: ", data)
-        createUser(axiosAuth, data).then((response) => {
-            console.log("User created: ", response)
-            toast(
-                {
-                    variant: "default",
-                    title: "User created.",
-                    description: "User was successfully created.",
-                    className: "bg-green-500 text-white"
-                }
-            )
-            router.push("/users")
-        }).catch((error) => {
-            console.log("Error creating user: ", error)
-            if (error?.response?.status === 404) {
-                return toast(
-                    {
-                        variant: "destructive",
-                        title: "Network error.",
-                        description: "Please check your internet connection and try again.",
-                        action:
-                            <ToastAction
-                                altText={"Try again"}
-                                onClick={() => onSubmit(data)}
-                                className={"cursor-pointer hover:underline outline-none border-none"}
-                            >
-                                Try again
-                            </ToastAction>
-                    }
-                )
-            } else if (error?.response?.status === 401) {
-                router.push("/sign-in")
-                return toast(
-                    {
-                        variant: "destructive",
-                        title: "Something went wrong.",
-                        description: "Token expired. Please login again.",
-                    }
-                )
-            } else {
-                return toast(
-                    {
-                        variant: "destructive",
-                        title: "Something went wrong.",
-                        description: "Please try again.",
-                        action:
-                            <ToastAction
-                                altText={"Try again"}
-                                onClick={() => onSubmit(data)}
-                                className={"cursor-pointer hover:underline outline-none border-none"}
-                            >
-                                Try again
-                            </ToastAction>
-                    }
-                )
-            }
-        })
+        try {
+
+        } catch (error) {
+
+        }
     }
 
     const preventNonNumericalInput = (e: React.KeyboardEvent<HTMLInputElement>) => {

@@ -3,16 +3,18 @@ import {UserDtoSchema, UserSchema} from "@models/User";
 import {AxiosInstance} from "axios";
 import {UsersProps} from "@app/(dashboard)/(routes)/users/_components/UserColumns";
 
-const UserResults = z.array(UserSchema);
+export const UserResults = z.array(UserSchema);
 
 export type UserArray = z.infer<typeof UserResults>;
 
 export type UserDto = z.infer<typeof UserDtoSchema>;
 
+export const VIEW_ALL_USERS_URL = "/api/v1/admin/users/view-all";
+export const VIEW_ONE_USER_URL = "/api/v1/admin/users/view";
+
 export async function fetchAllUsers(axiosAuth: AxiosInstance) {
     try {
-        const res = await axiosAuth.get("/api/v1/admin/users/view-all");
-        console.log(res.data);
+        const res = await axiosAuth.get(VIEW_ALL_USERS_URL);
 
         if (!res.data) {
             return undefined;
@@ -28,7 +30,7 @@ export async function fetchAllUsers(axiosAuth: AxiosInstance) {
 
 export async function fetchUser(axiosAuth: AxiosInstance, id: string) {
     try {
-        const res = await axiosAuth.get(`/api/v1/admin/users/view`,
+        const res = await axiosAuth.get(VIEW_ONE_USER_URL,
             {
                 headers: {
                     "Content-Type": "application/json",
@@ -49,57 +51,57 @@ export async function fetchUser(axiosAuth: AxiosInstance, id: string) {
     }
 }
 
-export async function fetchAppUsers(axiosAuth: AxiosInstance) {
-    try {
-        return fetchAllUsers(axiosAuth).then((users) => {
-            if (users) {
-                return users.filter(user =>
-                    user.userType === "APP_USER"
-                );
-            }
-        });
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
-}
+// export async function fetchAppUsers(axiosAuth: AxiosInstance) {
+//     try {
+//         return fetchAllUsers(axiosAuth).then((users) => {
+//             if (users) {
+//                 return users.filter(user =>
+//                     user.userType === "APP_USER"
+//                 );
+//             }
+//         });
+//     } catch (err) {
+//         console.log(err);
+//         throw err;
+//     }
+// }
 
-export async function fetchAdminUsers(axiosAuth: AxiosInstance) {
-    try {
-        return fetchAllUsers(axiosAuth).then((users) => {
-            if (users) {
-                return users.filter(user =>
-                    user.userType === "INSTITUTION_ADMIN" || user.userType === "SUPER_ADMIN"
-                );
-            }
-        });
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
-}
+// export async function fetchAdminUsers(axiosAuth: AxiosInstance) {
+//     try {
+//         return fetchAllUsers(axiosAuth).then((users) => {
+//             if (users) {
+//                 return users.filter(user =>
+//                     user.userType === "INSTITUTION_ADMIN" || user.userType === "SUPER_ADMIN"
+//                 );
+//             }
+//         });
+//     } catch (err) {
+//         console.log(err);
+//         throw err;
+//     }
+// }
 
-export async function deleteUserById(axiosAuth: AxiosInstance, userId: string) {
-    try {
-        const res = await axiosAuth.delete(`/api/v1/admin/users/delete`,
-            {
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            });
-        console.log(res.data);
-
-        if (!res.data) {
-            return undefined;
-        }
-
-        const usersJson: UsersProps = res.data?.data;
-        return UserSchema.parse(usersJson);
-    } catch (err) {
-        console.log(err);
-        throw err;
-    }
-}
+// export async function deleteUserById(axiosAuth: AxiosInstance, userId: string) {
+//     try {
+//         const res = await axiosAuth.delete(`/api/v1/admin/users/delete`,
+//             {
+//                 headers: {
+//                     "Content-Type": "application/json",
+//                 }
+//             });
+//         console.log(res.data);
+//
+//         if (!res.data) {
+//             return undefined;
+//         }
+//
+//         const usersJson: UsersProps = res.data?.data;
+//         return UserSchema.parse(usersJson);
+//     } catch (err) {
+//         console.log(err);
+//         throw err;
+//     }
+// }
 
 export async function activateOrDeactivateAppUser(axiosAuth: AxiosInstance, userUUID: string, status: "ACTIVATED" | "DEACTIVATED") {
     try {
@@ -159,6 +161,9 @@ export async function createUser(axiosAuth: AxiosInstance, userDto: UserDto) {
         country: userDto.country,
     }
 
+    // add a 10s delay to simulate network latency
+    await new Promise(resolve => setTimeout(resolve, 10000));
+
     try {
         const res = await axiosAuth.post(
             `/api/v1/admin/users/create`,
@@ -169,10 +174,6 @@ export async function createUser(axiosAuth: AxiosInstance, userDto: UserDto) {
                 },
             });
         console.log(res.data);
-
-        if (!res.data) {
-            return undefined;
-        }
 
         const usersJson: UsersProps = res.data?.data;
         return UserSchema.parse(usersJson);
