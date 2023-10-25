@@ -28,9 +28,9 @@ const countries = [
 
 const CreateUserPage = () => {
 
-    const {getAllUsers} = useFetch()
+    const {GetAllUsers} = useFetch()
 
-    const {mutate} = getAllUsers()
+    const {mutate} = GetAllUsers()
 
     const form = useForm<z.infer<typeof UserDtoSchema>>(
         {

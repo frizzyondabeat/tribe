@@ -6,9 +6,9 @@ import {useFetch} from "@lib/hooks/useSWR";
 
 const UsersPage = () => {
 
-    const {getAllUsers} = useFetch()
+    const {GetAllUsers} = useFetch()
 
-    const {data: users} = getAllUsers()
+    const {data: users} = GetAllUsers()
 
     return (
         <div className="flex flex-col min-h-screen">

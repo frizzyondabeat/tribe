@@ -107,9 +107,9 @@ export function DataTable<TData, TValue>({
 
     const axiosAuth = useAxiosAuth();
 
-    const {getAllCurrency} = useFetch()
+    const {GetAllCurrency} = useFetch()
 
-    const {mutate} = getAllCurrency()
+    const {mutate} = GetAllCurrency()
 
     const [open, setOpen] = useState(false);
 

@@ -26,8 +26,6 @@ import {
 } from "@components/ui/dialog";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {deleteCurrency} from "@lib/currencyCalls";
-import {useRouter} from "next/navigation";
-import {useCurrencyContext} from "@context/CurrencyContext";
 import {useFetch} from "@lib/hooks/useSWR";
 
 export type CurrencyProps = z.infer<typeof CurrencySchema>
@@ -43,20 +41,19 @@ export const CurrencyActionCell = ({row}: {
 
     const [open, setOpen] = useState(false);
 
-    const router = useRouter()
 
     // const {setCurrencies} = useCurrencyContext()
 
-    const {getAllCurrency} = useFetch()
+    const {GetAllCurrency} = useFetch()
 
-    const {data: currencies, mutate} = getAllCurrency()
+    const {data: currencies, mutate} = GetAllCurrency()
 
 
     const handleDelete = () => {
         console.log("Delete currency with UUID: ", uuid)
         mutate(
             deleteCurrency(axiosAuth, uuid).then(
-                (response) => {
+                () => {
                     return currencies?.filter(currency => currency.uuid !== uuid)
                 }
             ),

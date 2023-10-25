@@ -41,10 +41,10 @@ const SettingsPage = () => {
 
     const router = useRouter()
 
-    const {getAllCurrency, getAllExchangeRates} = useFetch()
+    const {GetAllCurrency, GetAllExchangeRates} = useFetch()
 
-    const {data: currencies} = getAllCurrency()
-    const {data: exchangeRates} = getAllExchangeRates()
+    const {data: currencies} = GetAllCurrency()
+    const {data: exchangeRates} = GetAllExchangeRates()
 
 
     const getExchangeForCurrencyPairForm = useForm<z.infer<typeof ExchangeForCurrencyPair>>(
