@@ -11,12 +11,20 @@ export const useFetch = () => {
 
     return {
         getAllUsers:
-            () => useSWR(VIEW_ALL_USERS_URL,  () => fetchAllUsers(axiosAuth)),
+            () => {
+                return useSWR(VIEW_ALL_USERS_URL, () => fetchAllUsers(axiosAuth))
+            },
         getAllTransactions:
-            () => useSWR(VIEW_ALL_TRANSACTIONS_URL,  () => fetchAllTransactions(axiosAuth)),
+            () => {
+                return useSWR(VIEW_ALL_TRANSACTIONS_URL, () => fetchAllTransactions(axiosAuth))
+            },
         getAllCurrency:
-            () => useSWR(VIEW_ALL_CURRENCIES_URL,  () => fetchAllCurrencies(axiosAuth)),
+            () => {
+                return useSWR(VIEW_ALL_CURRENCIES_URL, () => fetchAllCurrencies(axiosAuth))
+            },
         getAllExchangeRates:
-            () => useSWR(VIEW_ALL_EXCHANGE_RATES_URL,  () => fetchAllExchangeRates(axiosAuth)),
+            () => {
+                return useSWR(VIEW_ALL_EXCHANGE_RATES_URL, () => fetchAllExchangeRates(axiosAuth))
+            },
     }
 }
