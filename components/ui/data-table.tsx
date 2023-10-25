@@ -343,6 +343,34 @@ export function DataTable<TData, TValue>({
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Button variant="outline" className="ml-auto text-xs">
+                                Filter <ChevronDownIcon className="ml-2 h-4 w-4"/>
+                            </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                            {table
+                                .getAllColumns()
+                                .filter((column) => column.getCanFilter())
+                                .map((column) => {
+                                    return (
+                                        <DropdownMenuCheckboxItem
+                                            key={column.id}
+                                            checked={filterBy === column.id}
+                                            onCheckedChange={() => {
+                                                setFilterBy(column.id);
+                                                column.setFilterValue("")
+                                            }}
+                                            className="text-xs capitalize"
+                                        >
+                                            {column.id}
+                                        </DropdownMenuCheckboxItem>
+                                    )
+                                })
+                            }
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button variant="outline" className="ml-auto text-xs">
                                 Columns <ChevronDownIcon className="ml-2 h-4 w-4"/>
                             </Button>
                         </DropdownMenuTrigger>

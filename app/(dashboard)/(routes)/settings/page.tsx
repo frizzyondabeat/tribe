@@ -81,6 +81,19 @@ const SettingsPage = () => {
                 console.log("Fetched exchange rate: ", response)
                 setRate(response?.rate)
             })
+            .catch(
+                (error) => {
+                    setRate(undefined)
+                    console.log("Error fetching exchange rate: ", error)
+                    return toast(
+                        {
+                            variant: "destructive",
+                            title: "Something went wrong.",
+                            description: "Exchange rate not found. Please try again.",
+                        }
+                    )
+                }
+            )
     }
 
     const onConfigureExchangeRatesSubmit = async (data: z.infer<typeof ConfigureRate>) => {
@@ -88,6 +101,7 @@ const SettingsPage = () => {
         configureExchangeRate(axiosAuth, data)
             .then((response) => {
                 console.log("Configured exchange rate: ", response)
+                configureExchangeRatesForm.reset()
                 return toast(
                     {
                         variant: "default",
@@ -109,7 +123,7 @@ const SettingsPage = () => {
                                 action:
                                     <ToastAction
                                         altText={"Try again"}
-                                        onClick={() => router.refresh()}
+                                        onClick={() => onConfigureExchangeRatesSubmit(data)}
                                         className={"cursor-pointer hover:underline outline-none border-none"}
                                     >
                                         Try again
@@ -179,7 +193,7 @@ const SettingsPage = () => {
                                 <CardTitle className={"text-sm flex flex-col w-full gap-2"}>
                                     <h1>Exchange Rates</h1>
                                     <div
-                                        className="border w-full h-20 rounded-lg p-5 text-2xl text-primary flex items-center font-calculator">{rate}</div>
+                                        className="border w-full h-20 rounded-lg p-5 text-2xl text-primary flex items-center font-calculator">{rate ? rate : ""}</div>
                                 </CardTitle>
                                 <CardContent className="px-0 pb-0 pt-2">
                                     <Form {...getExchangeForCurrencyPairForm}>

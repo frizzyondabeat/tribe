@@ -162,7 +162,7 @@ export async function createUser(axiosAuth: AxiosInstance, userDto: UserDto) {
     }
 
     // add a 10s delay to simulate network latency
-    await new Promise(resolve => setTimeout(resolve, 10000));
+    // await new Promise(resolve => setTimeout(resolve, 10000));
 
     try {
         const res = await axiosAuth.post(

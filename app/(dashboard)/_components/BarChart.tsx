@@ -37,8 +37,6 @@ const BarChart = ({data}: { data: MonthlyTransactionCountProps | undefined }) =>
 
     const { theme } = useTheme()
 
-    console.log("Theme: ", theme)
-
     const formatValue = (value: number) => {
         if (value < 1000) {
             return `₦${value.toLocaleString('en-US')}`;

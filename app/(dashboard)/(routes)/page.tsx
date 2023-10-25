@@ -70,7 +70,6 @@ export default function RootPage() {
             fetchDailyTransactionCount(axiosAuth)
                 .then((response) => {
                     if (response) {
-                        console.log("DailyTransactionCount: ", response);
                         setDailyTransactionCount(response);
                     } else {
                         console.log("No response");
@@ -82,7 +81,6 @@ export default function RootPage() {
             fetchTotalTransactionAmount(axiosAuth)
                 .then((response) => {
                     if (response) {
-                        console.log("TotalTransactionValue: ", response);
                         setTotalTransactions(response);
                     }
                 })
@@ -92,7 +90,6 @@ export default function RootPage() {
             fetchTopTransactions(axiosAuth)
                 .then((response) => {
                     if (response) {
-                        console.log("TopTransactions: ", response);
                         setTopTransactions(response)
                     }
                 })
@@ -102,7 +99,6 @@ export default function RootPage() {
             fetchMonthlyTransaction(axiosAuth)
                 .then((response) => {
                     if (response) {
-                        console.log("MonthlyTransactionCount: ", response)
                         setMonthlyTransactions(response);
                     }
                 })
