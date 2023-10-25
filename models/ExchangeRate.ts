@@ -13,8 +13,8 @@ export const ExchangeRateSchema = z.object({
 export type ExchangeRateProps = z.infer<typeof ExchangeRateSchema>
 
 export const ConfigureRate = z.object({
-    fromUUID: z.string().min(1, "From currency is required"),
-    toUUID: z.string().min(1, "To currency is required"),
+    fromUUid: z.string().min(1, "From currency is required"),
+    toUUid: z.string().min(1, "To currency is required"),
     rate: z.coerce.number().min(0.0001, "Rate must be greater than 0"),
 })
 

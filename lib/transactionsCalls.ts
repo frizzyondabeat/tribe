@@ -18,10 +18,11 @@ export type MonthlyTransactionCountProps = [{
     totalAmount: number
 }]
 
+export const VIEW_ALL_TRANSACTIONS_URL = "/api/v1/admin/transactions/view-all";
+
 export async function fetchAllTransactions(axiosAuth: AxiosInstance) {
     try {
-        const res = await axiosAuth.get("/api/v1/admin/transactions/view-all");
-        console.log(res.data);
+        const res = await axiosAuth.get(VIEW_ALL_TRANSACTIONS_URL);
 
         if (!res.data) {
             return undefined;
@@ -35,9 +36,11 @@ export async function fetchAllTransactions(axiosAuth: AxiosInstance) {
     }
 }
 
+export const VIEW_ONE_TRANSACTION_URL = "/api/v1/admin/transactions/view-one";
+
 export async function fetchTransactionByUUIDAndUserId(axiosAuth: AxiosInstance, UUID: string, UserId: string) {
     try {
-        const res = await axiosAuth.get(`/api/v1/admin/transactions/view-one`,
+        const res = await axiosAuth.get(VIEW_ONE_TRANSACTION_URL,
             {
                 headers: {
                     "Content-Type": "application/json",

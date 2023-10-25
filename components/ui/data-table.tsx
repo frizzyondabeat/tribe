@@ -32,14 +32,14 @@ import {Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger} fr
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@components/ui/form";
 import {PlusIcon} from "@node_modules/lucide-react";
 import {useForm} from "@node_modules/react-hook-form";
-import {addCurrency, CurrencyDtoProps, fetchAllCurrencies} from "@lib/currencyCalls";
+import {addCurrency, CurrencyDtoProps} from "@lib/currencyCalls";
 import {zodResolver} from "@node_modules/@hookform/resolvers/zod";
 import {CurrencyDtoSchema} from "@models/Currency";
 import {useToast} from "@components/ui/use-toast";
 import {useRouter} from "@node_modules/next/navigation";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {ToastAction} from "@components/ui/toast";
-import {useCurrencyContext} from "@context/CurrencyContext";
+import {useFetch} from "@lib/hooks/useSWR";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -103,11 +103,13 @@ export function DataTable<TData, TValue>({
 
     const {toast} = useToast();
 
-    const {setCurrencies} = useCurrencyContext()
-
     const router = useRouter();
 
     const axiosAuth = useAxiosAuth();
+
+    const {getAllCurrency} = useFetch()
+
+    const {mutate} = getAllCurrency()
 
     const [open, setOpen] = useState(false);
 
@@ -118,10 +120,7 @@ export function DataTable<TData, TValue>({
         addCurrency(axiosAuth, data)
             .then((response) => {
                 console.log("Currency created: ", response)
-                fetchAllCurrencies(axiosAuth).then((response) => {
-                    console.log("Fetched currencies: ", response)
-                    setCurrencies(response);
-                })
+                mutate()
                 toast(
                     {
                         variant: "default",

@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useState} from 'react';
 import {UsersProps} from "@app/(dashboard)/(routes)/users/_components/UserColumns";
-import {activateOrDeactivateAppUser, fetchUser} from "@lib/userCalls";
+import {activateOrDeactivateAppUser, fetchUser, VIEW_ONE_USER_URL} from "@lib/userCalls";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {Button} from "@components/ui/button";
 import {ArrowLeft} from "lucide-react";
@@ -12,27 +12,21 @@ import {Separator} from "@components/ui/separator";
 import {toast} from "@components/ui/use-toast";
 import UserCardSkeleton from "@app/(dashboard)/(routes)/users/_components/UserCardSkeleton";
 import UserDetailsSkeleton from "@app/(dashboard)/(routes)/users/_components/UserDetailsSkeleton";
+import useSWR from "@node_modules/swr";
+import {useSession} from "next-auth/react";
 
 
 const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
 
     const {uuid} = params;
 
-    const [user, setUser] = useState<UsersProps>();
-
     const axiosAuth = useAxiosAuth();
 
     const router = useRouter();
 
-    useEffect(() => {
-        console.log(params);
-        fetchUser(axiosAuth, uuid).then((response) => {
-            console.log(response);
-            setUser(response);
-        }).catch((error) => {
-            console.log(error);
-        });
-    }, [axiosAuth, uuid, params]);
+    const {data: user, mutate} = useSWR(VIEW_ONE_USER_URL,() => fetchUser(axiosAuth, uuid))
+
+    const {data: session} = useSession();
 
 
     return (
@@ -74,13 +68,18 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
                                         </p>
                                         <div className="flex space-x-4">
                                             {
-                                                user && user.userType === "APP_USER" ?
+                                                session?.user?.role === "SUPER_ADMIN" && user && user.userType === "APP_USER" ?
                                                     (user && user.status === "ACTIVATED" ? (
                                                         <Button
                                                             variant={"outline"}
                                                             onClick={() => {
                                                                 activateOrDeactivateAppUser(axiosAuth, uuid, "DEACTIVATED").then((response) => {
-                                                                    setUser(response);
+                                                                    mutate(response, {
+                                                                        optimisticData: response,
+                                                                        populateCache: true,
+                                                                        rollbackOnError: true,
+                                                                        revalidate: false
+                                                                    });
                                                                     return toast({
                                                                         variant: "default",
                                                                         title: "User disabled.",
@@ -97,7 +96,12 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
                                                             variant={"outline"}
                                                             onClick={() => {
                                                                 activateOrDeactivateAppUser(axiosAuth, uuid, "ACTIVATED").then((response) => {
-                                                                    setUser(response);
+                                                                    mutate(response, {
+                                                                        optimisticData: response,
+                                                                        populateCache: true,
+                                                                        rollbackOnError: true,
+                                                                        revalidate: false
+                                                                    });
                                                                     return toast({
                                                                         variant: "default",
                                                                         title: "User activated.",
@@ -111,7 +115,7 @@ const UserDetailsPage = ({params}: { params: { uuid: string } }) => {
                                                         </Button>
                                                     )) : null
                                             }
-                                            {user && user.userType === "APP_USER" && <Button
+                                            {session?.user?.role === "SUPER_ADMIN"  && user && user.userType === "APP_USER" && <Button
                                                 variant={"destructive"}
                                                 onClick={() => {
                                                 }}

@@ -21,7 +21,6 @@ const AppUsersPage = () => {
         user.userType === "APP_USER"
     )
 
-    console.log("App-Users: ", appUsers)
 
     // const [users, setUsers] = useState<UserArray | undefined>();
     //

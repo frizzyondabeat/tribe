@@ -28,6 +28,7 @@ import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {deleteCurrency} from "@lib/currencyCalls";
 import {useRouter} from "next/navigation";
 import {useCurrencyContext} from "@context/CurrencyContext";
+import {useFetch} from "@lib/hooks/useSWR";
 
 export type CurrencyProps = z.infer<typeof CurrencySchema>
 
@@ -44,48 +45,76 @@ export const CurrencyActionCell = ({row}: {
 
     const router = useRouter()
 
-    const {setCurrencies} = useCurrencyContext()
+    // const {setCurrencies} = useCurrencyContext()
+
+    const {getAllCurrency} = useFetch()
+
+    const {data: currencies, mutate} = getAllCurrency()
+
 
     const handleDelete = () => {
         console.log("Delete currency with UUID: ", uuid)
-        deleteCurrency(axiosAuth, uuid)
-            .then(
+        mutate(
+            deleteCurrency(axiosAuth, uuid).then(
                 (response) => {
-                    console.log("Deleted currency: ", response)
-                    setOpen(false)
-                    setCurrencies(prevState => {
-                        if (prevState) {
-                            return prevState.filter(currency => currency.uuid !== uuid)
-                        }
-                    })
-                    return toast(
-                        {
-                            variant: "default",
-                            title: "Currency deleted.",
-                            description: "Currency deleted successfully.",
-                            className: "bg-green-500 text-white",
-                        }
-                    )
+                    return currencies?.filter(currency => currency.uuid !== uuid)
                 }
-            )
-            .catch(
-                (error) => {
-                    console.log("Error deleting currency: ", error)
-                    return toast(
-                        {
-                            variant: "default",
-                            title: "Something went wrong.",
-                            description: "Please try again.",
-                            className: "bg-red-500 text-white",
-                        }
-                    )
-                }
-            )
-            .finally(
-                () => {
-                    router.refresh()
-                }
-            )
+            ),
+            {
+                optimisticData: currencies?.filter(currency => currency.uuid !== uuid),
+                rollbackOnError: true,
+                revalidate: false,
+                populateCache: true,
+            }
+        )
+            .then(value => {
+                console.log("Deleted currency: ", value)
+                setOpen(false)
+                return toast(
+                    {
+                        variant: "default",
+                        title: "Currency deleted.",
+                        description: "Currency deleted successfully.",
+                        className: "bg-green-500 text-white",
+                    }
+                )
+            })
+            .catch(reason => {
+                console.log("Error deleting currency: ", reason)
+                return toast(
+                    {
+                        variant: "default",
+                        title: "Something went wrong.",
+                        description: "Please try again.",
+                        className: "bg-red-500 text-white",
+                    }
+                )
+            })
+        // deleteCurrency(axiosAuth, uuid)
+        //     .then(
+        //         (response) => {
+        //             console.log("Deleted currency: ", response)
+        //             setOpen(false)
+        //             return toast(
+        //                 {
+        //                     variant: "default",
+        //                     title: "Currency deleted.",
+        //                     description: "Currency deleted successfully.",
+        //                     className: "bg-green-500 text-white",
+        //                 }
+        //             )
+        //         }
+        //     )
+        //     .catch(
+        //         (error) => {
+        //
+        //         }
+        //     )
+        //     .finally(
+        //         () => {
+        //             router.refresh()
+        //         }
+        //     )
     }
 
     const [isDropdown, setIsDropdown] = useState(false);

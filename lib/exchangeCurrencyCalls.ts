@@ -13,9 +13,11 @@ export type ConfigureRateProps = z.infer<typeof ConfigureRate>
 
 export type ExchangeForCurrencyPairProps = z.infer<typeof ExchangeForCurrencyPair>
 
+export const VIEW_ALL_EXCHANGE_RATES_URL = "/api/v1/currency/view-all-exchange-rates";
+
 export async function fetchAllExchangeRates(axiosAuth: AxiosInstance) {
     try {
-        const res = await axiosAuth.get("/api/v1/currency/view-all-exchange-rates");
+        const res = await axiosAuth.get(VIEW_ALL_EXCHANGE_RATES_URL);
         console.log(res.data);
 
         if (!res.data) {
@@ -31,6 +33,8 @@ export async function fetchAllExchangeRates(axiosAuth: AxiosInstance) {
 }
 
 export async function configureExchangeRate(axiosAuth: AxiosInstance, configureRateDto: ConfigureRateProps) {
+
+
     try {
         const res = await axiosAuth.post("/api/v1/currency/configure-rates", configureRateDto);
         console.log(res.data);

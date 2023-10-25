@@ -10,9 +10,10 @@ export type CurrencyDtoProps = z.infer<typeof CurrencyDtoSchema>
 
 export type ResponseCurrencyProps = z.infer<typeof ResponseCurrencySchema>
 
+export const VIEW_ALL_CURRENCIES_URL = "/api/v1/currency/view-all-currency";
 export async function fetchAllCurrencies(axiosAuth: AxiosInstance) {
     try {
-        const res = await axiosAuth.get("/api/v1/currency/view-all-currency");
+        const res = await axiosAuth.get(VIEW_ALL_CURRENCIES_URL);
         console.log(res.data);
 
         if (!res.data) {

@@ -1,16 +1,17 @@
 "use client"
 
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {useRouter} from "next/navigation";
 import {ArrowLeft} from "@node_modules/lucide-react";
 import {Button} from "@components/ui/button";
-import {statusColors, TransactionsProps} from "@app/(dashboard)/(routes)/transactions/_components/TransactionColumns";
-import {fetchTransactionByUUIDAndUserId} from "@lib/transactionsCalls";
+import {statusColors} from "@app/(dashboard)/(routes)/transactions/_components/TransactionColumns";
+import {fetchTransactionByUUIDAndUserId, VIEW_ONE_TRANSACTION_URL} from "@lib/transactionsCalls";
 import {Card, CardContent, CardHeader, CardTitle} from "@components/ui/card";
 import TransactionDetailSkeleton from "@app/(dashboard)/(routes)/transactions/_components/TransactionDetailSkeleton";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import useSWR from "@node_modules/swr";
 
 const TransactionDetailsPage = ({params}: { params: { uuid: string, userId: string } }) => {
 
@@ -20,18 +21,9 @@ const TransactionDetailsPage = ({params}: { params: { uuid: string, userId: stri
 
     const {uuid, userId} = params;
 
-    const [transaction, setTransaction] = useState<TransactionsProps>();
 
-    useEffect(() => {
-        fetchTransactionByUUIDAndUserId(axiosAuth, uuid, userId)
-            .then((response) => {
-                console.log(response);
-                setTransaction(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-    }, [axiosAuth, uuid, userId]);
+    const {data: transaction} = useSWR(VIEW_ONE_TRANSACTION_URL, () => fetchTransactionByUUIDAndUserId(axiosAuth, uuid, userId))
+
 
     const generateReceipt = () => {
         const capture = document.getElementById("receipt");

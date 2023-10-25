@@ -1,34 +1,28 @@
 "use client"
 
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Tabs, TabsContent, TabsList, TabsTrigger} from "@components/ui/tabs";
 import CurrencyList from "@app/(dashboard)/(routes)/settings/_components/CurrencyList";
-import {fetchAllCurrencies} from "@lib/currencyCalls";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {useToast} from "@components/ui/use-toast";
 import {ToastAction} from "@components/ui/toast";
 import {useRouter, useSearchParams} from "next/navigation";
-import {useCurrencyContext} from "@context/CurrencyContext";
 import {Card, CardContent, CardHeader, CardTitle} from "@components/ui/card";
 import {useForm} from "@node_modules/react-hook-form";
 import {z} from "zod"
 import {ConfigureRate, ExchangeForCurrencyPair} from "@models/ExchangeRate";
 import {zodResolver} from "@node_modules/@hookform/resolvers/zod";
-import {configureExchangeRate, fetchAllExchangeRates, getExchangeForCurrencyPair} from "@lib/exchangeCurrencyCalls";
+import {configureExchangeRate, getExchangeForCurrencyPair} from "@lib/exchangeCurrencyCalls";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@components/ui/form";
 import {Popover, PopoverContent, PopoverTrigger} from "@components/ui/popover";
 import {Button} from "@components/ui/button";
 import {cn} from "@lib/utils";
 import {CaretSortIcon, CheckIcon} from "@node_modules/@radix-ui/react-icons";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@components/ui/command";
-import {useExchangeRatesContext} from "@context/ExchangeRatesContext";
 import {Input} from "@components/ui/input";
+import {useFetch} from "@lib/hooks/useSWR";
 
 const SettingsPage = () => {
-
-    const {currencies, setCurrencies} = useCurrencyContext()
-
-    const {exchangeRates, setExchangeRates} = useExchangeRatesContext()
 
     const [rate, setRate] = useState<number>();
     const [openFrom, setFromOpen] = useState(false);
@@ -47,112 +41,10 @@ const SettingsPage = () => {
 
     const router = useRouter()
 
-    useEffect(() => {
-        fetchAllCurrencies(axiosAuth)
-            .then((response) => {
-                console.log("Fetched currencies: ", response)
-                setCurrencies(response);
-            }).catch((error) => {
-            console.log("Error fetching currencies: ", error)
-            if (error?.response?.status === 404) {
-                return toast(
-                    {
-                        variant: "destructive",
-                        title: "Network error.",
-                        description: "Please check your internet connection and try again.",
-                        action:
-                            <ToastAction
-                                altText={"Try again"}
-                                onClick={() => router.refresh()}
-                                className={"cursor-pointer hover:underline outline-none border-none"}
-                            >
-                                Try again
-                            </ToastAction>
-                    }
-                )
-            } else if (error?.response?.status === 401) {
-                console.log("Error fetching currencies: ", error)
-                router.push("/sign-in")
-                return toast(
-                    {
-                        variant: "destructive",
-                        title: "Something went wrong.",
-                        description: "Token expired. Please login again.",
-                    }
-                )
-            } else {
-                console.log("Error fetching currencies: ", error)
-                return toast(
-                    {
-                        variant: "destructive",
-                        title: "Something went wrong.",
-                        description: "Please try again.",
-                        action:
-                            <ToastAction
-                                altText={"Try again"}
-                                onClick={() => router.refresh()}
-                                className={"cursor-pointer hover:underline outline-none border-none"}
-                            >
-                                Try again
-                            </ToastAction>
-                    }
-                )
-            }
-        })
-        fetchAllExchangeRates(axiosAuth)
-            .then((response) => {
-                console.log("Fetched exchange rates: ", response)
-                setExchangeRates(response);
-            })
-            .catch((error) => {
-                console.log("Error fetching exchange rates: ", error)
-                if (error?.response?.status === 404) {
-                    return toast(
-                        {
-                            variant: "destructive",
-                            title: "Network error.",
-                            description: "Please check your internet connection and try again.",
-                            action:
-                                <ToastAction
-                                    altText={"Try again"}
-                                    onClick={() => router.refresh()}
-                                    className={"cursor-pointer hover:underline outline-none border-none"}
-                                >
-                                    Try again
-                                </ToastAction>
-                        }
-                    )
-                } else if (error?.response?.status === 401) {
-                    console.log("Error fetching exchange rates: ", error)
-                    router.push("/sign-in")
-                    return toast(
-                        {
-                            variant: "destructive",
-                            title: "Something went wrong.",
-                            description: "Token expired. Please login again.",
-                        }
-                    )
-                } else {
-                    console.log("Error fetching exchange rates: ", error)
-                    return toast(
-                        {
-                            variant: "destructive",
-                            title: "Something went wrong.",
-                            description: "Please try again.",
-                            action:
-                                <ToastAction
-                                    altText={"Try again"}
-                                    onClick={() => router.refresh()}
-                                    className={"cursor-pointer hover:underline outline-none border-none"}
-                                >
-                                    Try again
-                                </ToastAction>
-                        }
-                    )
-                }
-            })
-    }, [axiosAuth, router]);
+    const {getAllCurrency, getAllExchangeRates} = useFetch()
 
+    const {data: currencies} = getAllCurrency()
+    const {data: exchangeRates} = getAllExchangeRates()
 
 
     const getExchangeForCurrencyPairForm = useForm<z.infer<typeof ExchangeForCurrencyPair>>(
@@ -169,8 +61,8 @@ const SettingsPage = () => {
         {
             resolver: zodResolver(ConfigureRate),
             defaultValues: {
-                fromUUID: "",
-                toUUID: "",
+                fromUUid: "",
+                toUUid: "",
                 rate: 0
             }
         }
@@ -196,11 +88,14 @@ const SettingsPage = () => {
         configureExchangeRate(axiosAuth, data)
             .then((response) => {
                 console.log("Configured exchange rate: ", response)
-                fetchAllExchangeRates(axiosAuth)
-                    .then((response) => {
-                        console.log("Fetched exchange rates: ", response)
-                        setExchangeRates(response);
-                    })
+                return toast(
+                    {
+                        variant: "default",
+                        title: "Exchange rate configured.",
+                        description: "Exchange rate configured successfully.",
+                        className: "bg-green-500 text-white"
+                    }
+                )
             })
             .catch(
                 (error) => {
@@ -463,7 +358,7 @@ const SettingsPage = () => {
                                     >
                                         <FormField
                                             control={configureExchangeRatesForm.control}
-                                            name="fromUUID"
+                                            name="fromUUid"
                                             render={({field, formState: {errors}}) => (
                                                 <FormItem
                                                     className="flex flex-col gap-2"
@@ -506,7 +401,7 @@ const SettingsPage = () => {
                                                                             value={currency.uuid}
                                                                             key={currency.uuid}
                                                                             onSelect={() => {
-                                                                                configureExchangeRatesForm.setValue("fromUUID", currency.uuid)
+                                                                                configureExchangeRatesForm.setValue("fromUUid", currency.uuid)
                                                                                 setOpenConfigFrom(false)
                                                                             }}
                                                                             className={"text-xs"}
@@ -527,14 +422,14 @@ const SettingsPage = () => {
                                                         </PopoverContent>
                                                     </Popover>
                                                     <FormMessage>
-                                                        {errors?.fromUUID?.message}
+                                                        {errors?.fromUUid?.message}
                                                     </FormMessage>
                                                 </FormItem>
                                             )}
                                         />
                                         <FormField
                                             control={configureExchangeRatesForm.control}
-                                            name="toUUID"
+                                            name="toUUid"
                                             render={({field, formState: {errors}}) => (
                                                 <FormItem
                                                     className="flex flex-col gap-2"
@@ -577,7 +472,7 @@ const SettingsPage = () => {
                                                                             value={currency.uuid}
                                                                             key={currency.uuid}
                                                                             onSelect={() => {
-                                                                                configureExchangeRatesForm.setValue("toUUID", currency.uuid)
+                                                                                configureExchangeRatesForm.setValue("toUUid", currency.uuid)
                                                                                 setOpenConfigTo(false)
                                                                             }}
                                                                             className={"text-xs"}
@@ -598,7 +493,7 @@ const SettingsPage = () => {
                                                         </PopoverContent>
                                                     </Popover>
                                                     <FormMessage>
-                                                        {errors?.toUUID?.message}
+                                                        {errors?.toUUid?.message}
                                                     </FormMessage>
                                                 </FormItem>
                                             )}
@@ -631,7 +526,7 @@ const SettingsPage = () => {
                                             disabled={!isConfigureExchangeRatesFormValid || isConfigureExchangeRatesFormSubmitting}
                                             variant={"default"}
                                             className={"w-full cursor-pointer flex justify-center text-xs mt-4"}
-                                            >
+                                        >
                                             Configure
                                         </Button>
                                     </form>
