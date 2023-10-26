@@ -93,14 +93,14 @@ export const ExchangeRatesActionCell = ({row}: {
                     >
                         <DialogTrigger
                             onClick={() => setOpen(true)}
-                            className={"text-xs text-destructive"}
+                            className={"text-xs"}
                         >
                             Edit Rate
                         </DialogTrigger>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator/>
                     <DropdownMenuItem
-                        className={"text-xs"}
+                        className={"text-xs text-destructive"}
                         onClick={() => {
                             setIsDropdown(false)
                             handleDelete()
@@ -180,6 +180,7 @@ export const ExchangeRatesActionCell = ({row}: {
                                             <FormControl>
                                                 <Button
                                                     variant="outline"
+                                                    disabled={true}
                                                     role="combobox"
                                                     className={cn(
                                                         "w-full justify-between text-xs",
@@ -251,6 +252,7 @@ export const ExchangeRatesActionCell = ({row}: {
                                             <FormControl>
                                                 <Button
                                                     variant="outline"
+                                                    disabled={true}
                                                     role="combobox"
                                                     className={cn(
                                                         "w-full justify-between text-xs",
