@@ -23,6 +23,7 @@ import {Popover, PopoverContent, PopoverTrigger} from "@components/ui/popover";
 import {cn} from "@lib/utils";
 import {CaretSortIcon, CheckIcon} from "@node_modules/@radix-ui/react-icons";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@components/ui/command";
+import {deleteExchangeRate, updateExchangeRate} from "@lib/exchangeCurrencyCalls";
 
 export const ExchangeRatesActionCell = ({row}: {
     row: Row<ExchangeRateProps>
@@ -39,13 +40,80 @@ export const ExchangeRatesActionCell = ({row}: {
 
     const {data: currencies} = GetAllCurrency()
 
+    const allExchangeRates = exchangeRates ?? []
+
     const handleDelete = () => {
         console.log("Deleting rate: ", row.original)
-
-
+        mutate(
+            deleteExchangeRate(axiosAuth, row.original).then((response) => {
+                if (response) {
+                    return allExchangeRates.filter((rate) => rate.id !== row.original.id)
+                }
+            }),
+            {
+                optimisticData: allExchangeRates.filter((rate) => rate.id !== row.original.id),
+                rollbackOnError: true,
+                revalidate: false,
+                populateCache: true
+            }
+        )
+            .then(() => {
+                toast({
+                    variant: "default",
+                    title: "Rate deleted.",
+                    description: "Rate has been deleted.",
+                    className: "bg-green-500 text-white"
+                })
+            })
+            .catch(() => {
+                toast({
+                    variant: "destructive",
+                    title: "Rate not deleted.",
+                    description: "Rate has not been deleted."
+                })
+            })
     }
 
     const onSubmit = (data: ExchangeRateProps) => {
+        console.log("Updating rate: ", data)
+        mutate(
+            updateExchangeRate(axiosAuth, data).then((response) => {
+                if (response) {
+                    return allExchangeRates.map((rate) => {
+                        if (rate.id === response.id) {
+                            return response
+                        }
+                        return rate
+                    })
+                }
+            }),
+            {
+                optimisticData: allExchangeRates.map((rate) => {
+                    if (rate.id === data.id) {
+                        return data
+                    }
+                    return rate
+                }),
+                rollbackOnError: true,
+                revalidate: false,
+                populateCache: true
+            }
+        )
+            .then(() => {
+                toast({
+                    variant: "default",
+                    title: "Rate updated.",
+                    description: "Rate has been updated.",
+                    className: "bg-green-500 text-white"
+                })
+            })
+            .catch(() => {
+                toast({
+                    variant: "destructive",
+                    title: "Rate not updated.",
+                    description: "Rate has not been updated."
+                })
+            })
     }
 
     const form = useForm<ExchangeRateProps>({
@@ -345,7 +413,7 @@ export const ExchangeRatesActionCell = ({row}: {
                                 }
                             }
                         >
-                            Edit
+                            Save Changes
                         </Button>
                     </form>
                 </Form>
@@ -361,7 +429,7 @@ export const ExchangeRatesColumns: ColumnDef<ExchangeRateProps>[] = [
     },
     {
         accessorKey: "fromCurrency",
-        header: ({column}) =>
+        header: () =>
             <p
                 className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
             >
@@ -377,7 +445,7 @@ export const ExchangeRatesColumns: ColumnDef<ExchangeRateProps>[] = [
     },
     {
         accessorKey: "toCurrency",
-        header: ({column}) =>
+        header: () =>
             <p
                 className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
             >
@@ -393,7 +461,7 @@ export const ExchangeRatesColumns: ColumnDef<ExchangeRateProps>[] = [
     },
     {
         accessorKey: "rate",
-        header: ({column}) =>
+        header: () =>
             <p
                 className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
             >
@@ -409,7 +477,7 @@ export const ExchangeRatesColumns: ColumnDef<ExchangeRateProps>[] = [
     },
     {
         accessorKey: "createdAt",
-        header: ({column}) => {
+        header: () => {
             return (
                 <Button
                     variant="ghost"
@@ -436,7 +504,7 @@ export const ExchangeRatesColumns: ColumnDef<ExchangeRateProps>[] = [
     },
     {
         accessorKey: "updatedAt",
-        header: ({column}) => {
+        header: () => {
             return (
                 <Button
                     variant="ghost"
@@ -463,7 +531,7 @@ export const ExchangeRatesColumns: ColumnDef<ExchangeRateProps>[] = [
     },
     {
         accessorKey: "id",
-        header: ({column}) => {
+        header: () => {
             return (
                 <Button
                     variant="ghost"
@@ -483,7 +551,7 @@ export const ExchangeRatesColumns: ColumnDef<ExchangeRateProps>[] = [
     },
     {
         accessorKey: "uuid",
-        header: ({column}) => {
+        header: () => {
             return (
                 <Button
                     variant="ghost"

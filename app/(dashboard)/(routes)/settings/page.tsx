@@ -242,7 +242,14 @@ const SettingsPage = () => {
                                                                     />
                                                                     <CommandEmpty>No country found.</CommandEmpty>
                                                                     <CommandGroup>
-                                                                        {currencies && currencies.map((currency) => (
+                                                                        {exchangeRates && currencies && currencies
+                                                                            .filter((currency) => {
+                                                                            //     Show only currencies that have exchange rates
+                                                                                return exchangeRates.some(
+                                                                                    (rate) => rate.fromCurrency === currency.code
+                                                                                ) && currency.code !== getExchangeForCurrencyPairForm.getValues("to");
+                                                                            })
+                                                                            .map((currency) => (
                                                                             <CommandItem
                                                                                 value={currency.code}
                                                                                 key={currency.code}
@@ -313,7 +320,15 @@ const SettingsPage = () => {
                                                                     />
                                                                     <CommandEmpty>No currency found.</CommandEmpty>
                                                                     <CommandGroup>
-                                                                        {currencies && currencies.map((currency) => (
+                                                                        {exchangeRates && currencies && currencies
+                                                                            .filter((currency) => {
+                                                                                // Check if there are exchange rates for this currency
+                                                                                return exchangeRates.some(
+                                                                                    (rate) => rate.fromCurrency === getExchangeForCurrencyPairForm.getValues("from") && rate.toCurrency === currency.code
+                                                                                ) && currency.code !== getExchangeForCurrencyPairForm.getValues("from");
+
+                                                                            })
+                                                                            .map((currency) => (
                                                                             <CommandItem
                                                                                 value={currency.code}
                                                                                 key={currency.code}
@@ -411,7 +426,15 @@ const SettingsPage = () => {
                                                                 />
                                                                 <CommandEmpty>No country found.</CommandEmpty>
                                                                 <CommandGroup>
-                                                                    {currencies && currencies.map((currency) => (
+                                                                    {exchangeRates && currencies && currencies
+                                                                        .filter((currency) => {
+                                                                            // Check if there are currencies that don't have exchange rates with the to-currency
+
+                                                                            return !exchangeRates.some(
+                                                                                (rate) => rate.fromCurrency === currency.code && rate.toCurrency === configureExchangeRatesForm.getValues("toUUid")
+                                                                            ) && currency.code !== configureExchangeRatesForm.getValues("toUUid");
+                                                                        })
+                                                                        .map((currency) => (
                                                                         <CommandItem
                                                                             value={currency.code}
                                                                             key={currency.code}
@@ -482,7 +505,15 @@ const SettingsPage = () => {
                                                                 />
                                                                 <CommandEmpty>No country found.</CommandEmpty>
                                                                 <CommandGroup>
-                                                                    {currencies && currencies.map((currency) => (
+                                                                    {exchangeRates && currencies && currencies
+                                                                        .filter((currency) => {
+                                                                            // Check if there are no exchange rates for this currency
+
+                                                                            return !exchangeRates.some(
+                                                                                (rate) => rate.fromCurrency === configureExchangeRatesForm.getValues("fromUUid") && rate.toCurrency === currency.code
+                                                                            ) && currency.code !== configureExchangeRatesForm.getValues("fromUUid");
+                                                                        })
+                                                                        .map((currency) => (
                                                                         <CommandItem
                                                                             value={currency.code}
                                                                             key={currency.code}

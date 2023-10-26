@@ -65,9 +65,12 @@ export async function getExchangeForCurrencyPair(axiosAuth: AxiosInstance, excha
     }
 }
 
-export async function updateExchangeRate(axiosAuth: AxiosInstance,) {
+export async function updateExchangeRate(axiosAuth: AxiosInstance, exchangeRateDto: ExchangeRateProps) {
+
+    // await new Promise(resolve => setTimeout(resolve, 30000));
+
     try {
-        const res = await axiosAuth.post("/api/v1/currency/update-rates");
+        const res = await axiosAuth.post("/api/v1/currency/update-rates", exchangeRateDto);
         console.log(res.data);
 
         if (!res.data) {

@@ -42,21 +42,25 @@ const SidebarItem = ({icon: Icon, label, href, subCategory, ...props}: SidebarIt
 
     return (
         <div className="flex flex-col">
-            <button
+            <motion.button
                 {...props}
+                transition={{duration: 0.3}}
                 onClick={label === "Sign Out" ? handleSignOut : handleClick}
                 type={"button"}
                 className={cn("flex items-center gap-x-2 text-slate-500 text-xs font-[500] pl-6 transition-all hover:dark:text-primary-foreground/90 hover:text-primary hover:bg-primary/5", isActive && "text-slate-800 dark:text-primary-foreground bg-primary/20 hover:bg-primary/30 hover:dark:text-primary-foreground")}
             >
-                <div className="flex items-center gap-x-4 py-4">
+                <motion.div
+                    transition={{duration: 0.3}}
+                    animate={{scale: isActive ? 1.05 : 1}}
+                    className="flex items-center gap-x-4 py-4">
                     <Icon size={22}
                           className={cn("text-slate-500", isActive && "dark:text-primary-foreground text-slate-800")}/>
                     {label}
-                </div>
+                </motion.div>
                 <div
-                    className={cn("w-0.5 h-full justify-end ml-auto rounded-tl-full rounded-bl-full transition-all", isActive ? "bg-primary" : "bg-transparent")}
+                    className={cn("w-1 h-full justify-end ml-auto rounded-tl-full rounded-bl-full transition-all", isActive ? "bg-primary" : "bg-transparent")}
                 />
-            </button>
+            </motion.button>
             <AnimatePresence>
                 {
                     isActive && subCategory &&
