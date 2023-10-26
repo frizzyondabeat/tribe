@@ -45,27 +45,27 @@ export const UserActionCell = ({row}: {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel className="text-xs">Actions</DropdownMenuLabel>
-                <DropdownMenuItem
-                    onClick={() =>
-                        navigator.clipboard.writeText(uuid)
-                            .then(
-                                () => {
-                                    return toast(
-                                        {
-                                            variant: "default",
-                                            title: "Copied to clipboard",
-                                            description: "Copied UUID to clipboard.",
-                                            className: "bg-green-500 text-white",
-                                        }
-                                    )
-                                }
-                            )
-                    }
-                    className={"text-xs"}
-                >
-                    Copy UUID
-                </DropdownMenuItem>
-                <DropdownMenuSeparator/>
+                {/*<DropdownMenuItem*/}
+                {/*    onClick={() =>*/}
+                {/*        navigator.clipboard.writeText(uuid)*/}
+                {/*            .then(*/}
+                {/*                () => {*/}
+                {/*                    return toast(*/}
+                {/*                        {*/}
+                {/*                            variant: "default",*/}
+                {/*                            title: "Copied to clipboard",*/}
+                {/*                            description: "Copied UUID to clipboard.",*/}
+                {/*                            className: "bg-green-500 text-white",*/}
+                {/*                        }*/}
+                {/*                    )*/}
+                {/*                }*/}
+                {/*            )*/}
+                {/*    }*/}
+                {/*    className={"text-xs"}*/}
+                {/*>*/}
+                {/*    Copy UUID*/}
+                {/*</DropdownMenuItem>*/}
+                {/*<DropdownMenuSeparator/>*/}
                 <DropdownMenuItem
                     className={"text-xs"}
                     onClick={

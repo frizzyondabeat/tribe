@@ -29,6 +29,7 @@ export async function fetchAllCurrencies(axiosAuth: AxiosInstance) {
 }
 
 export async function addCurrency(axiosAuth: AxiosInstance, currencyDto: CurrencyDtoProps) {
+    // await new Promise(resolve => setTimeout(resolve, 20000));
     try {
         const res = await axiosAuth.post("/api/v1/currency/add-currency", currencyDto);
         console.log(res.data);
@@ -50,9 +51,11 @@ export async function addCurrency(axiosAuth: AxiosInstance, currencyDto: Currenc
 }
 
 export async function deleteCurrency(axiosAuth: AxiosInstance, currencyUUID: string) {
+    // await new Promise(resolve => setTimeout(resolve, 20000));
     try {
+
         const res = await axiosAuth.delete(`/api/v1/currency/delete-currency/${currencyUUID}`);
-        console.log(res.data);
+        console.log("Delete API call completed: ",res.data);
 
         if (!res.data) {
             return undefined;

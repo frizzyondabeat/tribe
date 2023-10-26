@@ -11,7 +11,7 @@ import {
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import {Button} from "@components/ui/button";
-import {ArrowUpDown, MoreHorizontal} from "@node_modules/lucide-react";
+import {MoreHorizontal} from "@node_modules/lucide-react";
 import {useToast} from "@components/ui/use-toast";
 import {z} from "zod";
 import {CurrencySchema} from "@models/Currency";
@@ -41,9 +41,6 @@ export const CurrencyActionCell = ({row}: {
 
     const [open, setOpen] = useState(false);
 
-
-    // const {setCurrencies} = useCurrencyContext()
-
     const {GetAllCurrency} = useFetch()
 
     const {data: currencies, mutate} = GetAllCurrency()
@@ -64,8 +61,7 @@ export const CurrencyActionCell = ({row}: {
                 populateCache: true,
             }
         )
-            .then(value => {
-                console.log("Deleted currency: ", value)
+            .then(() => {
                 setOpen(false)
                 return toast(
                     {
@@ -87,31 +83,6 @@ export const CurrencyActionCell = ({row}: {
                     }
                 )
             })
-        // deleteCurrency(axiosAuth, uuid)
-        //     .then(
-        //         (response) => {
-        //             console.log("Deleted currency: ", response)
-        //             setOpen(false)
-        //             return toast(
-        //                 {
-        //                     variant: "default",
-        //                     title: "Currency deleted.",
-        //                     description: "Currency deleted successfully.",
-        //                     className: "bg-green-500 text-white",
-        //                 }
-        //             )
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => {
-        //
-        //         }
-        //     )
-        //     .finally(
-        //         () => {
-        //             router.refresh()
-        //         }
-        //     )
     }
 
     const [isDropdown, setIsDropdown] = useState(false);
@@ -131,28 +102,28 @@ export const CurrencyActionCell = ({row}: {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align={"end"}>
                     <DropdownMenuLabel className={"text-xs"}>Actions</DropdownMenuLabel>
-                    <DropdownMenuItem
-                        onClick={() => {
-                            setIsDropdown(false)
-                            navigator.clipboard.writeText(uuid)
-                                .then(
-                                    () => {
-                                        return toast(
-                                            {
-                                                variant: "default",
-                                                title: "Copied to clipboard",
-                                                description: "Copied Currency UUID to clipboard.",
-                                                className: "bg-green-500 text-white",
-                                            }
-                                        )
-                                    }
-                                )
-                        }
-                        }
-                        className={"text-xs"}
-                    >
-                        Copy Currency UUID
-                    </DropdownMenuItem>
+                    {/*<DropdownMenuItem*/}
+                    {/*    onClick={() => {*/}
+                    {/*        setIsDropdown(false)*/}
+                    {/*        navigator.clipboard.writeText(uuid)*/}
+                    {/*            .then(*/}
+                    {/*                () => {*/}
+                    {/*                    return toast(*/}
+                    {/*                        {*/}
+                    {/*                            variant: "default",*/}
+                    {/*                            title: "Copied to clipboard",*/}
+                    {/*                            description: "Copied Currency UUID to clipboard.",*/}
+                    {/*                            className: "bg-green-500 text-white",*/}
+                    {/*                        }*/}
+                    {/*                    )*/}
+                    {/*                }*/}
+                    {/*            )*/}
+                    {/*    }*/}
+                    {/*    }*/}
+                    {/*    className={"text-xs"}*/}
+                    {/*>*/}
+                    {/*    Copy Currency UUID*/}
+                    {/*</DropdownMenuItem>*/}
                     <DropdownMenuSeparator/>
                     <DropdownMenuItem
                         className={"text-xs"}
@@ -211,11 +182,11 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
                     Name
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
                 </Button>
             )
         },
@@ -233,11 +204,11 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
                     Country
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
                 </Button>
             )
         },
@@ -255,11 +226,11 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
                     Country Code
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
                 </Button>
             )
         },
@@ -277,11 +248,11 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
                     Symbol
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
                 </Button>
             )
         },
@@ -299,11 +270,11 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
                     UUID
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
                 </Button>
             )
         },
@@ -321,11 +292,11 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
                     Created At
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
                 </Button>
             )
         },
@@ -348,11 +319,11 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
                     Updated At
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
                 </Button>
             )
         },
@@ -375,11 +346,11 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
             return (
                 <Button
                     variant="ghost"
-                    onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+                    // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
                     className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
                 >
                     ID
-                    <ArrowUpDown className="ml-2 h-4 w-4"/>
+                    {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
                 </Button>
             )
         },

@@ -21,6 +21,7 @@ import {CaretSortIcon, CheckIcon} from "@node_modules/@radix-ui/react-icons";
 import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@components/ui/command";
 import {Input} from "@components/ui/input";
 import {useFetch} from "@lib/hooks/useSWR";
+import ExchangeRatesList from "@app/(dashboard)/(routes)/settings/_components/ExchangeRatesList";
 
 const SettingsPage = () => {
 
@@ -191,7 +192,7 @@ const SettingsPage = () => {
                                 className="flex"
                             >
                                 <CardTitle className={"text-sm flex flex-col w-full gap-2"}>
-                                    <h1>Exchange Rates</h1>
+                                    <h1>Convert</h1>
                                     <div
                                         className="border w-full h-20 rounded-lg p-5 text-2xl text-primary flex items-center font-calculator">{rate ? rate : ""}</div>
                                 </CardTitle>
@@ -391,7 +392,7 @@ const SettingsPage = () => {
                                                                 >
                                                                     {currencies && field.value
                                                                         ? currencies.find(
-                                                                            (currency) => currency.uuid === field.value
+                                                                            (currency) => currency.code === field.value
                                                                         )?.name
                                                                         : "Select currency"}
                                                                     <CaretSortIcon
@@ -412,10 +413,10 @@ const SettingsPage = () => {
                                                                 <CommandGroup>
                                                                     {currencies && currencies.map((currency) => (
                                                                         <CommandItem
-                                                                            value={currency.uuid}
-                                                                            key={currency.uuid}
+                                                                            value={currency.code}
+                                                                            key={currency.code}
                                                                             onSelect={() => {
-                                                                                configureExchangeRatesForm.setValue("fromUUid", currency.uuid)
+                                                                                configureExchangeRatesForm.setValue("fromUUid", currency.code)
                                                                                 setOpenConfigFrom(false)
                                                                             }}
                                                                             className={"text-xs"}
@@ -424,7 +425,7 @@ const SettingsPage = () => {
                                                                             <CheckIcon
                                                                                 className={cn(
                                                                                     "ml-auto h-4 w-4",
-                                                                                    currency.uuid === field.value
+                                                                                    currency.code === field.value
                                                                                         ? "opacity-100"
                                                                                         : "opacity-0"
                                                                                 )}
@@ -462,7 +463,7 @@ const SettingsPage = () => {
                                                                 >
                                                                     {currencies && field.value
                                                                         ? currencies.find(
-                                                                            (currency) => currency.uuid === field.value
+                                                                            (currency) => currency.code === field.value
                                                                         )?.name
                                                                         : "Select currency"}
                                                                     <CaretSortIcon
@@ -483,10 +484,10 @@ const SettingsPage = () => {
                                                                 <CommandGroup>
                                                                     {currencies && currencies.map((currency) => (
                                                                         <CommandItem
-                                                                            value={currency.uuid}
-                                                                            key={currency.uuid}
+                                                                            value={currency.code}
+                                                                            key={currency.code}
                                                                             onSelect={() => {
-                                                                                configureExchangeRatesForm.setValue("toUUid", currency.uuid)
+                                                                                configureExchangeRatesForm.setValue("toUUid", currency.code)
                                                                                 setOpenConfigTo(false)
                                                                             }}
                                                                             className={"text-xs"}
@@ -495,7 +496,7 @@ const SettingsPage = () => {
                                                                             <CheckIcon
                                                                                 className={cn(
                                                                                     "ml-auto h-4 w-4",
-                                                                                    currency.uuid === field.value
+                                                                                    currency.code === field.value
                                                                                         ? "opacity-100"
                                                                                         : "opacity-0"
                                                                                 )}
@@ -545,6 +546,18 @@ const SettingsPage = () => {
                                         </Button>
                                     </form>
                                 </Form>
+                            </CardContent>
+                        </Card>
+                        <Card className="col-span-full">
+                            <CardHeader
+                                className="flex"
+                            >
+                                <CardTitle className={"text-sm flex flex-col w-full"}>
+                                    Exchange Rates
+                                </CardTitle>
+                            </CardHeader>
+                            <CardContent>
+                                <ExchangeRatesList exchangeRates={exchangeRates} />
                             </CardContent>
                         </Card>
                     </div>

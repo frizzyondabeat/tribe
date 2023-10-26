@@ -6,13 +6,12 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel, DropdownMenuSeparator,
+    DropdownMenuLabel,
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import {Button} from "@components/ui/button";
 import {ArrowUpDown, MoreHorizontal} from "@node_modules/lucide-react";
 import React from "react";
-import {toast} from "@components/ui/use-toast";
 
 export type TransactionsProps = z.infer<typeof TransactionSchema>
 
@@ -33,27 +32,27 @@ export const TransactionActionCell = ({row}: {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
                 <DropdownMenuLabel className={"text-xs"}>Actions</DropdownMenuLabel>
-                <DropdownMenuItem
-                    onClick={() =>
-                        navigator.clipboard.writeText(uuid)
-                            .then(
-                                () => {
-                                    return toast(
-                                        {
-                                            variant: "default",
-                                            title: "Copied to clipboard",
-                                            description: "Copied transaction UUID to clipboard.",
-                                            className: "bg-green-500 text-white",
-                                        }
-                                    )
-                                }
-                            )
-                    }
-                    className={"text-xs"}
-                >
-                    Copy Transaction UUID
-                </DropdownMenuItem>
-                <DropdownMenuSeparator/>
+                {/*<DropdownMenuItem*/}
+                {/*    onClick={() =>*/}
+                {/*        navigator.clipboard.writeText(uuid)*/}
+                {/*            .then(*/}
+                {/*                () => {*/}
+                {/*                    return toast(*/}
+                {/*                        {*/}
+                {/*                            variant: "default",*/}
+                {/*                            title: "Copied to clipboard",*/}
+                {/*                            description: "Copied transaction UUID to clipboard.",*/}
+                {/*                            className: "bg-green-500 text-white",*/}
+                {/*                        }*/}
+                {/*                    )*/}
+                {/*                }*/}
+                {/*            )*/}
+                {/*    }*/}
+                {/*    className={"text-xs"}*/}
+                {/*>*/}
+                {/*    Copy Transaction UUID*/}
+                {/*</DropdownMenuItem>*/}
+                {/*<DropdownMenuSeparator/>*/}
                 <DropdownMenuItem
                     onClick={
                         () => {

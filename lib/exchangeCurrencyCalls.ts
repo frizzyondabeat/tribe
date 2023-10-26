@@ -1,8 +1,5 @@
 import {z} from 'zod';
-import {ExchangeRateProps, ExchangeRateSchema} from '@models/ExchangeRate';
-import {ExchangeForCurrencyPair} from '@models/ExchangeRate';
-import {ConfigureRate} from '@models/ExchangeRate';
-import {axiosAuth} from "@lib/axios";
+import {ConfigureRate, ExchangeForCurrencyPair, ExchangeRateProps, ExchangeRateSchema} from '@models/ExchangeRate';
 import {AxiosInstance} from "axios";
 
 export const ExchangeRateResults = z.array(ExchangeRateSchema)
@@ -68,7 +65,7 @@ export async function getExchangeForCurrencyPair(axiosAuth: AxiosInstance, excha
     }
 }
 
-export async function updateExchangeRate(axiosAuth: AxiosInstance, ) {
+export async function updateExchangeRate(axiosAuth: AxiosInstance,) {
     try {
         const res = await axiosAuth.post("/api/v1/currency/update-rates");
         console.log(res.data);
@@ -79,6 +76,22 @@ export async function updateExchangeRate(axiosAuth: AxiosInstance, ) {
 
         const exchangeRate: ExchangeRateProps = res.data?.data;
         return ExchangeRateSchema.parse(exchangeRate);
+    } catch (err) {
+        console.log(err);
+        throw err;
+    }
+}
+
+export async function deleteExchangeRate(axiosAuth: AxiosInstance, exchangeRateDTO: ExchangeRateProps) {
+    try {
+        const res = await axiosAuth.post(`/api/v1/currency/delete-rates`, exchangeRateDTO);
+        console.log("Delete API call completed: ", res.data);
+
+        if (!res.data) {
+            return undefined;
+        }
+
+        return true
     } catch (err) {
         console.log(err);
         throw err;

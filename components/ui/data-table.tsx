@@ -40,6 +40,7 @@ import {useRouter} from "@node_modules/next/navigation";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {ToastAction} from "@components/ui/toast";
 import {useFetch} from "@lib/hooks/useSWR";
+import {DataTablePagination} from "@components/ui/data-table-pagination";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -99,8 +100,6 @@ export function DataTable<TData, TValue>({
 
     const {isSubmitting, isValid} = form.formState;
 
-    const [isLoading, setIsLoading] = useState(false);
-
     const {toast} = useToast();
 
     const router = useRouter();
@@ -116,7 +115,6 @@ export function DataTable<TData, TValue>({
 
     const onSubmit = (data: CurrencyDtoProps) => {
         console.log("Creating currency: ", data)
-        setIsLoading(true)
         addCurrency(axiosAuth, data)
             .then((response) => {
                 console.log("Currency created: ", response)
@@ -129,7 +127,6 @@ export function DataTable<TData, TValue>({
                         className: "bg-green-500 text-white"
                     }
                 )
-                setIsLoading(false)
             })
             .catch((error) => {
                 console.log("Error creating currency: ", error)
@@ -237,7 +234,7 @@ export function DataTable<TData, TValue>({
                         <Dialog open={open} onOpenChange={setOpen}>
                             <DialogTrigger onClick={() => setOpen(true)}>
                                 <Button variant="default" className="ml-auto text-xs">
-                                    Add Currency
+                                    Add
                                     <PlusIcon className="ml-2 h-4 w-4"/>
                                 </Button>
                             </DialogTrigger>
@@ -327,9 +324,7 @@ export function DataTable<TData, TValue>({
                                             className={"text-xs"}
                                             onClick={
                                                 () => {
-                                                    if (!isLoading) {
-                                                        setOpen(false)
-                                                    }
+                                                    setOpen(false)
                                                 }
                                             }
                                         >
@@ -440,24 +435,25 @@ export function DataTable<TData, TValue>({
                     </TableBody>
                 </Table>
             </div>
-            <div className="flex items-center justify-end space-x-2 py-4">
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                >
-                    Previous
-                </Button>
-                <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                >
-                    Next
-                </Button>
-            </div>
+            {/*<div className="flex items-center justify-end space-x-2 py-4">*/}
+            {/*    <Button*/}
+            {/*        variant="outline"*/}
+            {/*        size="sm"*/}
+            {/*        onClick={() => table.previousPage()}*/}
+            {/*        disabled={!table.getCanPreviousPage()}*/}
+            {/*    >*/}
+            {/*        Previous*/}
+            {/*    </Button>*/}
+            {/*    <Button*/}
+            {/*        variant="outline"*/}
+            {/*        size="sm"*/}
+            {/*        onClick={() => table.nextPage()}*/}
+            {/*        disabled={!table.getCanNextPage()}*/}
+            {/*    >*/}
+            {/*        Next*/}
+            {/*    </Button>*/}
+            {/*</div>*/}
+            <DataTablePagination table={table}/>
         </div>
     )
 }

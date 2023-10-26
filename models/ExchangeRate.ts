@@ -5,7 +5,7 @@ export const ExchangeRateSchema = z.object({
     uuid: z.string(),
     fromCurrency: z.string(),
     toCurrency: z.string(),
-    rate: z.number(),
+    rate: z.coerce.number().min(0.0001, "Rate must be greater than 0"),
     createdAt: z.string(),
     updatedAt: z.string(),
 })
