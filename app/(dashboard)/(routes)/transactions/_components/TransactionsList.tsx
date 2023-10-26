@@ -10,7 +10,7 @@ const TransactionsList = ({transactions}: { transactions: TransactionArray | und
 
     return (
         <div className="container mx-auto py-2 overflow-x-auto">
-            <DataTable columns={transactionColumns} data={transactions} visibleFields={visibleFields} />
+            <DataTable columns={transactionColumns} data={transactions} visibleFields={visibleFields} filename={"transactions.csv"} />
         </div>
     );
 };

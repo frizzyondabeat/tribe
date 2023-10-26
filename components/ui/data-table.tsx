@@ -23,11 +23,9 @@ import {
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger
 } from "@components/ui/dropdown-menu";
 import {ChevronDownIcon} from "lucide-react";
-import {exportToExcel} from "@lib/utils/exportToExcel";
 import {Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger} from "@components/ui/dialog";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@components/ui/form";
 import {PlusIcon} from "@node_modules/lucide-react";
@@ -41,6 +39,8 @@ import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {ToastAction} from "@components/ui/toast";
 import {useFetch} from "@lib/hooks/useSWR";
 import {DataTablePagination} from "@components/ui/data-table-pagination";
+import {json2csv} from "json-2-csv";
+import {exportToCSV} from "@lib/utils/exportToCSV";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -48,6 +48,7 @@ interface DataTableProps<TData, TValue> {
     visibleFields?: string[],
     action?: "ADD_CURRENCY" | "EXCHANGE",
     enableExport?: boolean
+    filename?: string
 }
 
 const usersVisibleFields = ["email", "firstName", "lastName", "userType", "actions"]
@@ -57,7 +58,8 @@ export function DataTable<TData, TValue>({
                                              data,
                                              visibleFields = usersVisibleFields,
                                              action,
-                                             enableExport = true
+                                             enableExport = true,
+                                             filename = "data.csv"
                                          }: DataTableProps<TData, TValue>) {
 
     const [sorting, setSorting] = useState<SortingState>([]);
@@ -180,6 +182,8 @@ export function DataTable<TData, TValue>({
             )
     }
 
+    const [csvData, setCsvData] = useState<any>();
+
     useEffect(() => {
         table.getAllColumns().filter(
             (column) => {
@@ -188,6 +192,13 @@ export function DataTable<TData, TValue>({
         ).forEach((column) => {
             column.toggleVisibility(false)
         })
+        if (data) {
+            json2csv(data as any).then(
+                (csv) => {
+                    setCsvData(csv)
+                }
+            )
+        }
     }, [data, columns, visibleFields, table]);
 
     return (
@@ -212,20 +223,23 @@ export function DataTable<TData, TValue>({
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="center">
                                 <DropdownMenuLabel className="text-xs">File Formats</DropdownMenuLabel>
-                                <DropdownMenuItem className="text-xs capitalize">
+                                <DropdownMenuItem
+                                    onClick={() => exportToCSV(csvData, filename)}
+                                    className="text-xs capitalize"
+                                >
                                     CSV
                                 </DropdownMenuItem>
-                                <DropdownMenuSeparator/>
-                                <DropdownMenuItem
-                                    className="text-xs capitalize"
-                                    onClick={() => exportToExcel(table, "users")}
-                                >
-                                    Excel
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator/>
-                                <DropdownMenuItem className="text-xs capitalize">
-                                    PDF
-                                </DropdownMenuItem>
+                                {/*<DropdownMenuSeparator/>*/}
+                                {/*<DropdownMenuItem*/}
+                                {/*    className="text-xs capitalize"*/}
+                                {/*    onClick={() => exportToExcel(table, "users")}*/}
+                                {/*>*/}
+                                {/*    Excel*/}
+                                {/*</DropdownMenuItem>*/}
+                                {/*<DropdownMenuSeparator/>*/}
+                                {/*<DropdownMenuItem className="text-xs capitalize">*/}
+                                {/*    PDF*/}
+                                {/*</DropdownMenuItem>*/}
                             </DropdownMenuContent>
                         </DropdownMenu>
                     }

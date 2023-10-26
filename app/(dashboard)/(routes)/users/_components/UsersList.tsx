@@ -10,7 +10,7 @@ const UsersList = ({users}: {users: UserArray | undefined}) => {
 
     return (
         <div className="container mx-auto py-2 overflow-x-auto">
-            <DataTable columns={userColumns} data={users} />
+            <DataTable columns={userColumns} data={users} filename={"users.csv"} />
         </div>
     );
 };
