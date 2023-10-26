@@ -28,7 +28,7 @@ import {
 import {ChevronDownIcon} from "lucide-react";
 import {Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger} from "@components/ui/dialog";
 import {Form, FormControl, FormField, FormItem, FormLabel, FormMessage} from "@components/ui/form";
-import {PlusIcon} from "@node_modules/lucide-react";
+import {PlusIcon, Search} from "@node_modules/lucide-react";
 import {useForm} from "@node_modules/react-hook-form";
 import {addCurrency, CurrencyDtoProps} from "@lib/currencyCalls";
 import {zodResolver} from "@node_modules/@hookform/resolvers/zod";
@@ -41,6 +41,8 @@ import {useFetch} from "@lib/hooks/useSWR";
 import {DataTablePagination} from "@components/ui/data-table-pagination";
 import {json2csv} from "json-2-csv";
 import {exportToCSV} from "@lib/utils/exportToCSV";
+import {Popover, PopoverContent, PopoverTrigger} from "@components/ui/popover";
+import {FaFileDownload} from "@node_modules/react-icons/fa";
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
@@ -203,23 +205,46 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
-            <div className="flex items-center py-4 justify-between gap-x-2">
+            <div className="flex items-center py-4 justify-between gap-x-2 w-full">
                 <Input
                     placeholder={`Filter by ${filterBy ?? "email"}`}
                     value={(table.getColumn(filterBy ?? "email")?.getFilterValue() as string) ?? ""}
                     onChange={(event) =>
                         table.getColumn(filterBy ?? "email")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm text-xs"
+                    className="max-w-sm text-xs hidden md:block"
                 />
+                <Popover>
+                    <PopoverTrigger className="md:hidden justify-start" asChild>
+                        <Button variant="outline" className=" text-xs">
+                            <Search className="h-4 w-4 text-slate-500"/>
+                        </Button>
+                    </PopoverTrigger>
+                    <PopoverContent
+                        side={"bottom"}
+                        sideOffset={10}
+                        className="flex max-w-sm p-0 ml-8">
+                        <Input
+                            placeholder={`Filter by ${filterBy ?? "email"}`}
+                            value={(table.getColumn(filterBy ?? "email")?.getFilterValue() as string) ?? ""}
+                            onChange={(event) =>
+                                table.getColumn(filterBy ?? "email")?.setFilterValue(event.target.value)
+                            }
+                            className="w-full text-xs"
+                        />
+                    </PopoverContent>
+                </Popover>
                 <div className="flex space-x-2 items-center">
                     {
                         enableExport &&
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button variant="default" className="ml-auto text-xs">
-                                    Export <ChevronDownIcon className="ml-2 h-4 w-4"/>
+                                    <p className="hidden md:flex">Export</p>
+                                    <FaFileDownload className="h-4 w-4 flex md:hidden"/>
+                                    <ChevronDownIcon className="ml-2 h-4 w-4 hidden md:flex"/>
                                 </Button>
+
                             </DropdownMenuTrigger>
                             <DropdownMenuContent align="center">
                                 <DropdownMenuLabel className="text-xs">File Formats</DropdownMenuLabel>
