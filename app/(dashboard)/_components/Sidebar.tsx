@@ -12,6 +12,7 @@ import {
     UsersIcon
 } from "@node_modules/lucide-react";
 import SidebarItem from "@app/(dashboard)/_components/SidebarItem";
+import {User} from "lucide-react";
 
 const sidebarRoutes = [
     {
@@ -30,7 +31,7 @@ const sidebarRoutes = [
                 href: "/users/admin"
             },
             {
-                icon: UsersIcon,
+                icon: User,
                 label: "App Users",
                 href: "/users/app"
             }

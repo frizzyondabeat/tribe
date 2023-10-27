@@ -18,7 +18,11 @@ const RecentSales = ({transactions}: { transactions: TransactionArray | undefine
                                         {transaction.transactionReference}
                                     </p>
                                 </div>
-                                <div className="text-xs text-start">{`${transaction.sourceCurrency}${transaction.amount}`}</div>
+                                <div className="text-xs text-end">{`${transaction.amount.toLocaleString("en-US", {
+                                    minimumFractionDigits: 2,
+                                    style: "currency",
+                                    currency: transaction.sourceCurrency
+                                })}`}</div>
                                 <div className={`text-xs ${statusColors[transaction.transactionStatus]}`}>{transaction.transactionStatus}</div>
                             </div>
                         )

@@ -470,7 +470,7 @@ export const ExchangeRatesColumns: ColumnDef<ExchangeRateProps>[] = [
         cell: ({row}) => {
             return (
                 <span className="text-xs whitespace-nowrap flex justify-center">
-                    {row.original.rate}
+                    {row.original.rate.toLocaleString("en-US")}
                 </span>
             )
         }

@@ -5,7 +5,6 @@ import {Tabs, TabsContent, TabsList, TabsTrigger} from "@components/ui/tabs";
 import CurrencyList from "@app/(dashboard)/(routes)/settings/_components/CurrencyList";
 import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {useToast} from "@components/ui/use-toast";
-import {ToastAction} from "@components/ui/toast";
 import {useRouter, useSearchParams} from "next/navigation";
 import {Card, CardContent, CardHeader, CardTitle} from "@components/ui/card";
 import {useForm} from "@node_modules/react-hook-form";
@@ -22,6 +21,8 @@ import {Command, CommandEmpty, CommandGroup, CommandInput, CommandItem} from "@c
 import {Input} from "@components/ui/input";
 import {useFetch} from "@lib/hooks/useSWR";
 import ExchangeRatesList from "@app/(dashboard)/(routes)/settings/_components/ExchangeRatesList";
+import {uuid} from "uuidv4";
+import {Oval} from "react-loader-spinner";
 
 const SettingsPage = () => {
 
@@ -45,7 +46,8 @@ const SettingsPage = () => {
     const {GetAllCurrency, GetAllExchangeRates} = useFetch()
 
     const {data: currencies} = GetAllCurrency()
-    const {data: exchangeRates} = GetAllExchangeRates()
+    const {data: exchangeRates, mutate} = GetAllExchangeRates()
+    const [isLoading, setIsLoading] = useState(false);
 
 
     const getExchangeForCurrencyPairForm = useForm<z.infer<typeof ExchangeForCurrencyPair>>(
@@ -75,6 +77,8 @@ const SettingsPage = () => {
     const isExchangeRateFormValid = getExchangeForCurrencyPairForm.formState.isValid;
     const isExchangeRateFormSubmitting = getExchangeForCurrencyPairForm.formState.isSubmitting;
 
+    const allExchangeRates = exchangeRates ?? []
+
     const onGetExchangeRateSubmit = async (data: z.infer<typeof ExchangeForCurrencyPair>) => {
         console.log("Fetching exchange rate for: ", data)
         getExchangeForCurrencyPair(axiosAuth, data)
@@ -97,68 +101,70 @@ const SettingsPage = () => {
             )
     }
 
+    const getRandomId: () => (number) = () => {
+        const maxIdInExchangeRateArray = Math.max(...allExchangeRates.map((rate) => rate.id))
+        const maxIdValue = 10000000000
+        let randomId = Math.floor(Math.random() * (maxIdValue - maxIdInExchangeRateArray) + maxIdInExchangeRateArray);
+        if (allExchangeRates.some((rate) => rate.id === randomId)) {
+            return getRandomId()
+        } else {
+            return randomId
+        }
+    }
+
     const onConfigureExchangeRatesSubmit = async (data: z.infer<typeof ConfigureRate>) => {
         console.log("Configuring exchange rate: ", data)
-        configureExchangeRate(axiosAuth, data)
-            .then((response) => {
-                console.log("Configured exchange rate: ", response)
-                configureExchangeRatesForm.reset()
-                return toast(
+        setIsLoading(true)
+        mutate(
+            configureExchangeRate(axiosAuth, data).then((response) => {
+                if (response) {
+                    return [...allExchangeRates, response]
+                }
+            }),
+            {
+                optimisticData: [
+                    ...allExchangeRates,
                     {
-                        variant: "default",
-                        title: "Exchange rate configured.",
-                        description: "Exchange rate configured successfully.",
-                        className: "bg-green-500 text-white"
+                        id: getRandomId(),
+                        fromCurrency: data.fromUUid,
+                        toCurrency: data.toUUid,
+                        rate: data.rate,
+                        createdAt: new Date().toISOString(),
+                        updatedAt: new Date().toISOString(),
+                        uuid: uuid()
                     }
-                )
-            })
+                ],
+                revalidate: true,
+                populateCache: true,
+                rollbackOnError: true
+            }
+        )
+            .then(
+                (response) => {
+                    console.log("Configured exchange rate: ", response)
+                    setIsLoading(false)
+                    configureExchangeRatesForm.reset()
+                    return toast(
+                        {
+                            variant: "default",
+                            title: "Exchange rate configured.",
+                            description: "Exchange rate configured successfully.",
+                            className: "bg-green-500 text-white"
+                        }
+                    )
+                }
+            )
             .catch(
                 (error) => {
                     console.log("Error configuring exchange rate: ", error)
-                    if (error?.response?.status === 404) {
-                        return toast(
-                            {
-                                variant: "destructive",
-                                title: "Network error.",
-                                description: "Please check your internet connection and try again.",
-                                action:
-                                    <ToastAction
-                                        altText={"Try again"}
-                                        onClick={() => onConfigureExchangeRatesSubmit(data)}
-                                        className={"cursor-pointer hover:underline outline-none border-none"}
-                                    >
-                                        Try again
-                                    </ToastAction>
-                            }
-                        )
-                    } else if (error?.response?.status === 401) {
-                        console.log("Error configuring exchange rate: ", error)
-                        router.push("/sign-in")
-                        return toast(
-                            {
-                                variant: "destructive",
-                                title: "Something went wrong.",
-                                description: "Token expired. Please login again.",
-                            }
-                        )
-                    } else {
-                        console.log("Error configuring exchange rate: ", error)
-                        return toast(
-                            {
-                                variant: "destructive",
-                                title: "Something went wrong.",
-                                description: "Please try again.",
-                                action:
-                                    <ToastAction
-                                        altText={"Try again"}
-                                        onClick={() => router.refresh()}
-                                        className={"cursor-pointer hover:underline outline-none border-none"}
-                                    >
-                                        Try again
-                                    </ToastAction>
-                            }
-                        )
-                    }
+                    setIsLoading(false)
+                    return toast(
+                        {
+                            variant: "destructive",
+                            title: "Something went wrong.",
+                            description: "Exchange rate not configured. Please try again.",
+                        }
+                    )
                 }
             )
     }
@@ -194,7 +200,7 @@ const SettingsPage = () => {
                                 <CardTitle className={"text-sm flex flex-col w-full gap-2"}>
                                     <h1>Convert</h1>
                                     <div
-                                        className="border w-full h-20 rounded-lg p-5 text-2xl text-primary flex items-center font-calculator">{rate ? rate : ""}</div>
+                                        className="border w-full h-20 rounded-lg p-5 text-2xl text-primary flex items-center font-calculator">{rate ? rate.toLocaleString("en-US") : ""}</div>
                                 </CardTitle>
                                 <CardContent className="px-0 pb-0 pt-2">
                                     <Form {...getExchangeForCurrencyPairForm}>
@@ -569,11 +575,16 @@ const SettingsPage = () => {
                                         />
                                         <Button
                                             type="submit"
-                                            disabled={!isConfigureExchangeRatesFormValid || isConfigureExchangeRatesFormSubmitting}
+                                            disabled={!isConfigureExchangeRatesFormValid || isConfigureExchangeRatesFormSubmitting || isLoading}
                                             variant={"default"}
                                             className={"w-full cursor-pointer flex justify-center text-xs mt-4"}
                                         >
-                                            Configure
+                                            <p className={`${isLoading ? "hidden" : "block"}`}>Configure</p>
+                                            {
+                                                isLoading && (
+                                                    <Oval height={20} width={20} color={"#fff"} secondaryColor={"rgba(198,172,246,0.6)"}/>
+                                                )
+                                            }
                                         </Button>
                                     </form>
                                 </Form>

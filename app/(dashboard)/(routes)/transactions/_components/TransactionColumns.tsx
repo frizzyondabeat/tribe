@@ -146,7 +146,10 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
             const {amount, sourceCurrency} = row.original
             return (
                 <span className="text-xs whitespace-nowrap flex justify-center">
-                    {sourceCurrency}{`${amount}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",").toString()}
+                    {amount.toLocaleString("en-US", {
+                        style: "currency",
+                        currency: sourceCurrency.replace(/\s+/g, "")
+                    })}
                 </span>
             )
         }

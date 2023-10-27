@@ -28,26 +28,26 @@ export function DataTablePagination<TData>({
         <div className="flex w-full flex-col items-center justify-between gap-4 overflow-auto px-0 py-1 sm:flex-row sm:gap-8">
             <div className="flex w-full justify-end gap-4 sm:flex-row sm:gap-6 lg:gap-8">
                 <div className="flex items-center space-x-2">
-                    <p className="whitespace-nowrap text-sm font-medium">Rows per page</p>
+                    <p className="whitespace-nowrap text-xs font-medium">Rows per page</p>
                     <Select
                         value={`${table.getState().pagination.pageSize}`}
                         onValueChange={(value) => {
                             table.setPageSize(Number(value))
                         }}
                     >
-                        <SelectTrigger className="h-8 w-[70px]">
+                        <SelectTrigger className="h-8 w-[70px] text-xs">
                             <SelectValue placeholder={table.getState().pagination.pageSize} />
                         </SelectTrigger>
                         <SelectContent side="top">
                             {pageSizeOptions.map((pageSize) => (
-                                <SelectItem key={pageSize} value={`${pageSize}`}>
+                                <SelectItem key={pageSize} value={`${pageSize}`} className="text-xs">
                                     {pageSize}
                                 </SelectItem>
                             ))}
                         </SelectContent>
                     </Select>
                 </div>
-                <div className="flex w-[100px] items-center justify-center text-sm font-medium">
+                <div className="flex w-[100px] items-center justify-center text-xs font-medium">
                     Page {table.getState().pagination.pageIndex + 1} of{" "}
                     {table.getPageCount()}
                 </div>

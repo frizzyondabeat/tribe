@@ -31,6 +31,7 @@ export async function fetchAllExchangeRates(axiosAuth: AxiosInstance) {
 
 export async function configureExchangeRate(axiosAuth: AxiosInstance, configureRateDto: ConfigureRateProps) {
 
+    // await new Promise(resolve => setTimeout(resolve, 60000));
 
     try {
         const res = await axiosAuth.post("/api/v1/currency/configure-rates", configureRateDto);

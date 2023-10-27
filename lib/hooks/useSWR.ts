@@ -4,6 +4,7 @@ import useAxiosAuth from "@lib/hooks/useAxiosAuth";
 import {fetchAllTransactions, VIEW_ALL_TRANSACTIONS_URL} from "@lib/transactionsCalls";
 import {fetchAllCurrencies, VIEW_ALL_CURRENCIES_URL} from "@lib/currencyCalls";
 import {fetchAllExchangeRates, VIEW_ALL_EXCHANGE_RATES_URL} from "@lib/exchangeCurrencyCalls";
+import {fetchAllAuditLogs, VIEW_ALL_AUDIT_LOGS_URL} from "@lib/auditLogCalls";
 
 export const useFetch = () => {
 
@@ -26,5 +27,9 @@ export const useFetch = () => {
             () => {
                 return useSWR(VIEW_ALL_EXCHANGE_RATES_URL, () => fetchAllExchangeRates(axiosAuth))
             },
+        GetAllAuditLogs:
+            () => {
+                return useSWR(VIEW_ALL_AUDIT_LOGS_URL, () => fetchAllAuditLogs(axiosAuth))
+            }
     }
 }
