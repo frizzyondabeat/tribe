@@ -164,7 +164,7 @@ export default function RootPage() {
                                             </CardHeader>
                                             <CardContent>
                                                 <div
-                                                    className="text-2xl font-bold text-primary">{totalTransactions && totalTransactions[transactionIndex]?.totalAmount ? totalTransactions[transactionIndex]?.totalAmount : 0}</div>
+                                                    className="text-2xl font-bold text-primary">{totalTransactions && totalTransactions[transactionIndex]?.totalAmount ? totalTransactions[transactionIndex]?.totalAmount.toLocaleString("en-US") : 0}</div>
                                                 <p className="text-xs text-muted-foreground">
                                                     {totalTransactions && totalTransactions[transactionIndex]?.currency}
                                                 </p>
