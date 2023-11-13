@@ -182,7 +182,7 @@ const SettingsPage = () => {
                     <TabsTrigger
                         value="currency">Currency</TabsTrigger>
                     <TabsTrigger value="exchangeRates">
-                        Exchange Rates
+                        Exchange-Rates
                     </TabsTrigger>
                     <TabsTrigger value="paymentMethods">
                         Payment Methods

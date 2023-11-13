@@ -2,7 +2,7 @@
 import React from 'react';
 import {Logo} from "@app/(dashboard)/_components";
 import {
-    BarChart2Icon,
+    BarChart2Icon, CheckCircle2Icon,
     Layout,
     LogOut,
     LucideUsers,
@@ -46,6 +46,11 @@ const sidebarRoutes = [
         icon: Settings,
         label: "Settings",
         href: "/settings"
+    },
+    {
+        icon: CheckCircle2Icon,
+        label: "Approvals",
+        href: "/approvals"
     },
     {
         icon: StickyNoteIcon,
