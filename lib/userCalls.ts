@@ -135,14 +135,14 @@ export async function fetchTotalCountOfUsers(axiosAuth: AxiosInstance, userType:
                     "Content-Type": "application/json",
                 },
             });
-        console.log(res.data);
+        console.log("Total count users", res.data);
 
         if (!res.data) {
             return undefined;
         }
 
         const userCount: number = res.data?.data;
-        return userCount
+        return `${userCount}`
     } catch (err) {
         console.log(err);
         throw err;

@@ -42,8 +42,8 @@ export default function RootPage() {
         }
     })
     new Date().toLocaleString('default', {month: 'long'});
-    const [totalAdminUsers, setTotalAdminUsers] = useState<number>();
-    const [totalAppUsers, setTotalAppUsers] = useState<number>();
+    const [totalAdminUsers, setTotalAdminUsers] = useState<string>();
+    const [totalAppUsers, setTotalAppUsers] = useState<string>();
     const [dailyTransactionCount, setDailyTransactionCount] = useState<string>();
     const [totalTransactions, setTotalTransactions] = useState<TotalTransactionValueProps>();
     const [topTransactions, setTopTransactions] = useState<TransactionArray>();
