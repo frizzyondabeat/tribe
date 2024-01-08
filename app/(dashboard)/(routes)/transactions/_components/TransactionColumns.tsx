@@ -31,7 +31,7 @@ export const TransactionActionCell = ({row}: {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuLabel className={"text-xs"}>Actions</DropdownMenuLabel>
+                <DropdownMenuLabel className={"text-[13px]"}>Actions</DropdownMenuLabel>
                 {/*<DropdownMenuItem*/}
                 {/*    onClick={() =>*/}
                 {/*        navigator.clipboard.writeText(uuid)*/}
@@ -48,7 +48,7 @@ export const TransactionActionCell = ({row}: {
                 {/*                }*/}
                 {/*            )*/}
                 {/*    }*/}
-                {/*    className={"text-xs"}*/}
+                {/*    className={"text-[13px]"}*/}
                 {/*>*/}
                 {/*    Copy Transaction UUID*/}
                 {/*</DropdownMenuItem>*/}
@@ -59,7 +59,7 @@ export const TransactionActionCell = ({row}: {
                             router.push(`/transactions/${uuid}/${userId}`)
                         }
                     }
-                    className={"text-xs"}
+                    className={"text-[13px]"}
                 >
                     View Transaction
                 </DropdownMenuItem>
@@ -89,7 +89,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     Transaction Reference
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -112,7 +112,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap"
                 >
                     Source Currency
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -135,7 +135,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs justify-center flex "
+                    className="font-semibold text-[13px] justify-center flex "
                 >
                     Amount
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -145,7 +145,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
         cell: ({row}) => {
             const {amount, sourceCurrency} = row.original
             return (
-                <span className="text-xs whitespace-nowrap flex justify-center">
+                <span className="text-[13px] whitespace-nowrap flex justify-center">
                     {amount.toLocaleString("en-US", {
                         style: "currency",
                         currency: sourceCurrency.replace(/\s+/g, "")
@@ -161,7 +161,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`font-semibold text-xs whitespace-nowrap`}
+                    className={`font-semibold text-[13px] whitespace-nowrap`}
                 >
                     Source Account
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -184,7 +184,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs whitespace-nowrap flex justify-center"
+                    className="font-semibold text-[13px] whitespace-nowrap flex justify-center"
                 >
                     Destination Currency
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -207,7 +207,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs whitespace-nowrap flex justify-center"
+                    className="font-semibold text-[13px] whitespace-nowrap flex justify-center"
                 >
                     Transaction Status
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -217,7 +217,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
         cell: ({row}) => {
             const {transactionStatus} = row.original
             return (
-                <span className={`${statusColors[transactionStatus]} text-xs whitespace-nowrap flex justify-center`}>
+                <span className={`${statusColors[transactionStatus]} text-[13px] whitespace-nowrap flex justify-center`}>
                     {transactionStatus}
                 </span>
             )
@@ -230,7 +230,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                    className="font-semibold text-[13px] whitespace-nowrap flex justify-center w-full"
                 >
                     User ID
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -253,7 +253,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                    className="font-semibold text-[13px] whitespace-nowrap flex justify-center w-full"
                 >
                     Transaction UUID
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -276,7 +276,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                    className="font-semibold text-[13px] whitespace-nowrap flex justify-center w-full"
                 >
                     Activity Status
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -299,7 +299,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                    className="font-semibold text-[13px] whitespace-nowrap flex justify-center w-full"
                 >
                     Date Created
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -315,7 +315,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 day: "numeric",
             })
             return (
-                <p className="text-xs whitespace-nowrap flex justify-center">{formattedDate}</p>
+                <p className="text-[13px] whitespace-nowrap flex justify-center">{formattedDate}</p>
             )
         }
     },
@@ -326,7 +326,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs whitespace-nowrap flex justify-center w-full"
+                    className="font-semibold text-[13px] whitespace-nowrap flex justify-center w-full"
                 >
                     Source Processor
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -349,7 +349,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                    className={`font-semibold text-[13px] whitespace-nowrap flex justify-center`}
                 >
                     Source Status
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -359,7 +359,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
         cell: ({row}) => {
             const {sourceStatus} = row.original
             return (
-                <span className={`${statusColors[sourceStatus]} text-xs whitespace-nowrap flex justify-center`}>
+                <span className={`${statusColors[sourceStatus]} text-[13px] whitespace-nowrap flex justify-center`}>
                     {sourceStatus}
                 </span>
             )
@@ -372,7 +372,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                    className={`font-semibold text-[13px] whitespace-nowrap flex justify-center`}
                 >
                     Destination Account
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -395,7 +395,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "desc")}
-                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                    className={`font-semibold text-[13px] whitespace-nowrap flex justify-center`}
                 >
                     Destination Processor
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -418,7 +418,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                    className={`font-semibold text-[13px] whitespace-nowrap flex justify-center`}
                 >
                     Destination Status
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -428,7 +428,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
         cell: ({row}) => {
             const {destinationStatus} = row.original
             return (
-                <span className={`${statusColors[destinationStatus]} text-xs whitespace-nowrap flex justify-center`}>
+                <span className={`${statusColors[destinationStatus]} text-[13px] whitespace-nowrap flex justify-center`}>
                     {destinationStatus}
                 </span>
             )
@@ -441,7 +441,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "desc")}
-                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                    className={`font-semibold text-[13px] whitespace-nowrap flex justify-center`}
                 >
                     Institution ID
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -464,7 +464,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`font-semibold text-xs whitespace-nowrap flex justify-center w-full`}
+                    className={`font-semibold text-[13px] whitespace-nowrap flex justify-center w-full`}
                 >
                     Recipient Name
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -487,7 +487,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`font-semibold text-xs whitespace-nowrap flex justify-center`}
+                    className={`font-semibold text-[13px] whitespace-nowrap flex justify-center`}
                 >
                     Payment Type
                     <ArrowUpDown className="ml-2 h-4 w-4"/>
@@ -499,7 +499,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
             return (
                 <Button
                     variant="secondary"
-                    className={`text-xs justify-center`}
+                    className={`text-[13px] justify-center`}
                 >
                     {paymentType}
                 </Button>
@@ -513,7 +513,7 @@ export const transactionColumns: ColumnDef<TransactionsProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs"
+                    className="font-semibold text-[13px]"
                 >
                     ID
                     <ArrowUpDown className="ml-2 h-4 w-4"/>

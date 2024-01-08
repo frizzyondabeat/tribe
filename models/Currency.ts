@@ -1,7 +1,7 @@
 import {z} from 'zod';
 
 export const CurrencySchema = z.object({
-    id: z.number(),
+    id: z.any(),
     uuid: z.string(),
     name: z.string(),
     code: z.string(),

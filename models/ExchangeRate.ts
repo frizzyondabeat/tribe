@@ -1,7 +1,7 @@
 import {z} from 'zod';
 
 export const ExchangeRateSchema = z.object({
-    id: z.number(),
+    id: z.any(),
     uuid: z.string(),
     fromCurrency: z.string(),
     toCurrency: z.string(),

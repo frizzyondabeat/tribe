@@ -212,7 +212,7 @@ export function DataTable<TData, TValue>({
                     onChange={(event) =>
                         table.getColumn(filterBy ?? "email")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm text-xs hidden md:block"
+                    className="max-w-sm text-[13px] hidden md:block"
                 />
                 <Popover>
                     <PopoverTrigger className="md:hidden justify-start" asChild>

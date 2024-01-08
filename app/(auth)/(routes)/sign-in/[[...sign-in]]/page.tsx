@@ -92,14 +92,14 @@ const SignInPage = () => {
     return (
         <div className="flex flex-col justify-center items-center w-screen h-screen relative">
             <div className="w-[350px] text-slate-600 dark:text-primary-foreground">
-                <h1 className="font-extrabold flex justify-center px-6 text-2xl">
+                <h1 className="font-extrabold flex justify-center px-6 text-3xl">
                     <strong className="text-primary">3</strong>
                     ribe
                 </h1>
-                <p className="text-[10px] text-slate-500 text-center font-light mb-6 dark:text-white">Management Portal</p>
+                <p className="text-[12px] text-slate-500 text-center font-light mb-6 dark:text-white">Management Portal</p>
                 <Card className="shadow-lg w-[350px] h-auto dark:shadow-slate-800 overflow-y-auto text-slate-600 dark:text-primary-foreground">
                     <CardHeader>
-                        <CardTitle className="text-[18px]">
+                        <CardTitle className="text-[20px]">
                             Sign in
                         </CardTitle>
                     </CardHeader>
@@ -115,14 +115,14 @@ const SignInPage = () => {
                                     render={
                                         ({field, formState: {errors}}) => (
                                             <FormItem>
-                                                <FormLabel className="text-xs">Email</FormLabel>
+                                                <FormLabel className="text-sm">Email</FormLabel>
                                                 <FormControl>
                                                     <Input
                                                         disabled={isSubmitting}
                                                         placeholder="e.g john.doe@gmail.com"
                                                         {...field}
                                                         type={"email"}
-                                                        className="text-xs"
+                                                        className="text-sm"
                                                     />
                                                 </FormControl>
                                                 <FormMessage>
@@ -139,7 +139,7 @@ const SignInPage = () => {
                                         ({field, formState: {errors}}) => (
                                             <FormItem>
                                                 <div className="flex justify-between items-center h-full">
-                                                    <FormLabel className="text-xs">Password</FormLabel>
+                                                    <FormLabel className="text-sm">Password</FormLabel>
                                                     <Link
                                                         href={"/forgot-password"}
                                                         className="h-auto"
@@ -158,7 +158,7 @@ const SignInPage = () => {
                                                             disabled={isSubmitting}
                                                             {...field}
                                                             type={showPassword ? "text" : "password"}
-                                                            className="pr-10 text-xs"
+                                                            className="pr-10 text-sm"
                                                             // onKeyDown={
                                                             //     () => {
                                                             //         console.log(field.value.length)

@@ -47,7 +47,7 @@ const SidebarItem = ({icon: Icon, label, href, subCategory, ...props}: SidebarIt
                 transition={{duration: 0.3}}
                 onClick={label === "Sign Out" ? handleSignOut : handleClick}
                 type={"button"}
-                className={cn("flex items-center gap-x-2 text-slate-500 text-xs font-[500] pl-6 transition-all hover:dark:text-primary-foreground/90 hover:text-primary hover:bg-primary/5", isActive && "text-slate-800 dark:text-primary-foreground bg-primary/20 hover:bg-primary/30 hover:dark:text-primary-foreground")}
+                className={cn("flex items-center gap-x-2 text-slate-500 text-[13px] font-[500] pl-6 transition-all hover:dark:text-primary-foreground/90 hover:text-primary hover:bg-primary/5", isActive && "text-slate-800 dark:text-primary-foreground bg-primary/20 hover:bg-primary/30 hover:dark:text-primary-foreground")}
             >
                 <motion.div
                     transition={{duration: 0.3}}
@@ -86,9 +86,9 @@ const SidebarItem = ({icon: Icon, label, href, subCategory, ...props}: SidebarIt
                                     animate={{scale: isSubCategory ? 1.05 : 1}}
                                     key={index}
                                     onClick={() => handleSubCategoryClick(category.href)}
-                                    className={cn("flex items-center gap-x-2 duration-300 ease-in-out text-slate-500 text-sm font-[500] pl-6 transition-all hover:dark:text-primary-foreground/90 hover:text-primary hover:bg-primary/5", isSubCategory && "text-slate-800 dark:text-primary-foreground bg-primary/5 hover:bg-primary/10 hover:dark:text-primary-foreground")}
+                                    className={cn("flex items-center gap-x-2 duration-300 ease-in-out text-slate-500 text-[13px] font-[500] pl-6 transition-all hover:dark:text-primary-foreground/90 hover:text-primary hover:bg-primary/5", isSubCategory && "text-slate-800 dark:text-primary-foreground bg-primary/5 hover:bg-primary/10 hover:dark:text-primary-foreground")}
                                 >
-                                    <div className="flex items-center gap-x-4 py-4 text-xs">
+                                    <div className="flex items-center gap-x-4 py-4 text-[13px]">
                                         <Icon size={22}
                                               className={cn("text-slate-500", isSubCategory && "dark:text-primary-foreground text-slate-800")}/>
                                         {category.label}

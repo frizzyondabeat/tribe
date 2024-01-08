@@ -44,7 +44,7 @@ export const UserActionCell = ({row}: {
                 </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-                <DropdownMenuLabel className="text-xs">Actions</DropdownMenuLabel>
+                <DropdownMenuLabel className="text-[13px]">Actions</DropdownMenuLabel>
                 {/*<DropdownMenuItem*/}
                 {/*    onClick={() =>*/}
                 {/*        navigator.clipboard.writeText(uuid)*/}
@@ -61,13 +61,13 @@ export const UserActionCell = ({row}: {
                 {/*                }*/}
                 {/*            )*/}
                 {/*    }*/}
-                {/*    className={"text-xs"}*/}
+                {/*    className={"text-[13px]"}*/}
                 {/*>*/}
                 {/*    Copy UUID*/}
                 {/*</DropdownMenuItem>*/}
                 {/*<DropdownMenuSeparator/>*/}
                 <DropdownMenuItem
-                    className={"text-xs"}
+                    className={"text-[13px]"}
                     onClick={
                         () => {
                             router.push(`/users/${uuid}`)
@@ -93,7 +93,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="flex items-center gap-x-1 justify-center w-full text-xs
+                    className="flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold"
                 >
                     ID
@@ -104,7 +104,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         cell: ({row}) => {
             const {id} = row.original
             return (
-                <p className="flex justify-center text-xs">{id}</p>
+                <p className="flex justify-center text-[13px]">{id}</p>
             )
         },
         // @ts-ignore
@@ -117,7 +117,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     First Name
@@ -128,7 +128,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         cell: ({row}) => {
             const {firstName} = row.original
             return (
-                <p className="flex justify-center text-xs">{firstName}</p>
+                <p className="flex justify-center text-[13px]">{firstName}</p>
             )
         }
     },
@@ -139,7 +139,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Last Name
@@ -150,7 +150,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         cell: ({row}) => {
             const {lastName} = row.original
             return (
-                <p className="flex justify-center text-xs">{lastName}</p>
+                <p className="flex justify-center text-[13px]">{lastName}</p>
             )
         }
     },
@@ -161,7 +161,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     User Type
@@ -175,21 +175,21 @@ export const userColumns: ColumnDef<UsersProps>[] = [
 
             if (userType === "SUPER_ADMIN") {
                 return (
-                    <Button variant="default" className="w-full uppercase flex gap-x-5 cursor-auto text-xs">
+                    <Button variant="default" className="w-full uppercase flex gap-x-5 cursor-auto text-[13px]">
                         <Shield className="h-4 w-4 fill-red-500"/>
                         {userType}
                     </Button>
                 )
             } else if (userType === "INSTITUTION_ADMIN") {
                 return (
-                    <Button variant="secondary" className="w-full uppercase flex gap-x-5 cursor-auto text-xs">
+                    <Button variant="secondary" className="w-full uppercase flex gap-x-5 cursor-auto text-[13px]">
                         <ShieldHalf className="h-4 w-4 fill-amber-500"/>
                         {userType}
                     </Button>
                 )
             } else {
                 return (
-                    <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto text-xs">
+                    <Button variant="ghost" className="w-full uppercase flex gap-x-5 cursor-auto text-[13px]">
                         <User className="h-4 w-4"/>
                         {userType}
                     </Button>
@@ -204,7 +204,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Email
@@ -215,7 +215,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         cell: ({row}) => {
             const {email} = row.original
             return (
-                <p className="flex justify-center text-xs">{email}</p>
+                <p className="flex justify-center text-[13px]">{email}</p>
             )
         }
     },
@@ -226,7 +226,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Phone Number
@@ -237,7 +237,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         cell: ({row}) => {
             const {phoneNumber} = row.original
             return (
-                <p className="flex justify-center text-xs">{phoneNumber}</p>
+                <p className="flex justify-center text-[13px]">{phoneNumber}</p>
             )
         },
     },
@@ -248,7 +248,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Created At
@@ -265,7 +265,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 day: "numeric",
             })
             return (
-                <p className={"flex justify-center whitespace-nowrap text-xs"}>{formattedDate}</p>
+                <p className={"flex justify-center whitespace-nowrap text-[13px]"}>{formattedDate}</p>
             )
         }
     },
@@ -276,7 +276,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Updated At
@@ -293,7 +293,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 day: "numeric",
             })
             return (
-                <p className="text-xs flex justify-center whitespace-nowrap">{formattedDate}</p>
+                <p className="text-[13px] flex justify-center whitespace-nowrap">{formattedDate}</p>
             )
         }
     },
@@ -304,7 +304,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     UUID
@@ -315,7 +315,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         cell: ({row}) => {
             const {uuid} = row.original
             return (
-                <p className="flex justify-center text-xs whitespace-nowrap">{uuid}</p>
+                <p className="flex justify-center text-[13px] whitespace-nowrap">{uuid}</p>
             )
         }
     },
@@ -326,7 +326,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Address
@@ -337,7 +337,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
         cell: ({row}) => {
                 const {address} = row.original
                 return (
-                    <p className="flex justify-center text-xs whitespace-nowrap">{address}</p>
+                    <p className="flex justify-center text-[13px] whitespace-nowrap">{address}</p>
                 )
         }
     },
@@ -348,7 +348,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Country
@@ -361,7 +361,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 const {country} = row.original
 
                 return (
-                    <p className="flex justify-center text-xs">{country}</p>
+                    <p className="flex justify-center text-[13px]">{country}</p>
                 )
         }
     },
@@ -372,7 +372,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Enabled
@@ -406,7 +406,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className={`flex items-center gap-x-1 justify-center w-full text-xs
+                    className={`flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap`}
                 >
                     Status
@@ -419,7 +419,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
             const {status} = row.original
 
             return (
-                <Button variant="ghost" className={`w-full uppercase text-xs flex gap-x-5 cursor-auto ${statusColor[status]} ${status === "ACTIVATED" ? "text-[#2fa406]" : "text-red-600"}`}>
+                <Button variant="ghost" className={`w-full uppercase text-[13px] flex gap-x-5 cursor-auto ${statusColor[status]} ${status === "ACTIVATED" ? "text-[#2fa406]" : "text-red-600"}`}>
                     {status}
                 </Button>
             )
@@ -432,7 +432,7 @@ export const userColumns: ColumnDef<UsersProps>[] = [
                 <Button
                     variant="ghost"
                     onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="flex items-center gap-x-1 justify-center w-full text-xs
+                    className="flex items-center gap-x-1 justify-center w-full text-[13px]
                      font-semibold whitespace-nowrap"
                 >
                     KYC Completed

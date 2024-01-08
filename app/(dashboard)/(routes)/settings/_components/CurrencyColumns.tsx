@@ -101,7 +101,7 @@ export const CurrencyActionCell = ({row}: {
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align={"end"}>
-                    <DropdownMenuLabel className={"text-xs"}>Actions</DropdownMenuLabel>
+                    <DropdownMenuLabel className={"text-[13px]"}>Actions</DropdownMenuLabel>
                     {/*<DropdownMenuItem*/}
                     {/*    onClick={() => {*/}
                     {/*        setIsDropdown(false)*/}
@@ -120,13 +120,13 @@ export const CurrencyActionCell = ({row}: {
                     {/*            )*/}
                     {/*    }*/}
                     {/*    }*/}
-                    {/*    className={"text-xs"}*/}
+                    {/*    className={"text-[13px]"}*/}
                     {/*>*/}
                     {/*    Copy Currency UUID*/}
                     {/*</DropdownMenuItem>*/}
                     <DropdownMenuSeparator/>
                     <DropdownMenuItem
-                        className={"text-xs"}
+                        className={"text-[13px]"}
                         onClick={() => {
                             setIsDropdown(false)
                             setOpen(true)
@@ -134,7 +134,7 @@ export const CurrencyActionCell = ({row}: {
                     >
                         <DialogTrigger
                             onClick={() => setOpen(true)}
-                            className={"text-xs text-destructive"}
+                            className={"text-[13px] text-destructive"}
                         >
                             Delete Currency
                         </DialogTrigger>
@@ -151,7 +151,7 @@ export const CurrencyActionCell = ({row}: {
                 <DialogFooter className="max-sm:gap-3">
                     <Button
                         variant={"outline"}
-                        className={"text-xs"}
+                        className={"text-[13px]"}
                         onClick={() => {
                             setOpen(false)
                         }}
@@ -160,7 +160,7 @@ export const CurrencyActionCell = ({row}: {
                     </Button>
                     <Button
                         variant={"destructive"}
-                        className={"text-xs"}
+                        className={"text-[13px]"}
                         onClick={handleDelete}
                     >
                         Delete Currency
@@ -183,7 +183,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 <Button
                     variant="ghost"
                     // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     Name
                     {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
@@ -192,7 +192,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
         },
         cell: ({row}) => {
             return (
-                <span className="text-xs whitespace-nowrap flex justify-center">
+                <span className="text-[13px] whitespace-nowrap flex justify-center">
                     {row.original.name}
                 </span>
             )
@@ -205,7 +205,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 <Button
                     variant="ghost"
                     // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     Country
                     {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
@@ -214,7 +214,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
         },
         cell: ({row}) => {
             return (
-                <span className="text-xs whitespace-nowrap flex justify-center">
+                <span className="text-[13px] whitespace-nowrap flex justify-center">
                     {row.original.country}
                 </span>
             )
@@ -227,7 +227,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 <Button
                     variant="ghost"
                     // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     Country Code
                     {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
@@ -236,7 +236,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
         },
         cell: ({row}) => {
             return (
-                <span className="text-xs whitespace-nowrap flex justify-center">
+                <span className="text-[13px] whitespace-nowrap flex justify-center">
                     {row.original.code}
                 </span>
             )
@@ -249,7 +249,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 <Button
                     variant="ghost"
                     // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     Symbol
                     {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
@@ -258,7 +258,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
         },
         cell: ({row}) => {
             return (
-                <span className="text-xs whitespace-nowrap flex justify-center">
+                <span className="text-[13px] whitespace-nowrap flex justify-center">
                     {row.original.symbol}
                 </span>
             )
@@ -271,7 +271,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 <Button
                     variant="ghost"
                     // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     UUID
                     {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
@@ -280,7 +280,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
         },
         cell: ({row}) => {
             return (
-                <span className="text-xs whitespace-nowrap flex justify-center">
+                <span className="text-[13px] whitespace-nowrap flex justify-center">
                     {row.original.uuid}
                 </span>
             )
@@ -293,7 +293,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 <Button
                     variant="ghost"
                     // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     Created At
                     {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
@@ -309,7 +309,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 day: "numeric",
             })
             return (
-                <p className="text-xs whitespace-nowrap flex justify-center">{formattedDate}</p>
+                <p className="text-[13px] whitespace-nowrap flex justify-center">{formattedDate}</p>
             )
         }
     },
@@ -320,7 +320,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 <Button
                     variant="ghost"
                     // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     Updated At
                     {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
@@ -336,7 +336,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 day: "numeric",
             })
             return (
-                <p className="text-xs whitespace-nowrap flex justify-center">{formattedDate}</p>
+                <p className="text-[13px] whitespace-nowrap flex justify-center">{formattedDate}</p>
             )
         }
     },
@@ -347,7 +347,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
                 <Button
                     variant="ghost"
                     // onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-                    className="font-semibold text-xs flex justify-center whitespace-nowrap w-full"
+                    className="font-semibold text-[13px] flex justify-center whitespace-nowrap w-full"
                 >
                     ID
                     {/*<ArrowUpDown className="ml-2 h-4 w-4"/>*/}
@@ -356,7 +356,7 @@ export const CurrencyColumns: ColumnDef<CurrencyProps>[] = [
         },
         cell: ({row}) => {
             return (
-                <p className="text-xs whitespace-nowrap flex justify-center">{row.original.id}</p>
+                <p className="text-[13px] whitespace-nowrap flex justify-center">{row.original.id}</p>
             )
         }
     }
