@@ -206,7 +206,7 @@ export const ExchangeRatesActionCell = ({row}: {
                                             />
                                         </FormControl>
                                         <FormMessage>
-                                            {errors?.id?.message}
+                                            {errors?.root?.message}
                                         </FormMessage>
                                     </FormItem>
                                 )
